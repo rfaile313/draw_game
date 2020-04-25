@@ -2,17 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Texture2D charTexture;
-Texture2D tileTexture;
-
 //NOTE: mark concept: home, ctrl+space, end, ctrl+c, move ctrl+v
 //TODO: set up a smart struct or function to parse tiles.png
 //TODO: set up placeholder player animation with timedelta?
 //TODO: timing system/debug text
 //TODO: generate art, remove placeholder animations
 
-const int sourceSize = 32;
-const int destSize = 96;
+//const int sourceSize = 32;
+//const int destSize = 96;
 
 int i;
 
@@ -49,14 +46,16 @@ int main(void)
 {
     // Initialization
     //----------------------------------------------------------------------------
+    //screen size
     const int screenWidth = 800;
     const int screenHeight = 650;
     
     InitWindow(screenWidth, screenHeight, "Draw!");
-    //init comes before texture calls
-    charTexture = LoadTexture("assets/chars.png");
-    tileTexture = LoadTexture("assets/tiles.png");
+    // NOTE:(rudy) Textures MUST be loaded after Window initialization (OpenGL context is required)
+    Texture2D charTexture = LoadTexture("assets/chars.png");
+    Texture2D tileTexture = LoadTexture("assets/tiles.png");
     
+    //TODO: need a better way to do this
     //bottom left sand tile blst
     struct Tile *blst = Tile_create(192.0f,588.0f, //192, 588 src
                                     96.0f, 300.0f); //96, 300 dest
@@ -68,7 +67,14 @@ int main(void)
     //bottom right sand tile
     struct Tile *brst = Tile_create(256.0f,588.0f, //256, 588
                                     288.0f, 300.0f); //288, 300 dest
-    
+	
+    Vector2 playerPos = {200.0f, 200.0f};
+    Rectangle pCurrentFrame = {128.0f, 0.0f, (float)charTexture.width/32,
+                                           (float)charTexture.height/16};
+
+    int frameCounter = 0;
+    int frameSpeed = 4;
+	
     
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //---> end initialization-----------------------------------------------
@@ -77,17 +83,24 @@ int main(void)
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         // Update
-        //----------------------------------------------------------------------------------
-        
+        //----------------------------------------------------------------------------    
         //player anim/control
         
-        //
+        frameCounter++;
+        if (frameCounter >= (60/frameSpeed)){
+            frameCounter = 0;
+            pCurrentFrame.x += 16;
+            if (pCurrentFrame.x > 352) pCurrentFrame.x = 256;
+    
+        }
+        
         
         // end update--------------------------------------------------------------
         
         // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
+        //-------------------------------------------------------------------------
+        
+		BeginDrawing();
         
         ClearBackground(BLACK);
         
@@ -95,6 +108,9 @@ int main(void)
         DrawTexturePro(tileTexture, blst->source, blst->dest, origin, rotation, WHITE);
         DrawTexturePro(tileTexture, bmst->source, bmst->dest, origin, rotation, WHITE);
         DrawTexturePro(tileTexture, brst->source, brst->dest, origin, rotation, WHITE);
+
+        DrawTextureRec(charTexture, pCurrentFrame, playerPos, WHITE);
+
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
