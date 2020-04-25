@@ -54,8 +54,8 @@ int main(void)
     
     InitWindow(screenWidth, screenHeight, "Draw!");
     //init comes before texture calls
-    charTexture = LoadTexture("chars.png");
-    tileTexture = LoadTexture("tiles.png");
+    charTexture = LoadTexture("assets/chars.png");
+    tileTexture = LoadTexture("assets/tiles.png");
     
     //bottom left sand tile blst
     struct Tile *blst = Tile_create(192.0f,588.0f, //192, 588 src
