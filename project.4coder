@@ -28,7 +28,7 @@ command_list = {
    .cmd = {
           {"mingw32-make clean", .os = "win"},
           {"make clean", .os = "linux"},
-          {"./clean.sh", .os = "mac"},
+          {"make clean", .os = "mac"},
    },
  },
  { .name = "build",
@@ -36,7 +36,7 @@ command_list = {
    .cmd = {
           {"mingw32-make", .os = "win"},
           {"make", .os = "linux"},
-          {"./build.sh", .os = "mac"},
+          {"make", .os = "mac"},
    },
  },
  { .name = "run",
@@ -44,7 +44,7 @@ command_list = {
    .cmd = {
           {"game.exe", .os = "win"},
           {"game", .os = "linux"},
-          {"./game", .os = "mac"},
+          {"game", .os = "mac"},
    },
  },
 };
