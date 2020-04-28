@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "r_types.h"
 
 #define FPS 60
 
@@ -10,9 +11,8 @@
 //TODO: timing system/debug text
 //TODO: generate art, remove placeholder animations
 
-int frameCounter = 0;
-
-int i;
+s32 frameCounter = 0;
+s16 i;
 
 struct Tile{
     Rectangle source;
@@ -25,6 +25,7 @@ Vector2 playerPos = {100,100};
 
 float rotation = 0.0f;
 
+//TODO: get this off the heap
 struct Tile *Tile_create(float sX, float sY, float dX, float dY,
                          float srcW, float srcH, float destW, float destH)
 {
