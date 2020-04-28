@@ -19,7 +19,6 @@ struct Tile{
     Rectangle dest;
 };
 
-
 Vector2 origin = {0,0};
 Vector2 playerPos = {100,100};
 

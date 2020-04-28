@@ -1,8 +1,8 @@
 #ifndef R_TYPES_H
 #define R_TYPES_H
 
-#ifndef _types_c
-#define _types_c
+//Just making some types easier to
+//manage, initialize, and allocate
 
 #include <stdlib.h> //malloc, realloc, free
 #include <stdint.h> //standard types
@@ -17,8 +17,8 @@ typedef int16_t     s16;
 typedef uint32_t    u32;
 typedef int32_t     s32;
 typedef s32         b32;
-typedef uint_64_t   u64;
-typedef int_64_t    s64;
+typedef uint64_t   u64;
+typedef int64_t    s64;
 
 typedef float       f32;
 typedef double      f64;
@@ -28,7 +28,5 @@ typedef const char* const_str;
 #define s32_max     INT32_MAX
 #define f32_max     FLT_MAX
 #define f32_min     FLT_MIN
-
-
 
 #endif //R_TYPES_H
