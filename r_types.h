@@ -1,8 +1,10 @@
 #ifndef R_TYPES_H
 #define R_TYPES_H
 
-//Just making some types easier to
-//manage, initialize, and allocate
+//NOTE:(Rudy) r_types is a
+//typedef library just making
+//some types easier to manage,
+//initialize, and allocate effectively
 
 #include <stdlib.h> //malloc, realloc, free
 #include <stdint.h> //standard types
@@ -17,8 +19,8 @@ typedef int16_t     s16;
 typedef uint32_t    u32;
 typedef int32_t     s32;
 typedef s32         b32;
-typedef uint64_t   u64;
-typedef int64_t    s64;
+typedef uint64_t    u64;
+typedef int64_t     s64;
 
 typedef float       f32;
 typedef double      f64;

@@ -8,28 +8,26 @@
 //NOTE: mark concept: home, ctrl+space, end, ctrl+c, move ctrl+v
 //TODO: set up a smart struct or function to parse tiles.png
 //TODO: set up placeholder player animation with timedelta?
-//TODO: timing system/debug text
-//TODO: generate art, remove placeholder animations
+//TODO: set up debugger
 
 s32 frameCounter = 0;
 s16 i;
+s8 dCounter = 0;
 
-struct Tile{
+typedef struct Tile{
     Rectangle source;
     Rectangle dest;
-};
+}Tile;
 
 Vector2 origin = {0,0};
 Vector2 playerPos = {100,100};
 
 float rotation = 0.0f;
 
-//TODO: get this off the heap
-struct Tile *Tile_create(float sX, float sY, float dX, float dY,
-                         float srcW, float srcH, float destW, float destH)
+//pass tile/values that dynamically change on the fly
+void modifyTile(Tile *individual_tile, float sX, float sY, float dX, float dY,
+                float srcW, float srcH, float destW, float destH)
 {
-    struct Tile *individual_tile = malloc(sizeof(struct Tile));
-    
     individual_tile->source.x = sX;
     individual_tile->source.y = sY;
     individual_tile->source.width =  srcW;
@@ -39,42 +37,67 @@ struct Tile *Tile_create(float sX, float sY, float dX, float dY,
     individual_tile->dest.y = dY;
     individual_tile->dest.width =  destW;
     individual_tile->dest.height = destH;
-    
-    return individual_tile;
 }
 
-void Destroy_tile(struct Tile *individual_tile){
-    free(individual_tile);
-}
 
-void playerAnimation(int state, struct Tile *animation){
+void playerAnimation(int state, Tile *animation){
     
     if(FPS/frameCounter == 3)
     {
+        
         frameCounter = 0;
         if(state == 0) //idle
         {
-            animation->source.x += 32;
             animation->source.y = 0;
-            if(animation->source.x >= 128) animation->source.x = 0;
+            animation->source.x += 20;
+            if(animation->source.x >= 60) animation->source.x = 0;
         }
         if(state==1) //draw gun
         {
-            animation->source.y = 32;
-            animation->source.x += 32;
-            if(animation->source.x >= 96) animation->source.x = 0;
+            animation->source.y = 40;
+            animation->source.x += 20;
+            if(animation->source.x >= 60) animation->source.x = 0;
         }
         if(state==2)//shoot gun
         {
         }
-        if(state==3)//put gun away
+        if(state==3)//spin gun
         {
+            animation->source.y = 60;
+            animation->source.x -= 20;
+            if(animation->source.x < 0) animation->source.x = 60;
         }
-        if(state==4)//die
+        if(state==4)
         {
+            if(dCounter==0)
+            {
+                animation->source.y = 40;
+                animation->source.x = 40;
+                dCounter++;
+                
+            }
+            //dieframe1
+            else if (dCounter==1)
+            {
+                
+                animation->source.y = 80;
+                animation->source.x = 0;
+                dCounter++;
+                
+            }
+            //dieframe2
+            else if (dCounter==2)
+            {
+                animation->source.y = 80;
+                animation->source.x = 20;
+                
+            }
+            
         }
+        
     }
 }
+
 
 
 
@@ -82,37 +105,46 @@ int main(void)
 {
     // Initialization
     //----------------------------------------------------------------------------
-    const int screenWidth = 700;
-    const int screenHeight = 500;
+    const int screenWidth = 960;
+    const int screenHeight = 572;
+    
+    const float PRSW = 20.0f; //PLAYER RECTANGLE SOURCE WIDTH
+    const float PRSH = 20.0f; //PLAYER RECTANGLE SOURCE HEIGHT
+    
+    const float PRDW = 100.0f;
+    const float PRDH = 100.0f;
     
     InitWindow(screenWidth, screenHeight, "Draw!");
     //init comes before texture calls
-    Texture2D charTexture = LoadTexture("assets/cowboysdara/cowboys.png"); //128/4 x 256/8
-    Texture2D tileTexture = LoadTexture("assets/tiles.png");
+    Texture2D charTexture = LoadTexture("assets/cowboyspenzilla/characters.png"); //128/4 x 256/8
+    Texture2D tileTexture = LoadTexture("assets/cowboyspenzilla/background.png");
     
-    Image skyGradient = GenImageGradientV(screenWidth, screenHeight, SKYBLUE, LIGHTGRAY);
-    Texture2D skyTexture = LoadTextureFromImage(skyGradient);
+    //Image skyGradient = GenImageGradientV(screenWidth, screenHeight, SKYBLUE, LIGHTGRAY);
+    //Texture2D skyTexture = LoadTextureFromImage(
     
+    //init player and set to default tile  (20x20 px rects) (160x100)
+    Tile player = {.source.x=0.0f, .source.y=0.0f, .source.width=PRSW, .source.height=PRSH,
+        .dest.x=200.0f, .dest.y=300.0f, .dest.width=PRDW, .dest.height=PRDH};
     
-    //tileset
-    struct Tile *bg1 = Tile_create(192.0f,528.0f, //initial src
-                                   192.0f, 300.0f, //initial dest
-                                   96.0f, 192.0f, //srcw, srch
-                                   112.0f, 224.0f); //destw/desth
+    //NOTE:(rudy) maybe don't need this?
+    /*
+    Tile pIdle2 =  {0};
+    Tile pIdle3 =  {0};
+    Tile pStand =  {0};
+    Tile pShoot1 = {0};
+    Tile pShoot2 = {0};
+    Tile pShoot3 = {0};
+    Tile pSpin1 =  {0};
+    Tile pSpin2 =  {0};
+    Tile pSpin3 =  {0};
+    Tile pdie1 =   {0};
+    Tile pdie2 =   {0};
+    */
     
-    struct Tile *bg2 = Tile_create(192.0f,528.0f, //initial src
-                                   384.0f,300.0f, //initial dest
-                                   96.0f, 192.0f, //srcw, srch
-                                   112.0f, 224.0f); //destw/desth
+    //assign
     
-    //player idle
-    struct Tile *player = Tile_create(0.0f, 0.0f, //0,0 initialsrc
-                                      192.0f, 268.0f, // initial dest
-                                      32.0f, 32.0f,  // src w/h
-                                      96.0f, 96.0f); // dest w/h
+    //format: all floats -- source x, y, w, h // dest x, y, w, h
     
-    
-    //
     
     SetTargetFPS(FPS);               // Set our game to run at 60 frames-per-second
     //---> end initialization-----------------------------------------------
@@ -126,21 +158,23 @@ int main(void)
         frameCounter++;
         
         //default anim
-        playerAnimation(0, player);
+        playerAnimation(4, &player);
         
         
         BeginDrawing();
         
         ClearBackground(BLACK);
         
-        DrawTexture(skyTexture,0,0,WHITE);
+        //DrawTexture(skyTexture,0,0,WHITE);
         
         //TODO: When all the tiles are built just loop through for the draw
-        DrawTexturePro(tileTexture, bg1->source, bg1->dest, origin, rotation, WHITE);
-        DrawTexturePro(tileTexture, bg2->source, bg2->dest, origin, rotation, WHITE);
+        //DrawTexturePro(tileTexture, bg.source, bg.dest, origin, rotation, WHITE);
         //player
         
-        DrawTexturePro(charTexture, player->source , player->dest, origin, rotation, WHITE);
+        //Background: Texture / 0,0 / 0,0 / 4x scale / WHITE
+        DrawTextureEx(tileTexture, origin, rotation, 4.0f, WHITE);
+        
+        DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
         
         //-end draw
         EndDrawing();
@@ -151,11 +185,7 @@ int main(void)
     //--------------------------------------------------------------------------------------
     UnloadTexture(charTexture);
     UnloadTexture(tileTexture);
-    Destroy_tile(player);
-    Destroy_tile(bg1);
-    Destroy_tile(bg2);
     CloseWindow();        // Close window and OpenGL context
-    
     //--------------------------------------------------------------------------------------
     
     return 0;
