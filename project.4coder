@@ -1,6 +1,6 @@
 version(1);
 
-project_name = "game";
+project_name = "draw_game";
 
 patterns = {
 "*.cpp",
@@ -42,7 +42,7 @@ command_list = {
  { .name = "run",
    .out = "*run*", .footer_panel = true, .save_dirty_files = false, .cursor_at_end = true,
    .cmd = {
-          {"game.exe", .os = "win"},
+          {project_name, .os = "win"},
           {"game", .os = "linux"},
           {"game", .os = "mac"},
    },

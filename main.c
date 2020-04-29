@@ -10,9 +10,9 @@
 //TODO: set up placeholder player animation with timedelta?
 //TODO: set up debugger
 
-s32 frameCounter = 0;
-s16 i;
-s8 dCounter = 0;
+u32 frameCounter = 0;
+u16 i;
+u8 dCounter = 0;
 
 typedef struct Tile{
     Rectangle source;
