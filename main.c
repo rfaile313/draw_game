@@ -5,14 +5,14 @@
 
 #define FPS 60
 
-//NOTE: mark concept: home, ctrl+space, end, ctrl+c, move ctrl+v
-//TODO: set up a smart struct or function to parse tiles.png
-//TODO: set up placeholder player animation with timedelta?
-//TODO: set up debugger
+// NOTE: mark concept: home, ctrl+space, end, ctrl+c, move ctrl+v
+// TODO: set up a smart struct or function to parse tiles.png
+// TODO: set up placeholder player animation with timedelta?
+// TODO: set up debugger
 
 u32 frameCounter = 0;
 u16 i;
-u8 dCounter = 0;
+u8  dCounter = 0;
 
 typedef struct Tile{
     Rectangle source;
@@ -21,12 +21,12 @@ typedef struct Tile{
 
 Vector2 origin = {0,0};
 Vector2 playerPos = {100,100};
-
 float rotation = 0.0f;
 
-//pass tile/values that dynamically change on the fly
+
 void modifyTile(Tile *individual_tile, float sX, float sY, float dX, float dY,
-                float srcW, float srcH, float destW, float destH)
+				float srcW, float srcH, float destW, float destH)
+// Modify tile struct values directly
 {
     individual_tile->source.x = sX;
     individual_tile->source.y = sY;
@@ -42,7 +42,7 @@ void modifyTile(Tile *individual_tile, float sX, float sY, float dX, float dY,
 
 void playerAnimation(int state, Tile *animation){
     
-    if(FPS/frameCounter == 3)
+    if(FPS/frameCounter == 3) //every 20th count
     {
         
         frameCounter = 0;
@@ -158,7 +158,7 @@ int main(void)
         frameCounter++;
         
         //default anim
-        playerAnimation(4, &player);
+        playerAnimation(0, &player);
         
         
         BeginDrawing();

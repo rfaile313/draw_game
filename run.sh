@@ -1,15 +1,15 @@
 #!/bin/bash
 
-#combines clean, build, and run game
-#into one script, leveraging logical
-#operator && which runs only if 
-#previous command succeded
+# combines clean, build, and run game
+# into one script, leveraging logical
+# operator && which runs only if 
+# previous command succeded
 
-#cleaning constants
+# cleaning constants
 GAME="game"
 WEIRDMACFILE="game.dSYM"
 USELESSMACFILE=".DS_Store"
-#build constants
+# build constants
 COMPILER="clang"
 CFLAGS="-Wall -g"
 SOURCE="main.c"
@@ -17,13 +17,14 @@ LIBS="-lraylib"
 OUTPUT="-o game"
 COMPLETE="**Build Succeded**"
 RUNGAME="./game"
-#other
+# other
 NEWLINE="\n"
 BREAK="-----------------------------"
 
 echo "**Cleaning**" && rm -f $GAME; rm -Rf $WEIRDMACFILE; rm -f $USELESSMACFILE \
-  && echo "---Removed  $GAME && $WEIRDMACFILE && $USELESSMACFILE" \ 
+  && echo "Removed  $GAME && $WEIRDMACFILE && $USELESSMACFILE" \ 
 echo $BREAK
+echo "**Cleaning Done**"
 echo "**Building game with $COMPILER**"
 echo "Flags: $CFLAGS"
 echo "Source: $SOURCE"
