@@ -26,7 +26,7 @@ command_list = {
  { .name = "clean",
    .out = "*clean*", .footer_panel = true, .save_dirty_files = false, .cursor_at_end = true,
    .cmd = {
-          {"mingw32-make clean", .os = "win"},
+          {"run clean", .os = "win"},
           {"make clean", .os = "linux"},
           {"make clean", .os = "mac"},
    },
@@ -34,7 +34,7 @@ command_list = {
  { .name = "build",
    .out = "*compile*", .footer_panel = true, .save_dirty_files = true, .cursor_at_end = false,
    .cmd = {
-          {"mingw32-make", .os = "win"},
+          {"run build", .os = "win"},
           {"make", .os = "linux"},
           {"make", .os = "mac"},
    },
@@ -42,9 +42,17 @@ command_list = {
  { .name = "run",
    .out = "*run*", .footer_panel = true, .save_dirty_files = false, .cursor_at_end = true,
    .cmd = {
-          {project_name, .os = "win"},
+          {"run run", .os = "win"},
           {"game", .os = "linux"},
           {"game", .os = "mac"},
+   },
+ },
+  { .name = "debug",
+   .out = "*debugging*", .footer_panel = true, .save_dirty_files = false, .cursor_at_end = true,
+   .cmd = {
+          {"run debug", .os = "win"},
+          {"echo not defines", .os = "linux"},
+          {"echo not defined", .os = "mac"},
    },
  },
 };
@@ -52,3 +60,4 @@ command_list = {
 fkey_command[1] = "clean";
 fkey_command[2] = "build";
 fkey_command[3] = "run";
+fkey_command[4] = "debug";

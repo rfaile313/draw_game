@@ -116,8 +116,8 @@ int main(void)
     
     InitWindow(screenWidth, screenHeight, "Draw!");
     //init comes before texture calls
-    Texture2D charTexture = LoadTexture("assets/cowboyspenzilla/characters.png"); //128/4 x 256/8
-    Texture2D tileTexture = LoadTexture("assets/cowboyspenzilla/background.png");
+    Texture2D charTexture = LoadTexture("C:\\raylib\\draw_game\\assets\\cowboyspenzilla\\characters.png"); //128/4 x 256/8
+    Texture2D tileTexture = LoadTexture("C:\\raylib\\draw_game\\assets\\cowboyspenzilla\\background.png");
     
     //Image skyGradient = GenImageGradientV(screenWidth, screenHeight, SKYBLUE, LIGHTGRAY);
     //Texture2D skyTexture = LoadTextureFromImage(
