@@ -26,15 +26,15 @@ command_list = {
  { .name = "clean",
    .out = "*clean*", .footer_panel = true, .save_dirty_files = false, .cursor_at_end = true,
    .cmd = {
-          {"run clean", .os = "win"},
+          {"run.bat clean", .os = "win"},
           {"make clean", .os = "linux"},
           {"make clean", .os = "mac"},
    },
  },
  { .name = "build",
-   .out = "*compile*", .footer_panel = true, .save_dirty_files = true, .cursor_at_end = false,
+   .out = "*compile*", .footer_panel = true, .save_dirty_files = true, .cursor_at_end = true,
    .cmd = {
-          {"run build", .os = "win"},
+          {"run.bat build", .os = "win"},
           {"make", .os = "linux"},
           {"make", .os = "mac"},
    },
@@ -42,7 +42,7 @@ command_list = {
  { .name = "run",
    .out = "*run*", .footer_panel = true, .save_dirty_files = false, .cursor_at_end = true,
    .cmd = {
-          {"run run", .os = "win"},
+          {"run.bat run", .os = "win"},
           {"game", .os = "linux"},
           {"game", .os = "mac"},
    },
@@ -50,7 +50,7 @@ command_list = {
   { .name = "debug",
    .out = "*debugging*", .footer_panel = true, .save_dirty_files = false, .cursor_at_end = true,
    .cmd = {
-          {"run debug", .os = "win"},
+          {"run.bat debug", .os = "win"},
           {"echo not defines", .os = "linux"},
           {"echo not defined", .os = "mac"},
    },

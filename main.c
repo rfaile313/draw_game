@@ -4,15 +4,12 @@
 #include "r_types.h"
 
 #define FPS 60
-
-
-// TODO: set up a smart struct or function to parse tiles.png
-// TODO: set up placeholder player animation with timedelta?
-// TODO: set up debugger
+#define BASESPEED 4 // //60 FPS, every x count (4==15)
 
 u32 frameCounter = 0;
 u16 i;
 u8  dCounter = 0;
+u8  eCounter = 0;
 
 typedef struct Tile{
     Rectangle source;
@@ -40,9 +37,9 @@ void modifyTile(Tile *individual_tile, float sX, float sY, float dX, float dY,
 }
 
 
-void playerAnimation(int state, Tile *animation){
+void animation(int state, Tile *animation, int eState, Tile *eAnimation){
     
-    if(FPS/frameCounter == 3) //every 20th count
+    if(FPS/frameCounter == BASESPEED) //60 FPS, every x count (4==15)
     {
         
         frameCounter = 0;
@@ -95,11 +92,31 @@ void playerAnimation(int state, Tile *animation){
             
         }
         
+        if (eState == 0) //spin gun enemy idle
+        {
+            eAnimation->source.y = 60;
+            eAnimation->source.x -= 20;
+            if(eAnimation->source.x < 80) eAnimation->source.x = 120;
+        }
+        
+        if (eState == 1) //something else using eCounter
+        {
+            if (eCounter == 0)
+            {
+                eAnimation->source.x = 80;
+                eAnimation->source.y = 0;
+                eCounter++;
+            }
+            else if (eCounter == 1)
+            {
+                eAnimation->source.x = 80;
+                eAnimation->source.y = 20;
+                eCounter = 0;
+            }
+            
+        }
     }
 }
-
-
-
 
 int main(void)
 {
@@ -108,42 +125,28 @@ int main(void)
     const int screenWidth = 960;
     const int screenHeight = 572;
     
-    const float PRSW = 20.0f; //PLAYER RECTANGLE SOURCE WIDTH
-    const float PRSH = 20.0f; //PLAYER RECTANGLE SOURCE HEIGHT
+    const float PRSW = 20.0f; //20px RECTANGLE SOURCE WIDTH
+    const float PRSH = 20.0f; //20px RECTANGLE SOURCE HEIGHT
     
-    const float PRDW = 100.0f;
-    const float PRDH = 100.0f;
+    const float PRDW = 100.0f; //100px RECTANGLE DEST WIDTH
+    const float PRDH = 100.0f; //100px RECTANGLE DEST HEIGHT
     
+    //removed raylib output unless there's a warning -- h/t skytrias!
+    SetTraceLogLevel(LOG_WARNING);
+    //Init window
     InitWindow(screenWidth, screenHeight, "Draw!");
     //init comes before texture calls
     Texture2D charTexture = LoadTexture("C:\\raylib\\draw_game\\assets\\cowboyspenzilla\\characters.png"); //128/4 x 256/8
     Texture2D tileTexture = LoadTexture("C:\\raylib\\draw_game\\assets\\cowboyspenzilla\\background.png");
     
-    //Image skyGradient = GenImageGradientV(screenWidth, screenHeight, SKYBLUE, LIGHTGRAY);
-    //Texture2D skyTexture = LoadTextureFromImage(
-    
+    //format: all floats -- source x, y, w, h // dest x, y, w, h
     //init player and set to default tile  (20x20 px rects) (160x100)
     Tile player = {.source.x=0.0f, .source.y=0.0f, .source.width=PRSW, .source.height=PRSH,
         .dest.x=200.0f, .dest.y=300.0f, .dest.width=PRDW, .dest.height=PRDH};
     
-    //NOTE:(rudy) maybe don't need this?
-    /*
-    Tile pIdle2 =  {0};
-    Tile pIdle3 =  {0};
-    Tile pStand =  {0};
-    Tile pShoot1 = {0};
-    Tile pShoot2 = {0};
-    Tile pShoot3 = {0};
-    Tile pSpin1 =  {0};
-    Tile pSpin2 =  {0};
-    Tile pSpin3 =  {0};
-    Tile pdie1 =   {0};
-    Tile pdie2 =   {0};
-    */
-    
-    //assign
-    
-    //format: all floats -- source x, y, w, h // dest x, y, w, h
+    //init first enemy and set to default tile  (20x20 px rects) (160x100) negative source width to flip X
+    Tile enemy1 = {.source.x=120.0f, .source.y=60.0f, .source.width=-PRSW, .source.height=PRSH,
+        .dest.x=600.0f, .dest.y=300.0f, .dest.width=PRDH, .dest.height=PRDH};
     
     
     SetTargetFPS(FPS);               // Set our game to run at 60 frames-per-second
@@ -152,29 +155,23 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        //
         
         //player anim/control
         frameCounter++;
         
         //default anim
-        playerAnimation(0, &player);
-        
+        animation(0, &player, 0, &enemy1);
         
         BeginDrawing();
         
         ClearBackground(BLACK);
         
-        //DrawTexture(skyTexture,0,0,WHITE);
-        
-        //TODO: When all the tiles are built just loop through for the draw
-        //DrawTexturePro(tileTexture, bg.source, bg.dest, origin, rotation, WHITE);
-        //player
-        
         //Background: Texture / 0,0 / 0,0 / 4x scale / WHITE
         DrawTextureEx(tileTexture, origin, rotation, 4.0f, WHITE);
         
         DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
+        
+        DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
         
         //-end draw
         EndDrawing();

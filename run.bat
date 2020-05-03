@@ -14,7 +14,7 @@ IF [%1] == [] echo. && echo Value Missing! Try run build or run debug or run cle
 GOTO:EOF 
 
 :BUILD
-call "build.bat" -dv && echo. && echo **Build Succeeded**
+call "build.bat" -d && echo. && echo **build.bat ran with -d**
 GOTO:EOF 
 
 :DEBUG
