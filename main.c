@@ -5,7 +5,7 @@
 
 #define FPS 60
 
-// NOTE: mark concept: home, ctrl+space, end, ctrl+c, move ctrl+v
+
 // TODO: set up a smart struct or function to parse tiles.png
 // TODO: set up placeholder player animation with timedelta?
 // TODO: set up debugger
