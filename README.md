@@ -1,13 +1,21 @@
 # draw_game
 
 MacOS:
-    ./run.sh cleans, builds, and runs if build successful
-    ./cleanmac.sh cleans files for git commits
+    1. `./run.sh` cleans, builds, and runs if build successful
+    2. `./cleanmac.sh` cleans files for git commits
 
 Windows: 
-    4coder - f1 clean f2 build f3 run f4 debug
+    1. F1 Clean
+    2. F2 Build
+    3. F3 Run
+    4. F4 Debug
+    
+Linux:
+    1. `cd /compile/linux/`
+    2. `cmake .`
+    3. `make`
 
-## Debugging on Windows
+## More info on Windows
 
 ### 4coder bindings or run `run.bat [run, build, clean, debug]` in cmd
 
