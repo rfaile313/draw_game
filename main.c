@@ -138,6 +138,22 @@ bool checkAgainst(double scnds, int checkAgainst){
     else return false;
 }
 
+bool initSfxPlayed  = false;
+bool drawSfxPlayed  = false;
+bool shootSfxPlayed = false;
+bool loseSfxPlayed  = false;
+
+void playSoundOnce(Sound snd, bool *change){
+    bool *tmp = change;
+    if (!*tmp){
+    PlaySound(snd);
+    *tmp = true;
+    }
+}
+
+//TODO: function to set all bools to default values
+
+
 int main(void)
 {
     // Initialization
@@ -158,8 +174,13 @@ int main(void)
     //init comes before texture, loading calls (OpenGL context required)
     //TODO: change to relative paths and detect change in OS
     Texture2D charTexture = LoadTexture("C:\\raylib\\draw_game\\assets\\cowboyspenzilla\\characters.png"); //128/4 x 256/8
-    
     Texture2D tileTexture = LoadTexture("C:\\raylib\\draw_game\\assets\\cowboyspenzilla\\background.png");
+
+    InitAudioDevice();      // Initialize audio device
+    Sound fxInitial = LoadSound("C:\\raylib\\draw_game\\assets\\sound\\initial.ogg");
+    Sound fxDraw    = LoadSound("C:\\raylib\\draw_game\\assets\\sound\\draw.ogg");
+    Sound fxShoot   = LoadSound("C:\\raylib\\draw_game\\assets\\sound\\shoot.ogg");
+    Sound fxLose    = LoadSound("C:\\raylib\\draw_game\\assets\\sound\\lose.ogg");
     
     Font alagard = LoadFont("C:\\raylib\\draw_game\\assets\\spritefont\\custom_alagard.png");
     
@@ -167,17 +188,17 @@ int main(void)
     Vector2 posDraw =  {325, 225};
     
     const char tDRAW[6] = "DRAW!";
-    
     char tLevel1[10] = "Level 1";
     
     bool bDRAW = false;
+    bool bSHOOT = false;
     
-    //format: all floats -- source x, y, w, h // dest x, y, w, h
     //init player and set to default tile  (20x20 px rects) (160x100)
     Tile player = {0};
     //init first enemy and set to default tile  (20x20 px rects) (160x100) negative source width to flip X
     Tile enemy1 = {0};
     
+    //default values
     modifyTile(&player, 0.0f, 0.0f, 200.0f, 300.0f, PRSW, PRSH,  PRDW, PRDH);
     
     modifyTile(&enemy1, 120.0f, 60.0f, 600.0f, 300.0f, -PRSW, PRSH,  PRDW, PRDH);
@@ -198,9 +219,18 @@ int main(void)
         //stores seconds from time initWindow is called/ float value
         seconds = GetTime();
         
+        //initialsound
+        playSoundOnce(fxInitial, &initSfxPlayed);
+
         //default anim
         if(!bDRAW)animation(0, &player, 0, &enemy1);
-        if(bDRAW)animation(1, &player, 1, &enemy1);
+
+        //draw
+        if(bDRAW)
+        {
+            animation(1, &player, 1, &enemy1);
+            playSoundOnce(fxDraw, &drawSfxPlayed);
+        }
         
         if(checkAgainst(seconds, check)) bDRAW = true;
         
@@ -216,7 +246,7 @@ int main(void)
         
 
         
-        //Flash Level
+        //Display Level, Prior to shoot.
         if(!bDRAW){
 
         DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
@@ -237,13 +267,19 @@ int main(void)
             }
         }
         
-        //Draw! Text
+        //Draw! 
         if(bDRAW){
             DrawTextEx(alagard, tDRAW, posDraw, alagard.baseSize * 2, 1, WHITE);
             DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
             DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
         }
         
+        //Shoot
+
+        //Win
+
+        //Lose
+
         
         DrawText(TextFormat("%02.02f Seconds", seconds), 50, 50, 40, LIME);
         //%1.02f for two digit places i.e. 1.02 seconds
@@ -257,6 +293,11 @@ int main(void)
     UnloadTexture(charTexture);
     UnloadTexture(tileTexture);
     UnloadFont(alagard);
+    UnloadSound(fxInitial);
+    UnloadSound(fxDraw);
+    UnloadSound(fxShoot);
+    UnloadSound(fxLose);
+    CloseAudioDevice(); 
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
     
