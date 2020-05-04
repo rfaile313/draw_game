@@ -107,7 +107,12 @@ void animation(int state,  Tile *animation,
             eAnimation->source.y = 40;
             
         }
-        if(eState == 2) //something else using eCounter
+        if (eState == 2){ //shoot gun
+            eAnimation->source.y = 40;
+            eAnimation->source.x += 20;
+            if (eAnimation->source.x >= 100) eAnimation->source.x = 100; 
+        }
+        if (eState == 3) //something else using eCounter
         {
             if (eCounter == 0)
             {
@@ -166,6 +171,9 @@ int main(void)
     
     const float PRDW = 100.0f; //100px RECTANGLE DEST WIDTH
     const float PRDH = 100.0f; //100px RECTANGLE DEST HEIGHT
+
+    float enemyShootTime = 0.0f;
+    float enemyDifficulty = 1.5f;
     
     //removed raylib output unless there's a warning -- h/t skytrias!
     SetTraceLogLevel(LOG_WARNING);
@@ -191,7 +199,8 @@ int main(void)
     char tLevel1[10] = "Level 1";
     
     bool bDRAW = false;
-    bool bSHOOT = false;
+    bool bENEMYSHOOTANDWIN = false;
+    bool bPLAYERSHOOTANDWIN = false;
     
     //init player and set to default tile  (20x20 px rects) (160x100)
     Tile player = {0};
@@ -228,8 +237,25 @@ int main(void)
         //draw
         if(bDRAW)
         {
+            enemyShootTime += GetFrameTime();
+
             animation(1, &player, 1, &enemy1);
             playSoundOnce(fxDraw, &drawSfxPlayed);
+
+            if (enemyShootTime >= 1.5f){
+                enemyShootTime = 0;
+                playSoundOnce(fxShoot, &shootSfxPlayed);
+                bDRAW = false;
+                animation(1, &player, 2, &enemy1); //TODO: animate player die
+                bENEMYSHOOTANDWIN = true;
+            }
+
+            /*
+            if (IsKeyPressed(KEY_SPACE))
+            {
+            
+            }
+            */
         }
         
         if(checkAgainst(seconds, check)) bDRAW = true;
@@ -279,6 +305,10 @@ int main(void)
         //Win
 
         //Lose
+        if(bENEMYSHOOTANDWIN){
+            DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
+            DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
+        }
 
         
         DrawText(TextFormat("%02.02f Seconds", seconds), 50, 50, 40, LIME);
