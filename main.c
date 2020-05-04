@@ -10,6 +10,7 @@ u32 frameCounter = 0;
 u16 i;
 u8  dCounter = 0;
 u8  eCounter = 0;
+f64 seconds = 0;
 
 typedef struct Tile{
     Rectangle source;
@@ -19,6 +20,7 @@ typedef struct Tile{
 Vector2 origin = {0,0};
 Vector2 playerPos = {100,100};
 float rotation = 0.0f;
+
 
 
 void modifyTile(Tile *individual_tile, float sX, float sY, float dX, float dY,
@@ -37,11 +39,11 @@ void modifyTile(Tile *individual_tile, float sX, float sY, float dX, float dY,
 }
 
 
-void animation(int state, Tile *animation, int eState, Tile *eAnimation){
+void animation(int state,  Tile *animation, 
+               int eState, Tile *eAnimation){
     
     if(FPS/frameCounter == BASESPEED) //60 FPS, every x count (4==15)
-    {
-        
+    {  
         frameCounter = 0;
         if(state == 0) //idle
         {
@@ -92,6 +94,7 @@ void animation(int state, Tile *animation, int eState, Tile *eAnimation){
             
         }
         
+        //enemy animations
         if (eState == 0) //spin gun enemy idle
         {
             eAnimation->source.y = 60;
@@ -118,6 +121,25 @@ void animation(int state, Tile *animation, int eState, Tile *eAnimation){
     }
 }
 
+/*
+void modifyBool(float currentSeconds, int checkAgainst, bool bool){
+    if (currentSeconds >= checkAgainst) bool = true;
+}
+*/
+
+
+//note change = !change for swap without int: h/t anata :) 
+void changeBool(bool *change, int set){
+	bool *tmp = change;
+	if (!set) *tmp = false;
+	if ( set) *tmp = true;
+}
+
+bool checkAgainst(double scnds, int checkAgainst){
+    if ((int)scnds >= checkAgainst) return true;
+    else return false;
+}
+
 int main(void)
 {
     // Initialization
@@ -135,33 +157,47 @@ int main(void)
     SetTraceLogLevel(LOG_WARNING);
     //Init window
     InitWindow(screenWidth, screenHeight, "Draw!");
-    //init comes before texture calls
+    //init comes before texture, loading calls (OpenGL context required)
     Texture2D charTexture = LoadTexture("C:\\raylib\\draw_game\\assets\\cowboyspenzilla\\characters.png"); //128/4 x 256/8
     Texture2D tileTexture = LoadTexture("C:\\raylib\\draw_game\\assets\\cowboyspenzilla\\background.png");
+    Font alagard = LoadFont("C:\\raylib\\draw_game\\assets\\spritefont\\custom_alagard.png");
+    Vector2 fLevelInfo = {300, 225};
+    const char fDRAW[6] = "DRAW!";
+    char level1[10] = "Level 1";
     
+    bool bDRAW = false;
+
     //format: all floats -- source x, y, w, h // dest x, y, w, h
     //init player and set to default tile  (20x20 px rects) (160x100)
-    Tile player = {.source.x=0.0f, .source.y=0.0f, .source.width=PRSW, .source.height=PRSH,
-        .dest.x=200.0f, .dest.y=300.0f, .dest.width=PRDW, .dest.height=PRDH};
-    
+    Tile player = {0};
     //init first enemy and set to default tile  (20x20 px rects) (160x100) negative source width to flip X
-    Tile enemy1 = {.source.x=120.0f, .source.y=60.0f, .source.width=-PRSW, .source.height=PRSH,
-        .dest.x=600.0f, .dest.y=300.0f, .dest.width=PRDH, .dest.height=PRDH};
+    Tile enemy1 = {0};
     
-    
+    modifyTile(&player, 0.0f, 0.0f, 200.0f, 300.0f, PRSW, PRSH,  PRDW, PRDH);
+
+    modifyTile(&enemy1, 120.0f, 60.0f, 600.0f, 300.0f, -PRSW, PRSH,  PRDW, PRDH);
+
     SetTargetFPS(FPS);               // Set our game to run at 60 frames-per-second
     //---> end initialization-----------------------------------------------
     
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        
+        //Update---------------->
         //player anim/control
         frameCounter++;
-        
+
+        //stores seconds from time initWindow is called/ float value
+        seconds = GetTime(); 
+    
         //default anim
         animation(0, &player, 0, &enemy1);
         
+        if(checkAgainst(seconds, 6)) bDRAW = true;
+
+        //------------->Update
+        //--------------------------
+        //Draw---------->
         BeginDrawing();
         
         ClearBackground(BLACK);
@@ -173,15 +209,25 @@ int main(void)
         
         DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
         
+        if(!bDRAW){
+            if( (int)seconds % 2 == 0){
+                //TODO: size and spacing are floats, should fix. 
+                DrawTextEx(alagard, level1, fLevelInfo, alagard.baseSize * 2, 1, WHITE);
+            }
+        }    
+        
+        DrawText(TextFormat("%02.02f Seconds", seconds), 50, 50, 40, LIME);
+        //%1.02f for two digit places i.e. 1.02 seconds
         //-end draw
         EndDrawing();
-        //----------------------------------------------------------------------------------
+        //-------------->Draw
     }
     
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(charTexture);
     UnloadTexture(tileTexture);
+    UnloadFont(alagard);
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
     

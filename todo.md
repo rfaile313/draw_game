@@ -50,6 +50,10 @@ what indicates loss?
 
 🟡 Basic Player Animator
 
+🟡 Text display
+
+
+
 🔴 Input system (space for shoot, select)
 
 🔴 Main menu, options, hi score
@@ -79,6 +83,8 @@ what indicates loss?
 🟢 set up placeholder player animation with framecounter (done: playerAnimation())
 
 🟢 set up debugger (done: msvc)
+
+🟢 Initial Timer set up
 
 ---
 
