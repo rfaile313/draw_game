@@ -7,10 +7,11 @@
 #define BASESPEED 4 // //60 FPS, every x count (4==15)
 
 u32 frameCounter = 0;
-u16 i;
+u32 frameCounter1 = 0;
 u8  dCounter = 0;
 u8  eCounter = 0;
 f64 seconds = 0;
+u16 i;
 
 typedef struct Tile{
     Rectangle source;
@@ -19,8 +20,7 @@ typedef struct Tile{
 
 Vector2 origin = {0,0};
 Vector2 playerPos = {100,100};
-float rotation = 0.0f;
-
+f32 rotation = 0.0f;
 
 
 void modifyTile(Tile *individual_tile, float sX, float sY, float dX, float dY,
@@ -39,11 +39,11 @@ void modifyTile(Tile *individual_tile, float sX, float sY, float dX, float dY,
 }
 
 
-void animation(int state,  Tile *animation, 
+void animation(int state,  Tile *animation,
                int eState, Tile *eAnimation){
     
     if(FPS/frameCounter == BASESPEED) //60 FPS, every x count (4==15)
-    {  
+    {
         frameCounter = 0;
         if(state == 0) //idle
         {
@@ -54,8 +54,7 @@ void animation(int state,  Tile *animation,
         if(state==1) //draw gun
         {
             animation->source.y = 40;
-            animation->source.x += 20;
-            if(animation->source.x >= 60) animation->source.x = 0;
+            animation->source.x = 0;
         }
         if(state==2)//shoot gun
         {
@@ -102,12 +101,18 @@ void animation(int state,  Tile *animation,
             if(eAnimation->source.x < 80) eAnimation->source.x = 120;
         }
         
-        if (eState == 1) //something else using eCounter
+        if (eState == 1) //point gun
+        {
+            eAnimation->source.x = 80;
+            eAnimation->source.y = 40;
+            
+        }
+        if(eState == 2) //something else using eCounter
         {
             if (eCounter == 0)
             {
                 eAnimation->source.x = 80;
-                eAnimation->source.y = 0;
+                eAnimation->source.y = 40;
                 eCounter++;
             }
             else if (eCounter == 1)
@@ -116,19 +121,12 @@ void animation(int state,  Tile *animation,
                 eAnimation->source.y = 20;
                 eCounter = 0;
             }
-            
         }
     }
 }
 
-/*
-void modifyBool(float currentSeconds, int checkAgainst, bool bool){
-    if (currentSeconds >= checkAgainst) bool = true;
-}
-*/
 
-
-//note change = !change for swap without int: h/t anata :) 
+//note change = !change for swap without int: h/t anata :)
 void changeBool(bool *change, int set){
 	bool *tmp = change;
 	if (!set) *tmp = false;
@@ -136,7 +134,7 @@ void changeBool(bool *change, int set){
 }
 
 bool checkAgainst(double scnds, int checkAgainst){
-    if ((int)scnds >= checkAgainst) return true;
+    if (scnds >= (double)checkAgainst) return true;
     else return false;
 }
 
@@ -158,15 +156,22 @@ int main(void)
     //Init window
     InitWindow(screenWidth, screenHeight, "Draw!");
     //init comes before texture, loading calls (OpenGL context required)
+    //TODO: change to relative paths and detect change in OS
     Texture2D charTexture = LoadTexture("C:\\raylib\\draw_game\\assets\\cowboyspenzilla\\characters.png"); //128/4 x 256/8
+    
     Texture2D tileTexture = LoadTexture("C:\\raylib\\draw_game\\assets\\cowboyspenzilla\\background.png");
+    
     Font alagard = LoadFont("C:\\raylib\\draw_game\\assets\\spritefont\\custom_alagard.png");
-    Vector2 fLevelInfo = {300, 225};
-    const char fDRAW[6] = "DRAW!";
-    char level1[10] = "Level 1";
+    
+    Vector2 posLevel = {300, 225};
+    Vector2 posDraw =  {325, 225};
+    
+    const char tDRAW[6] = "DRAW!";
+    
+    char tLevel1[10] = "Level 1";
     
     bool bDRAW = false;
-
+    
     //format: all floats -- source x, y, w, h // dest x, y, w, h
     //init player and set to default tile  (20x20 px rects) (160x100)
     Tile player = {0};
@@ -174,9 +179,12 @@ int main(void)
     Tile enemy1 = {0};
     
     modifyTile(&player, 0.0f, 0.0f, 200.0f, 300.0f, PRSW, PRSH,  PRDW, PRDH);
-
+    
     modifyTile(&enemy1, 120.0f, 60.0f, 600.0f, 300.0f, -PRSW, PRSH,  PRDW, PRDH);
-
+    
+    //NOTE: maybe decrease time from level to draw as difficulty rises?
+    int check = GetRandomValue(3,6);
+    
     SetTargetFPS(FPS);               // Set our game to run at 60 frames-per-second
     //---> end initialization-----------------------------------------------
     
@@ -186,15 +194,16 @@ int main(void)
         //Update---------------->
         //player anim/control
         frameCounter++;
-
+        frameCounter1++;
         //stores seconds from time initWindow is called/ float value
-        seconds = GetTime(); 
-    
-        //default anim
-        animation(0, &player, 0, &enemy1);
+        seconds = GetTime();
         
-        if(checkAgainst(seconds, 6)) bDRAW = true;
-
+        //default anim
+        if(!bDRAW)animation(0, &player, 0, &enemy1);
+        if(bDRAW)animation(1, &player, 1, &enemy1);
+        
+        if(checkAgainst(seconds, check)) bDRAW = true;
+        
         //------------->Update
         //--------------------------
         //Draw---------->
@@ -205,16 +214,36 @@ int main(void)
         //Background: Texture / 0,0 / 0,0 / 4x scale / WHITE
         DrawTextureEx(tileTexture, origin, rotation, 4.0f, WHITE);
         
+
+        
+        //Flash Level
+        if(!bDRAW){
+
         DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
         
         DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
-        
-        if(!bDRAW){
-            if( (int)seconds % 2 == 0){
-                //TODO: size and spacing are floats, should fix. 
-                DrawTextEx(alagard, level1, fLevelInfo, alagard.baseSize * 2, 1, WHITE);
+
+            //TODO: size and spacing are floats, should fix.
+            // 60/x == 2 every 30 frames     60/x == 4 every 15 frames
+            if(frameCounter1 >= (60/4) )
+            {
+                DrawTextEx(alagard, tLevel1, posLevel, alagard.baseSize * 2, 1, WHITE);
+                
+                if(frameCounter1  >= (60/2))
+                {
+                    frameCounter1 = 0;
+                }
+                
             }
-        }    
+        }
+        
+        //Draw! Text
+        if(bDRAW){
+            DrawTextEx(alagard, tDRAW, posDraw, alagard.baseSize * 2, 1, WHITE);
+            DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
+            DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
+        }
+        
         
         DrawText(TextFormat("%02.02f Seconds", seconds), 50, 50, 40, LIME);
         //%1.02f for two digit places i.e. 1.02 seconds
