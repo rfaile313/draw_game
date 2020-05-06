@@ -7,6 +7,8 @@
 
 ---
 
+Refactor and organize
+
 basic logic:
 
 1. timer
