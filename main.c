@@ -9,19 +9,17 @@
 #include "src/bools.c"
 #include "src/tile.c"
 
+#include "src/stateTitle.c"
+#include "src/stateLevel.c"
+#include "src/stateDraw.c"
+
 // --- Program entry point
 int main(void)
 {
     // Initialization
     //----------------------------------------------------------------------------
-    const u16 screenWidth = 960;
-    const u16 screenHeight = 572;
-    
-    const f32 PRSW = 20.0f; //20px RECTANGLE SOURCE WIDTH
-    const f32 PRSH = 20.0f; //20px RECTANGLE SOURCE HEIGHT
-    
-    const f32 PRDW = 100.0f; //100px RECTANGLE DEST WIDTH
-    const f32 PRDH = 100.0f; //100px RECTANGLE DEST HEIGHT
+    const u16 screenWidth = GAME_SCREEN_WIDTH;
+    const u16 screenHeight = GAME_SCREEN_HEIGHT;
 
     f32 enemyShootTime = 0.0f;
     f32 enemyDifficulty = 1.5f;
@@ -56,15 +54,10 @@ int main(void)
     modifyTile(&player, 0.0f, 0.0f, 200.0f, 300.0f, PRSW, PRSH,  PRDW, PRDH);
     
     modifyTile(&enemy1, 120.0f, 60.0f, 600.0f, 300.0f, -PRSW, PRSH,  PRDW, PRDH);
-    
-    //TODO: refactor these with enum
-    bool bDRAW = false;
-    bool bENEMYSHOOTANDWIN = false;
-    bool bPLAYERSHOOTANDWIN = false;
-    
-    //NOTE: maybe decrease time from level to draw as difficulty rises?
-    int check = GetRandomValue(3,6);
-    
+
+    //set the starting state
+    currentState = TITLE;
+
     //Set game to run at 60 frames-per-second
     SetTargetFPS(FPS);
     //---> end initialization-----------------------------------------------
@@ -73,97 +66,85 @@ int main(void)
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         //Update---------------->
-        //player anim/control
-        frameCounter++;
-        frameCounter1++;
-        //stores seconds from time initWindow is called/ f32 value
-        seconds = GetTime();
-        
-        //initialsound
-        playSoundOnce(fxInitial, &initSfxPlayed);
-
-        //default anim
-        if(!bDRAW)animation(0, &player, 0, &enemy1);
-
-        //draw
-        if(bDRAW)
+        switch(currentState)
         {
-            enemyShootTime += GetFrameTime();
-
-            animation(1, &player, 1, &enemy1);
-            playSoundOnce(fxDraw, &drawSfxPlayed);
-
-            if (enemyShootTime >= 1.5f){
-                enemyShootTime = 0;
-                playSoundOnce(fxShoot, &shootSfxPlayed);
-                bDRAW = false;
-                animation(1, &player, 2, &enemy1); //TODO: animate player die
-                bENEMYSHOOTANDWIN = true;
-            }
-
-            /*
-            if (IsKeyPressed(KEY_SPACE))
+            case TITLE:
             {
-            
-            }
-            */
+                updateTitleScreen();
+                if(titleScreenFinished() == 1) //don't need the "1" with one option but will have more
+                {
+                    currentState = LEVEL;
+                    //Note: Change Game state
+                    //Note: Unload title assets if any
+                }
+            }break;
+            case LEVEL:
+            {
+
+            }break;
+            case DRAW:
+            {
+
+            }break;
+            case SHOOT:
+            {
+
+            }break;
+            case WIN:
+            {
+
+            }break;
+            case LOSE:
+            {
+
+            }break;
+            case END:
+            {
+
+            }break;
+            default: break;
         }
-        
-        if(checkAgainst(seconds, check)) bDRAW = true;
-        
         //------------->Update
-        //--------------------------
+
         //Draw---------->
         BeginDrawing();
         
+        //required
         ClearBackground(BLACK);
         
-        //Background: Texture / 0,0 / 0,0 / 4x scale / WHITE
-        DrawTextureEx(tileTexture, origin, rotation, 4.0f, WHITE);
-        
-
-        
-        //Display Level, Prior to shoot.
-        if(!bDRAW){
-
-        DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
-        
-        DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
-
-            //TODO: size and spacing are f32s, should fix.
-            // 60/x == 2 every 30 frames     60/x == 4 every 15 frames
-            if(frameCounter1 >= (60/4) )
+        switch(currentState)
+        {
+            case TITLE:
             {
-                DrawTextEx(alagard, LEVEL_1, posLevel, alagard.baseSize * 2, 1, WHITE);
-                
-                if(frameCounter1  >= (60/2))
-                {
-                    frameCounter1 = 0;
-                }
-                
-            }
+                drawTitleScreen();
+            }break;
+            case LEVEL:
+            {
+
+            }break;
+            case DRAW:
+            {
+
+            }break;
+            case SHOOT:
+            {
+
+            }break;
+            case WIN:
+            {
+
+            }break;
+            case LOSE:
+            {
+
+            }break;
+            case END:
+            {
+
+            }break;
+            default: break;
         }
         
-        //Draw! 
-        if(bDRAW){
-            DrawTextEx(alagard, GAME_NAME, posDraw, alagard.baseSize * 2, 1, WHITE);
-            DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
-            DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
-        }
-        
-        //Shoot
-
-        //Win
-
-        //Lose
-        if(bENEMYSHOOTANDWIN){
-            DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
-            DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
-        }
-
-        
-        DrawText(TextFormat("%02.02f Seconds", seconds), 50, 50, 40, LIME);
-        //%1.02f for two digit places i.e. 1.02 seconds
         //-end draw
         EndDrawing();
         //-------------->Draw

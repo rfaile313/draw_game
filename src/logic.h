@@ -28,8 +28,18 @@ typedef struct Tile{
 // Global variables------>
 const_str GAME_NAME = "DRAW!";
 const_str LEVEL_1 = "Level 1";
+
+const u16 GAME_SCREEN_WIDTH  = 960;
+const u16 GAME_SCREEN_HEIGHT = 572;
+
 const u8 FPS = 60;
 const u8 BASESPEED = 4; //60 FPS, every x count (4==15)
+
+const f32 PRSW = 20.0f; //20px RECTANGLE SOURCE WIDTH
+const f32 PRSH = 20.0f; //20px RECTANGLE SOURCE HEIGHT
+
+const f32 PRDW = 100.0f; //100px RECTANGLE DEST WIDTH
+const f32 PRDH = 100.0f; //100px RECTANGLE DEST HEIGHT
 
 //NEED TO REFACTOR THESE -- SHITTY
 u32 frameCounter = 0;
