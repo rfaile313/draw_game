@@ -5,7 +5,7 @@ set GAME_NAME=draw_game.exe
 REM Set your sources here (relative paths!)
 REM Example with two source folders:
 REM set SOURCES=src\*.c src\submodule\*.c
-set SOURCES=..\..\*.c
+set SOURCES=..\..\*.c 
 
 REM Set your raylib\src location here (relative path!)
 set RAYLIB_SRC=..\..\..\raylib\src
