@@ -1,34 +1,51 @@
 ::===============================================================
 :: Author: Rudy Faile @rfaile313
-:: Description: Custom Run Script
+:: Description: Custom Run, Build, Clean, Debug Script
+:: License: MIT
 :: args in bat are %1, %2, etc - so run build means %1 is build
 ::===============================================================
 @echo off
 
+:: Determines output and launcher
+SET EXECUTABLE=draw_game.exe
+:: Source to build from (can use abs or rel path)
+SET SOURCE=..\..\..\main.c
+
+SET RAYLIB=C:\RAYLIB\RAYLIB\SRC
+
+SET COMPILER=gcc
+SET CFLAGS=-O1 -Wall -std=c99 -Wno-missing-braces
+SET INCLUDEPATHS=-I %RAYLIB%
+SET LIBPATHS=-L %RAYLIB%
+SET LIBFLAGS=-lraylib -lopengl32 -lgdi32 -lwinmm
+
+IF [%1] == [] GOTO RUN
+IF [%1] == [clean] GOTO CLEAN
 IF [%1] == [build] GOTO BUILD
 IF [%1] == [debug] GOTO DEBUG
-IF [%1] == [run]   GOTO RUN
-IF [%1] == [clean] GOTO CLEAN
-
-IF [%1] == [] echo. && echo Value Missing! Try run build or run debug or run clean or run run
-GOTO:EOF 
-
-:BUILD
-call "build.bat" -d && echo. && echo **build.bat ran with -d**
-GOTO:EOF 
-
-:DEBUG
-call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64 && devenv builds-debug\windows-msvc\draw_game.exe
-GOTO:EOF 
-
-:CLEAN
-RMDIR /Q/S TEMP && echo **Removed TEMP folder + files** && RMDIR /Q/S BUILDS-DEBUG && echo **Removed BUILDS-DEBUG folder + files** && RMDIR /Q/S BUILDS && echo **Removed BUILDS folder + files** 
+ECHO Invalid Command. Try run or run clean or run build or run debug
 GOTO:EOF 
 
 :RUN
-builds-debug\windows-msvc\draw_game.exe
+IF NOT EXIST Build MKDIR Build
+PUSHD Build
+%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %WINFLAGS% %INCLUDEPATHS% %LIBPATHS% %LIBFLAGS% && echo **Build Successful. Running.** && echo. && %EXECUTABLE%
+POPD
+GOTO:EOF
+
+:BUILD
+IF NOT EXIST Build MKDIR Build
+PUSHD Build
+%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %WINFLAGS% %INCLUDEPATHS% %LIBPATHS% %LIBFLAGS% && echo **Build Successful** && echo.
+POPD
 GOTO:EOF 
 
+:DEBUG
+echo HAHA who needs a debugger (jk need to set up tinycc)
+GOTO:EOF 
 
-
+:CLEAN
+IF NOT EXIST Build echo. && echo **No build directory at the moment**
+IF EXIST Build RMDIR /Q/S Build && echo **Cleaned Build folder + files** 
+GOTO:EOF 
 

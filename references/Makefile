@@ -37,7 +37,7 @@ CFLAGS += -O1 -Wall -std=c99 -Wno-missing-braces
 # -Wl, --subsystem, windows hides the console window
 CFLAGS += -Wl,--subsystem,windows
 #source files - you will need to add more as your project expands
-OBJS = main.c
+OBJS = ../../main.c
 #You can comment the line above and use this:
 #OBJS = $( wildcard *.c **/*.c )
 
