@@ -41,7 +41,10 @@ POPD
 GOTO:EOF 
 
 :DEBUG
-echo HAHA who needs a debugger (jk need to set up tinycc)
+IF NOT EXIST Build echo. && echo **No build directory at the moment**
+IF EXIST Build PUSHD Build
+echo set up a debugger :D
+POPD
 GOTO:EOF 
 
 :CLEAN
