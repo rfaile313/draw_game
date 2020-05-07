@@ -12,7 +12,7 @@ USELESSMACFILE=".DS_Store"
 # build constants
 COMPILER="clang"
 CFLAGS="-Wall -g"
-SOURCE="main.c"
+SOURCE="../../main.c"
 LIBS="-lraylib"
 OUTPUT="-o game"
 COMPLETE="**Build Succeded**"

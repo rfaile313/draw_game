@@ -2,7 +2,7 @@
 #include "r_types.h"
 #include <raylib.h>
 
-//TODO add apple and unix paths
+//TODO add unix paths
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 
@@ -18,7 +18,19 @@
     const_str fontAlagard  ="C:\\raylib\\draw_game\\assets\\spritefont\\custom_alagard.png";
 
 #elif __APPLE__
-    #include <TargetConditionals.h>
+	//not sure what this is V
+	// #include <TargetConditionals.h>
+	
+    const_str charTexturePath = "/Users/RFaile/gamedev/draw_game/assets/cowboyspenzilla/characters.png";
+    const_str tileTexturePath = "/Users/RFaile/gamedev/draw_game/assets/cowboyspenzilla/background.png";
+
+    const_str soundInitial = "/Users/RFaile/gamedev/draw_game/assets/sounds/initial.ogg";
+    const_str soundDraw    = "/Users/RFaile/gamedev/draw_game/assets/sounds/raw.ogg";
+    const_str soundShoot   = "/Users/RFaile/gamedev/draw_game/assets/sounds/shoot.ogg";
+    const_str soundLose    = "/Users/RFaile/gamedev/draw_game/assets/sounds/lose.ogg";
+
+    const_str fontAlagard  ="/Users/RFaile/gamedev/draw_game/assets/spritefont/custom_alagard.png";
+
     #if TARGET_IPHONE_SIMULATOR
          // iOS Simulator
     #elif TARGET_OS_IPHONE
@@ -26,8 +38,8 @@
     #elif TARGET_OS_MAC
         // Other kinds of Mac OS
     #else
-    #   error "Unknown Apple platform"
-    #endif
+    
+	#endif
 #elif __linux__
     // linux
 #elif __unix__ // all unices not caught above
