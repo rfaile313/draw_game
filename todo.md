@@ -47,8 +47,11 @@ what indicates loss?
 --game over
 
 -----> Slow motion is cool.
-
+what if you had a single counter int that was only being incremented by one file, and all the other files read from that counter, but didn't increment it?
+h/t Alan Stevens  ^^^^
 ---
+
+DEFINITELY GO BACK TO GCC -- IT MAKES YOU HAPPY
 
 🟡 Basic Player Animator
 

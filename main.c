@@ -11,7 +11,7 @@
 
 #include "src/stateTitle.c"
 #include "src/stateLevel.c"
-#include "src/stateDraw.c"
+#include "src/stateCore.c"
 
 // --- Program entry point
 int main(void)
@@ -33,22 +33,18 @@ int main(void)
     InitAudioDevice();
     
     //load resources
-    Sound fxInitial = LoadSound(soundInitial);
-    Sound fxDraw    = LoadSound(soundDraw);
-    Sound fxShoot   = LoadSound(soundShoot);
-    Sound fxLose    = LoadSound(soundLose);      
+    fxInitial = LoadSound(soundInitial);
+    fxDraw    = LoadSound(soundDraw);
+    fxShoot   = LoadSound(soundShoot);
+    fxLose    = LoadSound(soundLose);      
     
-    Texture2D charTexture = LoadTexture(charTexturePath); //128/4 x 256/8
-    Texture2D tileTexture = LoadTexture(tileTexturePath);
+    charTexture = LoadTexture(charTexturePath); //128/4 x 256/8
+    tileTexture = LoadTexture(tileTexturePath);
 
-    Font alagard = LoadFont(fontAlagard);
+    alagard = LoadFont(fontAlagard);
 
     //-->end resource load
 
-    //init player and set to default tile  (20x20 px rects) (160x100)
-    Tile player = {0};
-    //init first enemy and set to default tile  (20x20 px rects) (160x100) negative source width to flip X
-    Tile enemy1 = {0};
 
     //default values
     modifyTile(&player, 0.0f, 0.0f, 200.0f, 300.0f, PRSW, PRSH,  PRDW, PRDH);
@@ -73,6 +69,7 @@ int main(void)
                 updateTitleScreen();
                 if(titleScreenFinished() == 1) //don't need the "1" with one option but will have more
                 {
+                    initLevel();
                     currentState = LEVEL;
                     //Note: Change Game state
                     //Note: Unload title assets if any
@@ -80,11 +77,17 @@ int main(void)
             }break;
             case LEVEL:
             {
+                updateLevelScreen();
+
+                if (levelScreenFinished()){
+                    initCore();
+                    currentState = CORE;
+                }
 
             }break;
-            case DRAW:
+            case CORE:
             {
-
+                updateCore();
             }break;
             case SHOOT:
             {
@@ -120,11 +123,11 @@ int main(void)
             }break;
             case LEVEL:
             {
-
+                drawLevelScreen();
             }break;
-            case DRAW:
+            case CORE:
             {
-
+                drawCoreScreen();
             }break;
             case SHOOT:
             {

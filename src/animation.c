@@ -1,14 +1,22 @@
 #include "logic.h"
 #include "r_types.h"
 
-//todo: probably should refactor this shitty ass function
+//todo: probably should refactor this shitty ass function!!
+
+u32 animationCounter = 0;
+
+//i think??? <--- 
+u8  dCounter = 0;
+u8  eCounter = 0;
 
 void animation(int state,  Tile *animation,
                int eState, Tile *eAnimation){
     
-    if(FPS/frameCounter == BASESPEED) //60 FPS, every x count (4==15)
+    animationCounter++;
+
+    if(FPS/animationCounter == 4) //60 FPS, every x count (4==15)
     {
-        frameCounter = 0;
+        animationCounter = 0;
         if(state == 0) //idle
         {
             animation->source.y = 0;
