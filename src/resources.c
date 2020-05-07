@@ -24,10 +24,10 @@
     const_str charTexturePath = "/Users/RFaile/gamedev/draw_game/assets/cowboyspenzilla/characters.png";
     const_str tileTexturePath = "/Users/RFaile/gamedev/draw_game/assets/cowboyspenzilla/background.png";
 
-    const_str soundInitial = "/Users/RFaile/gamedev/draw_game/assets/sounds/initial.ogg";
-    const_str soundDraw    = "/Users/RFaile/gamedev/draw_game/assets/sounds/raw.ogg";
-    const_str soundShoot   = "/Users/RFaile/gamedev/draw_game/assets/sounds/shoot.ogg";
-    const_str soundLose    = "/Users/RFaile/gamedev/draw_game/assets/sounds/lose.ogg";
+    const_str soundInitial = "/Users/RFaile/gamedev/draw_game/assets/sound/initial.ogg";
+    const_str soundDraw    = "/Users/RFaile/gamedev/draw_game/assets/sound/raw.ogg";
+    const_str soundShoot   = "/Users/RFaile/gamedev/draw_game/assets/sound/shoot.ogg";
+    const_str soundLose    = "/Users/RFaile/gamedev/draw_game/assets/sound/lose.ogg";
 
     const_str fontAlagard  ="/Users/RFaile/gamedev/draw_game/assets/spritefont/custom_alagard.png";
 
