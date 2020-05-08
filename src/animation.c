@@ -4,10 +4,16 @@
 //todo: probably should refactor this shitty ass function!!
 
 u32 animationCounter = 0;
-
 //i think??? <--- 
-u8  dCounter = 0;
-u8  eCounter = 0;
+u16  dCounter = 0;
+u16  eCounter = 0;
+
+enum EnemyState{
+shoot = 0,
+stand,
+};
+
+enum EnemyState enemystate;
 
 void animation(int state,  Tile *animation,
                int eState, Tile *eAnimation){
@@ -30,6 +36,9 @@ void animation(int state,  Tile *animation,
         }
         if(state==2)//shoot gun
         {
+            animation->source.y = 40;
+            animation->source.x += 20;
+            if(animation->source.x >= 60) animation->source.x = 60;
         }
         if(state==3)//spin gun
         {
@@ -37,7 +46,7 @@ void animation(int state,  Tile *animation,
             animation->source.x -= 20;
             if(animation->source.x < 0) animation->source.x = 60;
         }
-        if(state==4)
+        if(state==4)//death
         {
             if(dCounter==0)
             {
@@ -60,7 +69,7 @@ void animation(int state,  Tile *animation,
             {
                 animation->source.y = 80;
                 animation->source.x = 20;
-                
+                dCounter = 2;
             }
             
         }
@@ -79,17 +88,34 @@ void animation(int state,  Tile *animation,
             eAnimation->source.y = 40;
             
         }
-        if (eState == 2){ //shoot gun
+        if (eState == 2){ //draw gun
             eAnimation->source.y = 40;
             eAnimation->source.x += 20;
             if (eAnimation->source.x >= 100) eAnimation->source.x = 100; 
         }
-        if (eState == 3) //something else using eCounter
+        if (eState == 3){ //shoot gun
+            if(enemystate == shoot){
+            eAnimation->source.y = 40;
+            eAnimation->source.x += 20;
+            }
+            if (eAnimation->source.x >= 120){
+                enemystate = stand;
+                eAnimation->source.x = 80;
+                eAnimation->source.y = 0; 
+            }
+        }
+        if (eState == 4) //die
+        { 
+            eAnimation->source.y = 80;
+            eAnimation->source.x += 20;
+            if (eAnimation->source.x >= 100) eAnimation->source.x = 100; 
+        }
+        if (eState == 5) //something else with eCounter... probably death
         {
             if (eCounter == 0)
             {
                 eAnimation->source.x = 80;
-                eAnimation->source.y = 40;
+                eAnimation->source.y = 80;
                 eCounter++;
             }
             else if (eCounter == 1)

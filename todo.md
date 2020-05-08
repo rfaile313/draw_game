@@ -7,6 +7,13 @@
 
 ---
 
+- Art
+
+- bullet travel
+- death/blood
+- sun needs to flow
+- cactus sway
+
 Refactor and organize
 
 basic logic:
