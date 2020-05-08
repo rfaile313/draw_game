@@ -2,7 +2,6 @@
 #include "r_types.h"
 #include "logic.h"
 
-//local variables
 static u16 titlePosX = 310;
 static u16 titlePosY = 150;
 static u16 titleSize  = 100;

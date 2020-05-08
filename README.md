@@ -1,25 +1,40 @@
-# draw_game
+# Draw_Game
 
-MacOS:
-    1. `./run.sh` cleans, builds, and runs if build successful
-    2. `./cleanmac.sh` cleans files for git commits
+## MacOS:
 
-Windows: 
-    1. F1 Clean
-    2. F2 Build
-    3. F3 Run
-    4. F4 Debug
-    
-Linux:
-    1. `cd /compile/linux/`
-    2. `cmake .`
-    3. `make`
+1. `./run.sh` cleans, builds, and runs if build successful
+2. `./cleanmac.sh` cleans files for git commits
 
-## More info on Windows
+## Windows:
 
-### 4coder bindings or run `run.bat [run, build, clean, debug]` in cmd
+(Everything runs through run.bat)
+
+`run.bat` does everything with options:
+1. `run` builds and runs
+2. `run build` only builds
+3. `run clean` cleans files
+4. `run debug` will run a debugger once I set it up
+
+(4coder bindings to run.bat)
+
+1. F1 Clean
+2. F2 Build
+3. F3 Run
+4. F4 Debug
+
+## Linux:
+
+1. `cd /compile/linux/`
+2. `cmake .`
+3. `make`
+
+---
+
+Old Windows info (MSVC)
 
 1. `run build` calls build.bat with -dv by default (debug build, verbose). See build.bat for more options
 2. `run run` calls `builds-debug\windows-msvc\draw_game.exe` by default
 3. `run debug` initializes vcvars all then runs the executable with `devenv`
 4. `run clean` destroys the `builds`, `builds-debug`, and `temp` directories 
+
+---

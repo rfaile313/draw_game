@@ -6,83 +6,47 @@
 🟢 Complete
 
 ---
-
-- Art
-
-- bullet travel
-- death/blood
-- sun needs to flow
-- cactus sway
-
-Refactor and organize
-
-basic logic:
-
-1. timer
-2. random time within a range
-3. sometime within random time DRAW
-4. enemy level difficulty reduces the amount of time
-from DRAW to the time he shoots
-5. player has to react AFTER DRAW but before ENEMY SHOOTS
-6. penalty if they react before DRAW
-7. one mulligan? Two penalties = LOSS
-
-what indicates draw?
-
-1. distinct sharp >1s sound
-2. enemy animation changes
-
-what indicates shoot?
-
-1. winner (only one winner) shoot animation
-2. winner (only one winner) shoot sound
-
-what indicates win?
-1. player shoot animation
-2. player shoot sound
-3. enemy die animation
-4. enemie die sound
-
-++player advances level
-
-what indicates loss?
-1. enemy shoot animation
-2. enemy  shoot sound
-3. player die animation
-4. player die sound
-
---game over
-
------> Slow motion is cool.
-what if you had a single counter int that was only being incremented by one file, and all the other files read from that counter, but didn't increment it?
-h/t Alan Stevens  ^^^^
----
-
 DEFINITELY GO BACK TO GCC -- IT MAKES YOU HAPPY
 
-🟡 Basic Player Animator
+🟡 Finish player and enemy animations. (and new chars)
 
-🟡 Text display
+🟡 Set up timer system (pretty much done but will tie into slomo)
 
+🟡 set up debugger (done but then went back to gcc, maybe look into tinycc?)
 
+🔴 Game Logic: Win 
 
-🔴 Input system (space for shoot, select)
+🔴 Game Logic: New/Different Enemy
 
-🔴 Main menu, options, hi score
+🔴 Game Logic: Display reaction time
 
-🔴 Enemy animations
+🔴 Game Logic: High Score
 
-🔴 Set up timer system
+🔴 Consider refactoring animation.c
 
-🔴 Game logic
+🔴 Game Logic: (maybe) Slowmo?
 
-🔴 Text: 1. timer, 2: info
+🔴 Title: Options Screen
 
-🔴 Cooler shoot/blood/death
+🔴 Title: High Score Screen
 
-🔴 Slowmo?
+🔴 Art: Cooler shoot/blood/death
+
+🟢 Game Logic: Lose 
+
+🟢 Main menu (Title) screen (Done!)
+
+🟢 Input system (space for shoot, select -- done)
+
+🟢 Text: 1. timer, 2: info (done)
  
-🔴 create/add sounds
+🟢 create/add sounds (done)
+
+🟢 Basic Player Animator (done: animation.c)
+
+🟢 Text display (done)
+
+🟢 Refactor and organize (done 5.8.20)
 
 🟢 Explicit memory allocation typdef headers (done: r_types.h)
 
@@ -94,9 +58,7 @@ DEFINITELY GO BACK TO GCC -- IT MAKES YOU HAPPY
 
 🟢 set up placeholder player animation with framecounter (done: playerAnimation())
 
-🟢 set up debugger (done: msvc)
-
-🟢 Initial Timer set up
+🟢 Initial Timer set up (done)
 
 ---
 
