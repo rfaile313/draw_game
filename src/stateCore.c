@@ -9,15 +9,19 @@ lose,
 finish
 };
 
-enum CoreGameplay coregameplay;
+enum FinishState{
+nothing = 0,
+gototitle,
+gotonextscreen
+};
 
-u32 stateCoreCounter = 0;
-f64 stateCoreSeconds = 0;
+enum CoreGameplay coregameplay;
+enum FinishState finishstate;
 
 void initCore(void){
     PlaySound(fxDraw);
     coregameplay = draw;
-    stateCoreCounter = 0;
+    finishstate = nothing;
     stateCoreSeconds = GetTime ();
 }
 
@@ -27,6 +31,7 @@ void updateCore(void){
 // but not before you draw your weapon
    
    if(coregameplay == draw)animation(1, &player, 1, &enemy1);
+
     //enemy win condition
     if (GetTime() - stateCoreSeconds >= ENEMY_DIFFICULTY){
         if(coregameplay == draw){
@@ -36,8 +41,10 @@ void updateCore(void){
   
         animation(4, &player, 3, &enemy1);
 
-        if (coregameplay == lose){
+        if (GetTime() - stateCoreSeconds >= (ENEMY_DIFFICULTY + 2) ) {
+        //wait 2 seconds ^, then
 
+        finishstate = gototitle;
 
         }
 
@@ -71,6 +78,6 @@ void drawCoreScreen(void){
 }
 
 int finishCore(void){
-    return 0;
+    return finishstate;
 }
 

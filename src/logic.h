@@ -50,28 +50,44 @@ const f32 PRDH = 100.0f; //100px RECTANGLE DEST HEIGHT
 const f32 ENEMY_DIFFICULTY = 1.05f;
 const f32 DIFFICULTY_MULTIPLIER = 1.05f;
 
-//TODO: NEED TO REFACTOR THESE -- SHITTY
-
-f64 seconds = 0;
+// Spare counter variable
 u16 i;
 
+//stateLevel.c initLevel() variables
+u16 nextScreen;
+u16 check;
+u32 stateLevelCounter;
+f64 timePassed;
+
+//animation.c variables (also get reset in initLevel)
+//TODO: should probably factor dCounter and eCounter into the single enemyState enum
+u32 animationCounter;
+
+u16  dCounter;
+u16  eCounter;
+
+enum EnemyState{
+shoot = 0,
+stand,
+};
+enum EnemyState enemystate;
+//--->end animation.c variables
+
+//stateCore.c variables
+f64 stateCoreSeconds;
+
+//required DrawTexturePro() variables
 Vector2 origin = {0,0};
-Vector2 playerPos = {100,100};
 f32 rotation = 0.0f;
+//-->DrawTexturePro()
 
-//level x text positioning
+//"Level X" Text Positioning on Screen
 Vector2 posLevel = {300, 225};
-//draw! text positioning
+//"Draw!" Text Positioning on Screen
 Vector2 posDraw =  {325, 225};
-
-bool initSfxPlayed  = false;
-bool drawSfxPlayed  = false;
-bool shootSfxPlayed = false;
-bool loseSfxPlayed  = false;
 //--->end global variables
 
 //resources----->
-//load resources
 Sound fxInitial;
 Sound fxDraw;
 Sound fxShoot;
@@ -81,7 +97,6 @@ Texture2D charTexture;
 Texture2D tileTexture;
 
 Font alagard;
-
 //--->resources
 
 //tile.c function defs
@@ -92,15 +107,16 @@ void modifyTile(Tile *individual_tile, f32 sX, f32 sY, f32 dX, f32 dY,
 void animation(int state,  Tile *animation,
                int eState, Tile *eAnimation);
 
-//bools.c function defs
-void changeBool(bool *change, int set);
-bool checkAgainst(f64 scnds, int checkAgainst);
-void playSoundOnce(Sound snd, bool *change);
-
 //stateTitle.c function defs
 void updateTitleScreen(void);
 void drawTitleScreen(void);
 int titleScreenFinished(void);
+
+//stateLevel.c function defs
+void initLevel(void);
+void updateLevelScreen(void);
+void drawLevelScreen(void);
+int levelScreenFinished(void);
 
 //stateCore.c function defs 
 void initCore(void);

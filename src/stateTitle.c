@@ -5,19 +5,19 @@
 //local variables
 static u16 titlePosX = 310;
 static u16 titlePosY = 150;
-static u8 titleSize  = 100;
+static u16 titleSize  = 100;
 
 static u16 playPosX = 310;
 static u16 playPosY = 300;
-static u8 playSize  = 50;
+static u16 playSize  = 50;
 
 static u16 optionsPosX = 310;
 static u16 optionsPosY = 350;
-static u8  optionsSize = 50;
+static u16 optionsSize = 50;
 
 static u16 arrowPosX = 250;
 static u16 arrowPosY = 300;
-static u8 arrowSize  = 50;
+static u16 arrowSize  = 50;
 
 const_str fontPlay    = "Play";
 const_str fontOptions = "Options";

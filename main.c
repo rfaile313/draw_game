@@ -1,14 +1,12 @@
-#include <raylib.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "src/r_types.h"
+//only external dependency
+#include <raylib.h> 
+//headers
+#include "src/r_types.h" 
 #include "src/logic.h"
-
+//unity
 #include "src/animation.c"
 #include "src/resources.c"
-#include "src/bools.c"
 #include "src/tile.c"
-
 #include "src/stateTitle.c"
 #include "src/stateLevel.c"
 #include "src/stateCore.c"
@@ -16,13 +14,9 @@
 // --- Program entry point
 int main(void)
 {
-    // Initialization
-    //----------------------------------------------------------------------------
+    // Initialization------>
     const u16 screenWidth = GAME_SCREEN_WIDTH;
     const u16 screenHeight = GAME_SCREEN_HEIGHT;
-
-    f32 enemyShootTime = 0.0f;
-    f32 enemyDifficulty = 1.5f;
     
     //removed raylib output unless there's a warning -- h/t skytrias!
     SetTraceLogLevel(LOG_WARNING);
@@ -45,18 +39,12 @@ int main(void)
 
     //-->end resource load
 
-
-    //default values
-    modifyTile(&player, 0.0f, 0.0f, 200.0f, 300.0f, PRSW, PRSH,  PRDW, PRDH);
-    
-    modifyTile(&enemy1, 120.0f, 60.0f, 600.0f, 300.0f, -PRSW, PRSH,  PRDW, PRDH);
-
     //set the starting state
     currentState = TITLE;
 
     //Set game to run at 60 frames-per-second
     SetTargetFPS(FPS);
-    //---> end initialization-----------------------------------------------
+    //---> end initialization------
     
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -69,25 +57,29 @@ int main(void)
                 updateTitleScreen();
                 if(titleScreenFinished() == 1) //don't need the "1" with one option but will have more
                 {
-                    initLevel();
-                    currentState = LEVEL;
-                    //Note: Change Game state
-                    //Note: Unload title assets if any
+                    choice = 0; //resets titleScreenFinished()
+                    initLevel(); //function in stateTitle.c: resets variables from logic.h
+                    currentState = LEVEL; 
                 }
             }break;
             case LEVEL:
             {
                 updateLevelScreen();
 
-                if (levelScreenFinished()){
+                if (levelScreenFinished() == 1){
+                    nextScreen = 0; //resets levelScreenFinished()
                     initCore();
                     currentState = CORE;
                 }
 
             }break;
-            case CORE:
+            case CORE: 
             {
                 updateCore();
+                if(finishCore() == 1){
+                    finishstate = 0;
+                    currentState = TITLE;
+                }
             }break;
             case SHOOT:
             {
@@ -148,23 +140,24 @@ int main(void)
             default: break;
         }
         
-        //-end draw
+        //EndDrawing() (Required)
         EndDrawing();
         //-------------->Draw
     }
     
     // De-Initialization
-    //--------------------------------------------------------------------------------------
+    // Unload Resources 
     UnloadTexture(charTexture);
     UnloadTexture(tileTexture);
-    UnloadFont(alagard);
     UnloadSound(fxInitial);
     UnloadSound(fxDraw);
     UnloadSound(fxShoot);
     UnloadSound(fxLose);
+    UnloadFont(alagard);
+    // Close audio
     CloseAudioDevice(); 
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    // Close window and OpenGL context
+    CloseWindow();        
     
     return 0;
 }

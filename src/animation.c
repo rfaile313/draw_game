@@ -3,18 +3,6 @@
 
 //todo: probably should refactor this shitty ass function!!
 
-u32 animationCounter = 0;
-//i think??? <--- 
-u16  dCounter = 0;
-u16  eCounter = 0;
-
-enum EnemyState{
-shoot = 0,
-stand,
-};
-
-enum EnemyState enemystate;
-
 void animation(int state,  Tile *animation,
                int eState, Tile *eAnimation){
     

@@ -1,26 +1,30 @@
 #include <raylib.h>
+#include <stdio.h> //TODO: don't think i need?
 #include "r_types.h"
 #include "logic.h"
-#include <stdio.h>
-
-u8 nextScreen = 0;
-u16 check;
-u32 stateLevelCounter = 0;
-
-f64 timePassed;
 
 void initLevel(void){
     //initialize and reset variables
+
+    //player initial poses
+    modifyTile(&player, 0.0f, 0.0f, 200.0f, 300.0f, PRSW, PRSH,  PRDW, PRDH);
+    modifyTile(&enemy1, 120.0f, 60.0f, 600.0f, 300.0f, -PRSW, PRSH,  PRDW, PRDH);
+
+    //default values
     stateLevelCounter = 0;
+    nextScreen = 0;
     timePassed = GetTime();
     check = GetRandomValue(3,6);
     PlaySound(fxInitial);
+
+    //animation.c variables set to 0
+    animationCounter = 0;
+    dCounter = 0;
+    eCounter = 0;
+    enemystate = 0;
+
 }
 
-//actual drawing declaration
-void drawLevelText(void){
-    DrawTextEx(alagard, LEVEL_1, posLevel, alagard.baseSize * 2, 1, WHITE);
-}
 
 void updateLevelScreen(void){
     stateLevelCounter++;
@@ -42,11 +46,14 @@ void drawLevelScreen(void){
 
     // You can use this code when you are ready to weild its power (ty anata)
     // DrawTextEx(alagard, LEVEL_1, posLevel, alagard.baseSize * 2, 1, Fade( WHITE, (((int)(GetTime() * 10) >> 2  ) % 100) & 1 ? 255 : 0 ));
+    // Refactor might be better as (GetTime() * 100)  / 32 ) % 2)
+    // or (int)GetTime() % 4 >= 4 / 2 ? 255 : 0 -- h/t vortfu
     
     //flashing text
     if(stateLevelCounter >= (FPS/4) )
     {  
-        drawLevelText();
+        //TODO: will need to change "Level 1" to show multiple levels
+        DrawTextEx(alagard, LEVEL_1, posLevel, alagard.baseSize * 2, 1, WHITE);
 
         if(stateLevelCounter >= (FPS/2))
         {
