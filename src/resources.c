@@ -16,6 +16,7 @@
     const_str soundError   = "C:/raylib/draw_game/assets/sound/error.ogg";
     const_str soundInitial = "C:/raylib/draw_game/assets/sound/initial.ogg";
     const_str soundLose    = "C:/raylib/draw_game/assets/sound/lose.ogg";
+    const_str soundLoseWdl = "C:/raylib/draw_game/assets/sound/losewithdelay.ogg";
     const_str soundOrgan   = "C:/raylib/draw_game/assets/sound/organ.ogg";
     const_str soundShoot   = "C:/raylib/draw_game/assets/sound/shoot.ogg";
 
@@ -35,6 +36,7 @@
     const_str soundError   = "/Users/RFaile/gamedev/draw_game/assets/sound/error.ogg";
     const_str soundInitial = "/Users/RFaile/gamedev/draw_game/assets/sound/initial.ogg";
     const_str soundLose    = "/Users/RFaile/gamedev/draw_game/assets/sound/lose.ogg";
+    const_str soundLoseWdl = "/Users/RFaile/gamedev/draw_game/assets/sound/losewithdelay.ogg";
     const_str soundOrgan   = "/Users/RFaile/gamedev/draw_game/assets/sound/organ.ogg";
     const_str soundShoot   = "/Users/RFaile/gamedev/draw_game/assets/sound/shoot.ogg";
 

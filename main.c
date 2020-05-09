@@ -32,16 +32,15 @@ int main(void)
     fxError   = LoadSound(soundError);
     fxInitial = LoadSound(soundInitial);
     fxLose    = LoadSound(soundLose);
+    fxLoseWdl = LoadSound(soundLoseWdl);
     fxOrgan   = LoadSound(soundOrgan); 
     fxShoot   = LoadSound(soundShoot);
          
-    
     charTexture = LoadTexture(charTexturePath); //128/4 x 256/8
     tileTexture = LoadTexture(tileTexturePath);
     enemy1IdleTexture = LoadTexture(enemy1IdleTexturePath);
 
     alagard = LoadFont(fontAlagard);
-
     //-->end resource load
 
     //set the starting state
@@ -154,10 +153,15 @@ int main(void)
     // Unload Resources 
     UnloadTexture(charTexture);
     UnloadTexture(tileTexture);
+    UnloadTexture(enemy1IdleTexture);
     UnloadSound(fxInitial);
     UnloadSound(fxDraw);
     UnloadSound(fxShoot);
     UnloadSound(fxLose);
+    UnloadSound(fxOrgan);
+    UnloadSound(fxLoseWdl);
+    UnloadSound(fxError);
+    UnloadSound(fxBullet);
     UnloadFont(alagard);
     // Close audio
     CloseAudioDevice(); 

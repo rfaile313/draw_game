@@ -22,11 +22,19 @@ void animation(int state,  Tile *animation,
             animation->source.y = 40;
             animation->source.x = 0;
         }
-        if(state==2)//shoot gun
+        if(state==2)//shoot gun, then spin?
         {
+            if (playerstate != spingun){
             animation->source.y = 40;
             animation->source.x += 20;
-            if(animation->source.x >= 60) animation->source.x = 60;
+            if(animation->source.x >= 40) playerstate = spingun;
+            }
+            if (playerstate == spingun)
+            {
+            animation->source.y = 60;
+            animation->source.x -= 20;
+            if(animation->source.x < 0) animation->source.x = 60;   
+            }
         }
         if(state==3)//spin gun
         {
@@ -69,34 +77,60 @@ void animation(int state,  Tile *animation,
             if(eAnimation->source.x < 80) eAnimation->source.x = 120;
         }
         
-        if (eState == 1) //point gun
+        if (eState == 1) //point gun enemy
         {
             eAnimation->source.x = 80;
             eAnimation->source.y = 40;
             
         }
-        if (eState == 2){ //draw gun
+        if (eState == 2){ //draw gun enemy
             eAnimation->source.y = 40;
             eAnimation->source.x += 20;
             if (eAnimation->source.x >= 100) eAnimation->source.x = 100; 
         }
-        if (eState == 3){ //shoot gun
-            if(enemystate == shoot){
+        if (eState == 3){ //shoot gun enemy
+            if(enemystate == shoot)
+            {
             eAnimation->source.y = 40;
             eAnimation->source.x += 20;
+                if (eAnimation->source.x >= 120)
+                {
+                    enemystate = taunt1;
+                    eAnimation->source.x = 80;
+                    eAnimation->source.y = 0; 
+                }
             }
-            if (eAnimation->source.x >= 120){
-                enemystate = stand;
-                eAnimation->source.x = 80;
-                eAnimation->source.y = 0; 
-            }
+           
         }
-        if (eState == 4) //die
+        if (eState == 4) //die enemy
         { 
             eAnimation->source.y = 80;
             eAnimation->source.x += 20;
             if (eAnimation->source.x >= 100) eAnimation->source.x = 100; 
         }
+        if (eState == 5) //new idle
+        {
+            eAnimation->source.y = 0;
+            eAnimation->source.x += 100;
+            if(eAnimation->source.x >= 2000) eAnimation->source.x = 0;
+        }
+        if (eState == 6) //taunt enemy
+        {
+            if(enemystate == taunt1)
+            {
+            enemystate = taunt2;
+            eAnimation->source.y = 0;
+            eAnimation->source.x = 80;
+            }
+            else if (enemystate == taunt2)
+            {
+            enemystate = taunt1;
+            eAnimation->source.y = 20;
+            eAnimation->source.x = 80;
+            }
+           
+        }
+       
        
     }
 }

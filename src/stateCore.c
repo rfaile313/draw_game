@@ -33,15 +33,18 @@ void updateCore(void){
    if(coregameplay == draw)animation(1, &player, 1, &enemy1);
 
     //enemy win condition
-    if (GetTime() - stateCoreSeconds >= ENEMY_DIFFICULTY){
+    if (GetTime() - stateCoreSeconds >= ENEMY_DIFFICULTY && coregameplay != win){
+        animation(4, &player, 3, &enemy1);
         if(coregameplay == draw){
-            PlaySound(fxShoot);
+            PlaySound(fxBullet);
+            PlaySound(fxLoseWdl);
         }
         coregameplay = lose;
   
-        animation(4, &player, 3, &enemy1);
+        animation(4, &player, 6, &enemy1);
 
-        if (GetTime() - stateCoreSeconds >= (ENEMY_DIFFICULTY + 2) ) {
+        if (GetTime() - stateCoreSeconds >= (ENEMY_DIFFICULTY + 4) ) 
+        {
         //wait 2 seconds ^, then
 
         finishstate = gototitle;
@@ -51,20 +54,27 @@ void updateCore(void){
     }
 
     //if you press space and the enemy hasn't won that means you've won
-    if(IsKeyPressed(KEY_SPACE) && coregameplay != lose){
-        if(coregameplay == draw)PlaySound(fxShoot);
-        coregameplay = win;
+    if(IsKeyPressed(KEY_SPACE) && coregameplay != lose)
+    {
+        if(coregameplay == draw){
+            PlaySound(fxBullet);
+            //PlaySound(win sound with delay);
+            coregameplay = win;
+        }
         //enemy lose, play animations, change state
-        if(coregameplay == win)
-            {
-                animation(3, &player, 4, &enemy1);
-                if( ( (GetTime() - stateCoreSeconds) + ENEMY_DIFFICULTY) >= ( ( (GetTime() - stateCoreSeconds) + ENEMY_DIFFICULTY) + 1)  )
-                {
-                    printf("Enemy wins\n");
-                }
-            }
     }
+        
+        if (coregameplay == win)
+        {
+        
+        animation(2, &player, 4, &enemy1);
 
+            if (GetTime() - stateCoreSeconds >= (ENEMY_DIFFICULTY + 4) ) 
+            {
+            //wait 2 seconds ^, then
+            //finishstate = gotonextscreen;
+            }
+        }
 }
 
 void drawCoreScreen(void){
@@ -75,7 +85,7 @@ void drawCoreScreen(void){
     DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
     DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
 
-    DrawTextEx(alagard, GAME_NAME, posDraw, alagard.baseSize * 2, 1, WHITE);
+    if(coregameplay == draw) DrawTextEx(alagard, GAME_NAME, posDraw, alagard.baseSize * 2, 1, WHITE);
 }
 
 int finishCore(void){

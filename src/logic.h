@@ -28,6 +28,8 @@ typedef struct Tile{
 Tile player = {0};
 //init first enemy and set to default tile  (20x20 px rects) (160x100) negative source width to flip X
 Tile enemy1 = {0};
+//init first enemy idle (comes from different sheet)
+Tile enemy1idle = {0};
 
 //---->types and structure def 
 
@@ -60,17 +62,17 @@ u32 stateLevelCounter;
 f64 timePassed;
 
 //animation.c variables (also get reset in initLevel)
-//TODO: should probably factor dCounter and eCounter into the single enemyState enum
 u32 animationCounter;
-
-u16  dCounter;
 
 enum AnimationState{
 reset = 0,
 shoot,
 stand,
 dieframe1,
-dieframe2
+dieframe2,
+taunt1,
+taunt2,
+spingun
 };
 enum AnimationState enemystate;
 enum AnimationState playerstate;
@@ -96,6 +98,7 @@ Sound fxDraw;
 Sound fxError;
 Sound fxInitial;
 Sound fxLose;
+Sound fxLoseWdl;
 Sound fxOrgan;
 Sound fxShoot;
 
