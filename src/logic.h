@@ -64,13 +64,16 @@ f64 timePassed;
 u32 animationCounter;
 
 u16  dCounter;
-u16  eCounter;
 
-enum EnemyState{
-shoot = 0,
+enum AnimationState{
+reset = 0,
+shoot,
 stand,
+dieframe1,
+dieframe2
 };
-enum EnemyState enemystate;
+enum AnimationState enemystate;
+enum AnimationState playerstate;
 //--->end animation.c variables
 
 //stateCore.c variables
@@ -88,13 +91,17 @@ Vector2 posDraw =  {325, 225};
 //--->end global variables
 
 //resources----->
-Sound fxInitial;
+Sound fxBullet;
 Sound fxDraw;
+Sound fxError;
+Sound fxInitial;
+Sound fxLose;
+Sound fxOrgan;
 Sound fxShoot;
-Sound fxLose;     
 
 Texture2D charTexture;
 Texture2D tileTexture;
+Texture2D enemy1IdleTexture;
 
 Font alagard;
 //--->resources

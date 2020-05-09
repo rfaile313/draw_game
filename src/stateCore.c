@@ -57,14 +57,13 @@ void updateCore(void){
         //enemy lose, play animations, change state
         if(coregameplay == win)
             {
-            animation(3, &player, 4, &enemy1);
-            if( ( (GetTime() - stateCoreSeconds) + ENEMY_DIFFICULTY) >= ( ( (GetTime() - stateCoreSeconds) + ENEMY_DIFFICULTY) + 1)  )
-            {
-                printf("Enemy wins\n");
-            }
+                animation(3, &player, 4, &enemy1);
+                if( ( (GetTime() - stateCoreSeconds) + ENEMY_DIFFICULTY) >= ( ( (GetTime() - stateCoreSeconds) + ENEMY_DIFFICULTY) + 1)  )
+                {
+                    printf("Enemy wins\n");
+                }
             }
     }
-
 
 }
 

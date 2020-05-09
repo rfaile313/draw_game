@@ -20,8 +20,8 @@ void initLevel(void){
     //animation.c variables set to 0
     animationCounter = 0;
     dCounter = 0;
-    eCounter = 0;
-    enemystate = 0;
+    enemystate = shoot;
+    playerstate = reset;
 
 }
 

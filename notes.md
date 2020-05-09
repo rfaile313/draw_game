@@ -1,5 +1,7 @@
 ### Art
 
+## Juice FX! 
+
 - bullet travel
 - death/blood
 - sun needs to glow
@@ -7,7 +9,6 @@
 - tumbleweed roll?
 - dust?
 - more characters
-
 
 
 basic logic:

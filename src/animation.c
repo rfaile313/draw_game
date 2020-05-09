@@ -36,34 +36,33 @@ void animation(int state,  Tile *animation,
         }
         if(state==4)//death
         {
-            if(dCounter==0)
+            if(playerstate==reset)
             {
                 animation->source.y = 40;
                 animation->source.x = 40;
-                dCounter++;
+                playerstate=dieframe1;
                 
             }
             //dieframe1
-            else if (dCounter==1)
+            else if (playerstate==dieframe1)
             {
                 
                 animation->source.y = 80;
                 animation->source.x = 0;
-                dCounter++;
+                playerstate=dieframe2;
                 
             }
             //dieframe2
-            else if (dCounter==2)
+            else if (playerstate==dieframe2)
             {
                 animation->source.y = 80;
                 animation->source.x = 20;
-                dCounter = 2;
             }
             
         }
         
         //enemy animations
-        if (eState == 0) //spin gun enemy idle
+        if (eState == 0) //spin gun enemy
         {
             eAnimation->source.y = 60;
             eAnimation->source.x -= 20;
@@ -98,20 +97,6 @@ void animation(int state,  Tile *animation,
             eAnimation->source.x += 20;
             if (eAnimation->source.x >= 100) eAnimation->source.x = 100; 
         }
-        if (eState == 5) //something else with eCounter... probably death
-        {
-            if (eCounter == 0)
-            {
-                eAnimation->source.x = 80;
-                eAnimation->source.y = 80;
-                eCounter++;
-            }
-            else if (eCounter == 1)
-            {
-                eAnimation->source.x = 80;
-                eAnimation->source.y = 20;
-                eCounter = 0;
-            }
-        }
+       
     }
 }

@@ -14,6 +14,8 @@ DEFINITELY GO BACK TO GCC -- IT MAKES YOU HAPPY
 
 🟡 set up debugger (done but then went back to gcc, maybe look into tinycc?)
 
+🔴 Use JuiceFX to make things cool!
+
 🔴 Game Logic: Win 
 
 🔴 Game Logic: New/Different Enemy

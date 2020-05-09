@@ -27,13 +27,18 @@ int main(void)
     InitAudioDevice();
     
     //load resources
-    fxInitial = LoadSound(soundInitial);
+    fxBullet  = LoadSound(soundBullet);
     fxDraw    = LoadSound(soundDraw);
+    fxError   = LoadSound(soundError);
+    fxInitial = LoadSound(soundInitial);
+    fxLose    = LoadSound(soundLose);
+    fxOrgan   = LoadSound(soundOrgan); 
     fxShoot   = LoadSound(soundShoot);
-    fxLose    = LoadSound(soundLose);      
+         
     
     charTexture = LoadTexture(charTexturePath); //128/4 x 256/8
     tileTexture = LoadTexture(tileTexturePath);
+    enemy1IdleTexture = LoadTexture(enemy1IdleTexturePath);
 
     alagard = LoadFont(fontAlagard);
 
