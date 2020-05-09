@@ -26,7 +26,7 @@ int main(void)
     // Initialize audio device (required for sound)
     InitAudioDevice();
     
-    //load resources
+    //load resources--->
     fxBullet  = LoadSound(soundBullet);
     fxDraw    = LoadSound(soundDraw);
     fxError   = LoadSound(soundError);
@@ -35,6 +35,7 @@ int main(void)
     fxLoseWdl = LoadSound(soundLoseWdl);
     fxOrgan   = LoadSound(soundOrgan); 
     fxShoot   = LoadSound(soundShoot);
+    fxWin     = LoadSound(soundWin);
          
     charTexture = LoadTexture(charTexturePath); //128/4 x 256/8
     tileTexture = LoadTexture(tileTexturePath);
@@ -70,7 +71,8 @@ int main(void)
             {
                 updateLevelScreen();
 
-                if (levelScreenFinished() == 1){
+                if (levelScreenFinished() == 1)
+                {
                     nextScreen = 0; //resets levelScreenFinished()
                     initCore();
                     currentState = CORE;
@@ -80,7 +82,8 @@ int main(void)
             case CORE: 
             {
                 updateCore();
-                if(finishCore() == 1){
+                if(finishCore() == 1)
+                {
                     finishstate = 0;
                     currentState = TITLE;
                 }
@@ -162,6 +165,7 @@ int main(void)
     UnloadSound(fxLoseWdl);
     UnloadSound(fxError);
     UnloadSound(fxBullet);
+    UnloadSound(fxWin);
     UnloadFont(alagard);
     // Close audio
     CloseAudioDevice(); 

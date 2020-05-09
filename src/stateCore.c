@@ -36,7 +36,7 @@ void updateCore(void){
     if (GetTime() - stateCoreSeconds >= ENEMY_DIFFICULTY && coregameplay != win){
         animation(4, &player, 3, &enemy1);
         if(coregameplay == draw){
-            PlaySound(fxBullet);
+            PlaySound(fxShoot);
             PlaySound(fxLoseWdl);
         }
         coregameplay = lose;
@@ -57,8 +57,8 @@ void updateCore(void){
     if(IsKeyPressed(KEY_SPACE) && coregameplay != lose)
     {
         if(coregameplay == draw){
-            PlaySound(fxBullet);
-            //PlaySound(win sound with delay);
+            PlaySound(fxShoot);
+            PlaySound(fxWin);
             coregameplay = win;
         }
         //enemy lose, play animations, change state

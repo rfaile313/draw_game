@@ -4,9 +4,10 @@
 //todo: probably should refactor this shitty ass function!!
 
 void animation(int state,  Tile *animation,
-               int eState, Tile *eAnimation){
-    
+               int eState, Tile *eAnimation)
+{
     animationCounter++;
+    fastestAnimationCounter++;
 
     if(FPS/animationCounter == 4) //60 FPS, every x count (4==15)
     {
@@ -22,21 +23,8 @@ void animation(int state,  Tile *animation,
             animation->source.y = 40;
             animation->source.x = 0;
         }
-        if(state==2)//shoot gun, then spin?
-        {
-            if (playerstate != spingun){
-            animation->source.y = 40;
-            animation->source.x += 20;
-            if(animation->source.x >= 40) playerstate = spingun;
-            }
-            if (playerstate == spingun)
-            {
-            animation->source.y = 60;
-            animation->source.x -= 20;
-            if(animation->source.x < 0) animation->source.x = 60;   
-            }
-        }
-        if(state==3)//spin gun
+
+        if(state==3)//player spin gun
         {
             animation->source.y = 60;
             animation->source.x -= 20;
@@ -102,12 +90,7 @@ void animation(int state,  Tile *animation,
             }
            
         }
-        if (eState == 4) //die enemy
-        { 
-            eAnimation->source.y = 80;
-            eAnimation->source.x += 20;
-            if (eAnimation->source.x >= 100) eAnimation->source.x = 100; 
-        }
+
         if (eState == 5) //new idle
         {
             eAnimation->source.y = 0;
@@ -131,6 +114,39 @@ void animation(int state,  Tile *animation,
            
         }
        
-       
-    }
-}
+    } //--->if(FPS/animationCounter == 4)
+
+    if(FPS/fastestAnimationCounter == 15) //60 FPS, every 4 count
+    {
+        fastestAnimationCounter = 0;
+        if (eState == 4) //die enemy
+        { 
+            if(enemystate != dieframe1){
+            eAnimation->source.y = 80;
+            eAnimation->dest.x += 20;
+            }
+            if (eAnimation->dest.x >= 700 )
+            {
+            enemystate = dieframe1;
+            eAnimation->source.x += 20;
+            if (eAnimation->source.x >= 100) eAnimation->source.x = 100;
+            }
+        }
+        
+        if(state==2)//shoot gun, then spin?
+        {
+            if (playerstate != spingun){
+            animation->source.y = 40;
+            animation->source.x += 20;
+            if(animation->source.x >= 40) playerstate = spingun;
+            }
+            if (playerstate == spingun)
+            {
+            animation->source.y = 60;
+            animation->source.x -= 20;
+            if(animation->source.x < 0) animation->source.x = 60;   
+            }
+        }
+    }//fastestAnimationCounter
+
+}//animation parent function

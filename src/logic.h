@@ -34,8 +34,9 @@ Tile enemy1idle = {0};
 //---->types and structure def 
 
 // Global variables------>
+u16 currentLevel = 1;
+
 const_str GAME_NAME = "DRAW!";
-const_str LEVEL_1 = "Level 1";
 
 const u16 GAME_SCREEN_WIDTH  = 960;
 const u16 GAME_SCREEN_HEIGHT = 572;
@@ -43,14 +44,12 @@ const u16 GAME_SCREEN_HEIGHT = 572;
 const u32 FPS = 60;
 const u32 BASESPEED = 4; //60 FPS, every x count (4==15)
 
-const f32 PRSW = 20.0f; //20px RECTANGLE SOURCE WIDTH
-const f32 PRSH = 20.0f; //20px RECTANGLE SOURCE HEIGHT
+const f32 TWENTY = 20.0f; //20.0f Float
+const f32 ONE_HUNDRED = 100.0f; //100.0f Float
 
-const f32 PRDW = 100.0f; //100px RECTANGLE DEST WIDTH
-const f32 PRDH = 100.0f; //100px RECTANGLE DEST HEIGHT
 
-const f32 ENEMY_DIFFICULTY = 1.05f;
-const f32 DIFFICULTY_MULTIPLIER = 1.05f;
+f32 ENEMY_DIFFICULTY = 1.05f;
+f32 DIFFICULTY_MULTIPLIER = 1.05f;
 
 // Spare counter variable
 u16 i;
@@ -63,6 +62,7 @@ f64 timePassed;
 
 //animation.c variables (also get reset in initLevel)
 u32 animationCounter;
+u32 fastestAnimationCounter;
 
 enum AnimationState{
 reset = 0,
@@ -101,6 +101,7 @@ Sound fxLose;
 Sound fxLoseWdl;
 Sound fxOrgan;
 Sound fxShoot;
+Sound fxWin;
 
 Texture2D charTexture;
 Texture2D tileTexture;

@@ -19,6 +19,7 @@
     const_str soundLoseWdl = "C:/raylib/draw_game/assets/sound/losewithdelay.ogg";
     const_str soundOrgan   = "C:/raylib/draw_game/assets/sound/organ.ogg";
     const_str soundShoot   = "C:/raylib/draw_game/assets/sound/shoot.ogg";
+    const_str soundWin     = "C:/raylib/draw_game/assets/sound/win.ogg";
 
     const_str fontAlagard  ="C:/raylib/draw_game/assets/spritefont/custom_alagard.png";
 
@@ -39,6 +40,7 @@
     const_str soundLoseWdl = "/Users/RFaile/gamedev/draw_game/assets/sound/losewithdelay.ogg";
     const_str soundOrgan   = "/Users/RFaile/gamedev/draw_game/assets/sound/organ.ogg";
     const_str soundShoot   = "/Users/RFaile/gamedev/draw_game/assets/sound/shoot.ogg";
+    const_str soundWin     = "/Users/RFaile/gamedev/draw_game/assets/sound/win.ogg";
 
     const_str fontAlagard  ="/Users/RFaile/gamedev/draw_game/assets/spritefont/custom_alagard.png";
 
