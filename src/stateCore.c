@@ -75,6 +75,8 @@ void drawCoreScreen(void){
 
     DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
     DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
+
+    DrawTextEx(alagard, GAME_NAME, posDraw, alagard.baseSize * 2, 1, WHITE);
 }
 
 int finishCore(void){

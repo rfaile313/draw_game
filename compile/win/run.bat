@@ -41,9 +41,8 @@ POPD
 GOTO:EOF 
 
 :DEBUG
-IF NOT EXIST Build echo. && echo **No build directory at the moment**
 IF EXIST Build PUSHD Build
-echo set up a debugger :D
+echo set up debugger
 POPD
 GOTO:EOF 
 
