@@ -1,12 +1,11 @@
 //only external dependency
-#include <raylib.h> 
+#include <raylib.h>
 //headers
 #include "src/r_types.h" 
 #include "src/logic.h"
 //unity
 #include "src/animation.c"
 #include "src/resources.c"
-#include "src/tile.c"
 #include "src/stateTitle.c"
 #include "src/stateLevel.c"
 #include "src/stateCore.c"
@@ -22,7 +21,8 @@ int main(void)
     SetTraceLogLevel(LOG_WARNING);
     //init window - must come before texture, loading calls (OpenGL context required)
     InitWindow(screenWidth, screenHeight, GAME_NAME);
-
+    //this should only reset on new game or if called directly
+    modifyTile(&xAnim, 0.0f, 0.0f, 140.0f, 250.0f, 64.0f, 64.0f, 192.0f, 192.0f);
     // Initialize audio device (required for sound)
     InitAudioDevice();
     
@@ -40,6 +40,7 @@ int main(void)
     charTexture = LoadTexture(charTexturePath); //128/4 x 256/8
     tileTexture = LoadTexture(tileTexturePath);
     enemy1IdleTexture = LoadTexture(enemy1IdleTexturePath);
+    xAnimationTexture = LoadTexture(xAnimationTexturePath);
 
     alagard = LoadFont(fontAlagard);
     //-->end resource load
@@ -60,17 +61,28 @@ int main(void)
             case TITLE:
             {
                 updateTitleScreen();
-                if(titleScreenFinished() == 1) //don't need the "1" with one option but will have more
+                if(titleScreenFinished() == 1) //1 = next screen
                 {
                     choice = 0; //resets titleScreenFinished()
                     initLevel(); //function in stateTitle.c: resets variables from logic.h
                     currentState = LEVEL; 
                 }
+   
             }break;
             case LEVEL:
             {
-                updateLevelScreen();
+                if (earlystatus == warning)
+                {
+                    initLevel();
+                    earlystatus = restart;      
+                }
+                if (bRestart)
+                {
+                    initLevel();
+                    bRestart = false;
+                }
 
+                updateLevelScreen();
                 if (levelScreenFinished() == 1)
                 {
                     nextScreen = 0; //resets levelScreenFinished()

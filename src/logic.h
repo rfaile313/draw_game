@@ -30,6 +30,8 @@ Tile player = {0};
 Tile enemy1 = {0};
 //init first enemy idle (comes from different sheet)
 Tile enemy1idle = {0};
+// xanim
+Tile xAnim = {0};
 
 //---->types and structure def 
 
@@ -47,9 +49,11 @@ const u32 BASESPEED = 4; //60 FPS, every x count (4==15)
 const f32 TWENTY = 20.0f; //20.0f Float
 const f32 ONE_HUNDRED = 100.0f; //100.0f Float
 
+bool bWait;
+bool bRestart;
 
 f32 ENEMY_DIFFICULTY = 1.05f;
-f32 DIFFICULTY_MULTIPLIER = 1.05f;
+f32 DIFFICULTY_MULTIPLIER = .25f;
 
 // Spare counter variable
 u16 i;
@@ -57,12 +61,14 @@ u16 i;
 //stateLevel.c initLevel() variables
 u16 nextScreen;
 u16 check;
+u16 errorCount;
 u32 stateLevelCounter;
 f64 timePassed;
 
 //animation.c variables (also get reset in initLevel)
 u32 animationCounter;
 u32 fastestAnimationCounter;
+u32 animation1Counter;
 
 enum AnimationState{
 reset = 0,
@@ -90,6 +96,10 @@ f32 rotation = 0.0f;
 Vector2 posLevel = {300, 225};
 //"Draw!" Text Positioning on Screen
 Vector2 posDraw =  {325, 225};
+//"TOO SOON!" Text Positioning on Screen
+Vector2 posTooSoon = {240, 225};
+//"Two Faults = LOSE" Text Positioning on Screen
+Vector2 posTwoFaults = {110, 225};
 //--->end global variables
 
 //resources----->
@@ -106,17 +116,19 @@ Sound fxWin;
 Texture2D charTexture;
 Texture2D tileTexture;
 Texture2D enemy1IdleTexture;
+Texture2D xAnimationTexture;
 
 Font alagard;
 //--->resources
 
-//tile.c function defs
-void modifyTile(Tile *individual_tile, f32 sX, f32 sY, f32 dX, f32 dY,
-				f32 srcW, f32 srcH, f32 destW, f32 destH);
-
 //animation.c function defs
 void animation(int state,  Tile *animation,
                int eState, Tile *eAnimation);
+
+void animation1(int state,  Tile *animation);
+
+void modifyTile(Tile *individual_tile, f32 sX, f32 sY, f32 dX, f32 dY,
+				f32 srcW, f32 srcH, f32 destW, f32 destH);
 
 //stateTitle.c function defs
 void updateTitleScreen(void);

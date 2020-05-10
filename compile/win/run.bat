@@ -6,48 +6,53 @@
 ::===============================================================
 @echo off
 
-:: Determines output and launcher
-SET EXECUTABLE=draw_game.exe
-:: Source to build from (can use abs or rel path)
+:: Project Source (Unity Build)
 SET SOURCE=..\..\..\main.c
+:: Project Executable
+SET EXECUTABLE=draw_game
+:: MSVC
+SET COMPILER=cl
+:: Compiler Flags https://docs.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-alphabetically?view=vs-2019\
+SET CFLAGS=/nologo /Zi /O2 /Fe%EXECUTABLE% /I..\raylib %SOURCE% /link..\raylib\raylib.lib
 
-SET RAYLIB=C:\RAYLIB\RAYLIB\SRC
-
-SET COMPILER=gcc
-SET CFLAGS=-O1 -Wall -std=c99 -Wno-missing-braces
-SET INCLUDEPATHS=-I %RAYLIB%
-SET LIBPATHS=-L %RAYLIB%
-SET LIBFLAGS=-lraylib -lopengl32 -lgdi32 -lwinmm
+SET VCVARSALL="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat"
+SET COPYDLL="..\raylib\raylib.dll ." 
+SET SUCCESS=********************Build Successful. Running.************************
 
 IF [%1] == [] GOTO RUN
 IF [%1] == [clean] GOTO CLEAN
 IF [%1] == [build] GOTO BUILD
 IF [%1] == [debug] GOTO DEBUG
-ECHO Invalid Command. Try run or run clean or run build or run debug
+ECHO Invalid Command. Commands: run, run clean, run build, or run debug
 GOTO:EOF 
 
 :RUN
 IF NOT EXIST Build MKDIR Build
 PUSHD Build
-%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %WINFLAGS% %INCLUDEPATHS% %LIBPATHS% %LIBFLAGS% && echo **Build Successful. Running.** && echo. && %EXECUTABLE%
+call %VCVARSALL% x64
+copy %COPYDLL%
+%COMPILER% %CFLAGS% && echo. && echo %SUCCESS% && echo. && %EXECUTABLE%.exe
 POPD
 GOTO:EOF
 
 :BUILD
 IF NOT EXIST Build MKDIR Build
 PUSHD Build
-%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %WINFLAGS% %INCLUDEPATHS% %LIBPATHS% %LIBFLAGS% && echo. && echo **Build Successful** && echo.
+call %VCVARSALL% x64
+copy %COPYDLL%
+%COMPILER% %CFLAGS% && echo. && echo %SUCCESS% && echo.
 POPD
 GOTO:EOF 
 
 :DEBUG
-IF EXIST Build PUSHD Build
-echo set up debugger
+IF NOT EXIST Build MKDIR Build
+PUSHD Build
+remedybg.exe %EXECUTABLE%.exe
 POPD
 GOTO:EOF 
 
 :CLEAN
 IF NOT EXIST Build echo. && echo **No build directory at the moment**
-IF EXIST Build RMDIR /Q/S Build && echo **Cleaned Build folder + files** 
+IF EXIST Build RMDIR /Q/S Build && echo **Cleaned Build folder + files**  
 GOTO:EOF 
 

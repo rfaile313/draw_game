@@ -2,7 +2,19 @@
 #include "r_types.h"
 #include "logic.h"
 
-void initLevel(void){
+enum EarlyStatus{
+    ok = 0,
+    warning,
+    restart,
+    wait,
+    losethegame,
+    losethegame1
+};
+
+enum EarlyStatus earlystatus;
+
+void initLevel(void)
+{
     //initialize and reset variables
 
     //player initial poses
@@ -13,62 +25,151 @@ void initLevel(void){
     //default values
     stateLevelCounter = 0;
     nextScreen = 0;
+    errorCount = 0;
+    bWait = false;
+
+    earlystatus = ok; //reset each level?
+
     timePassed = GetTime();
     check = GetRandomValue(3,6);
     PlaySound(fxInitial);
 
     //animation.c variables set to 0
     animationCounter = 0;
+    animation1Counter= 0;
+    fastestAnimationCounter=0;
     enemystate = shoot;
     playerstate = reset;
-
 }
 
 
-void updateLevelScreen(void){
+void updateLevelScreen(void)
+{
     stateLevelCounter++;
-   
-    //TODO: size and spacing are f32s, should fix (WHAT????????????????)
-    // 60/x == 2 every 30 frames     60/x == 4 every 15 frames
-    animation(0, &player, 0, &enemy1);
 
-    //amount of time level flashes before draw
-    if (GetTime() - timePassed >= check) { 
+    //TODO: change condition
+    animation(0, &player, 0, &enemy1); //default animation
+
+    if(earlystatus==wait)
+    {
+        animation1(1, &xAnim);
+    }
+    //if fault
+    if(IsKeyPressed(KEY_SPACE))
+    { //if pressed at all here its a fault, if already fault, it's a lose.
+        if(earlystatus == ok)
+        {
+            PlaySound(fxError);
+            earlystatus = wait;
+            bWait = true;
+            timePassed = GetTime();
+        }
+        if(earlystatus == restart) //game over
+        {   
+            PlaySound(fxError);
+            
+            earlystatus = losethegame;
+            bWait = true;
+            timePassed = GetTime();
+        }
+    }
+    
+    if (earlystatus == wait)
+        {
+            if(GetTime() - timePassed >= 4) 
+            {
+            earlystatus = warning; //restarts in main.c
+            }
+        }
+
+    if (earlystatus == losethegame)
+        {
+            if(GetTime() - timePassed >= 1) 
+            {
+                PlaySound(fxLose);
+                earlystatus=losethegame1;
+            }
+        }
+
+   if (earlystatus == losethegame1)
+    {
+        if(GetTime() - timePassed >= 4) 
+            {
+                modifyTile(&xAnim, 0.0f, 0.0f, 140.0f, 250.0f, 64.0f, 64.0f, 192.0f, 192.0f); //reset X tile
+                earlystatus = ok; //reset earlystatus 
+                choice = 0; //reset title choice
+                currentState = TITLE;
+            }
+    }
+
+
+    //advance to core if they get here amount of time before draw, random every time
+    if ( GetTime() - timePassed >= check && !bWait) { 
         nextScreen = 1; 
     } 
 
-}
+}//update
 
-void drawLevelScreen(void){
+void drawLevelScreen(void)
+{
 
     //Background: Texture / 0,0 / 0,0 / 4x scale / WHITE
     DrawTextureEx(tileTexture, origin, rotation, 4.0f, WHITE);
+
+    DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
+    DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
+    //if use enemy1idletexture //DrawTexturePro(enemy1IdleTexture, enemy1idle.source, enemy1idle.dest, origin, rotation, WHITE);
+
+     if(earlystatus != ok)
+    {
+        DrawTexturePro(xAnimationTexture, xAnim.source, xAnim.dest, origin, rotation, WHITE);
+ 
+    }
 
     // You can use this code when you are ready to weild its power (ty anata)
     // DrawTextEx(alagard, LEVEL_1, posLevel, alagard.baseSize * 2, 1, Fade( WHITE, (((int)(GetTime() * 10) >> 2  ) % 100) & 1 ? 255 : 0 ));
     // Refactor might be better as (GetTime() * 100)  / 32 ) % 2)
     // or (int)GetTime() % 4 >= 4 / 2 ? 255 : 0 -- h/t vortfu
     
+        
     //flashing text, every 15 frames at 60/4
-    if(stateLevelCounter >= (FPS/4) )
-    {  
-        //TODO: will need to change "Level 1" to show multiple levels
-        DrawTextEx(alagard, FormatText("Level %i", currentLevel), posLevel, alagard.baseSize * 2, 1, WHITE);
+    if(!bWait)
+    {
+        if(stateLevelCounter >= (FPS/4) )
+        {  
 
-        if(stateLevelCounter >= (FPS/2))
-        {
-            stateLevelCounter = 0;
-        }
+            DrawTextEx(alagard, FormatText("Level %i", currentLevel), posLevel, alagard.baseSize * 2, 1, WHITE);
 
-    }//---> flashing text
+            if(stateLevelCounter >= (FPS/2))
+            {
+                stateLevelCounter = 0;
+            }
 
+        }//---> flashing text
+    }
 
-    DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
-    DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
-    //if use enemy1idletexture //DrawTexturePro(enemy1IdleTexture, enemy1idle.source, enemy1idle.dest, origin, rotation, WHITE);
+    
+    if(earlystatus == wait || earlystatus == losethegame || earlystatus == losethegame1)
+    {
+        if(stateLevelCounter >= (FPS/4) )
+        {  
 
-}
+            if(earlystatus == wait)DrawTextEx(alagard, "TOO SOON!", posTooSoon, alagard.baseSize * 2, 1, WHITE);
+            if(earlystatus != wait)DrawTextEx(alagard, "Two Faults = LOSE", posTwoFaults, alagard.baseSize * 2, 1, WHITE);
 
-int levelScreenFinished(void){
+            if(stateLevelCounter >= (FPS/2))
+            {
+                stateLevelCounter = 0;
+            }
+
+        }//---> flashing text
+        
+        
+    }
+    
+}//draw
+
+int levelScreenFinished(void)
+{
     return nextScreen;
 }

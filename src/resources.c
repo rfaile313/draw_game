@@ -10,6 +10,7 @@
     const_str tileTexturePath = "C:/raylib/draw_game/assets/cowboyspenzilla/background.png";
 
     const_str enemy1IdleTexturePath = "C:/raylib/draw_game/assets/cowboyspenzilla/enemy1idle.png";
+    const_str xAnimationTexturePath = "C:/raylib/draw_game/assets/rudy/xanimation.png";
     
     const_str soundBullet  = "C:/raylib/draw_game/assets/sound/bullet.ogg";
     const_str soundDraw    = "C:/raylib/draw_game/assets/sound/draw.ogg";
@@ -31,6 +32,7 @@
     const_str tileTexturePath = "/Users/RFaile/gamedev/draw_game/assets/cowboyspenzilla/background.png";
 
     const_str enemy1IdleTexturePath = "/Users/RFaile/gamedev/draw_game/assets/cowboyspenzilla/enemy1idle.png";
+    const_str xAnimationTexturePath = "/Users/RFaile/gamedev/draw_game/assets/rudy/xanimation.png";
     
     const_str soundBullet  = "/Users/RFaile/gamedev/draw_game/assets/sound/bullet.ogg";
     const_str soundDraw    = "/Users/RFaile/gamedev/draw_game/assets/sound/draw.ogg";

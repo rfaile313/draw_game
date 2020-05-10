@@ -132,7 +132,7 @@ void animation(int state,  Tile *animation,
             if (eAnimation->source.x >= 100) eAnimation->source.x = 100;
             }
         }
-        
+
         if(state==2)//shoot gun, then spin?
         {
             if (playerstate != spingun){
@@ -150,3 +150,52 @@ void animation(int state,  Tile *animation,
     }//fastestAnimationCounter
 
 }//animation parent function
+
+void animation1(int state,  Tile *animation)
+{
+    animation1Counter++;
+    if(FPS/animation1Counter == 15)
+    { // every 5 frames
+        animation1Counter = 0;
+        if (state == 1)
+        {
+            animation->source.x += 64;
+            if(animation->source.x >= (64*19)){
+                animation->source.x = (64*19);
+
+                animation->dest.x -= 20;
+                animation->dest.y += 20;
+                
+                //also make smaller
+                animation->dest.width -= 20;
+                animation->dest.height -= 20;
+       
+                if (animation->dest.y >= (250 + (20 * 5) ) && animation->dest.width <= (192 - (20 * 4) )  )
+                {
+                animation->dest.x = (140.0f - (20 * 5));
+                animation->dest.y = (250 + (20 * 5)   );
+
+                animation->dest.width = (192 - (20 * 4));
+                animation->dest.height= (192 - (20 * 4));
+         
+                }
+            }
+        }
+    
+    }
+}
+
+void modifyTile(Tile *individual_tile, f32 sX, f32 sY, f32 dX, f32 dY,
+				f32 srcW, f32 srcH, f32 destW, f32 destH)
+// Modify tile struct values directly
+{
+    individual_tile->source.x = sX;
+    individual_tile->source.y = sY;
+    individual_tile->source.width =  srcW;
+    individual_tile->source.height = srcH;
+    
+    individual_tile->dest.x = dX;
+    individual_tile->dest.y = dY;
+    individual_tile->dest.width =  destW;
+    individual_tile->dest.height = destH;
+}

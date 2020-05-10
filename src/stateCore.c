@@ -38,15 +38,19 @@ void updateCore(void){
         if(coregameplay == draw){
             PlaySound(fxShoot);
             PlaySound(fxLoseWdl);
+            //reset time
+            stateCoreSeconds = GetTime();
         }
         coregameplay = lose;
   
         animation(4, &player, 6, &enemy1);
 
-        if (GetTime() - stateCoreSeconds >= (ENEMY_DIFFICULTY + 4) ) 
+        if (GetTime() - stateCoreSeconds >= 4 ) 
         {
         //wait 2 seconds ^, then
-
+        //reset levels, difficulty
+        currentLevel = 1;
+        ENEMY_DIFFICULTY = 1.05f;
         finishstate = gototitle;
 
         }
@@ -57,24 +61,32 @@ void updateCore(void){
     if(IsKeyPressed(KEY_SPACE) && coregameplay != lose)
     {
         if(coregameplay == draw){
+            //one time
             PlaySound(fxShoot);
             PlaySound(fxWin);
+            //increment level
+            currentLevel += 1;
+            ENEMY_DIFFICULTY -= DIFFICULTY_MULTIPLIER;
+            //set time
+            stateCoreSeconds = GetTime();
+            //change inner state
             coregameplay = win;
         }
         //enemy lose, play animations, change state
     }
         
-        if (coregameplay == win)
-        {
-        
-        animation(2, &player, 4, &enemy1);
+    if (coregameplay == win)
+    {
 
-            if (GetTime() - stateCoreSeconds >= (ENEMY_DIFFICULTY + 4) ) 
-            {
-            //wait 2 seconds ^, then
-            //finishstate = gotonextscreen;
-            }
+
+    animation(2, &player, 4, &enemy1);
+
+        if (GetTime() - stateCoreSeconds >= 4) 
+        {
+            bRestart = true;
+            currentState = LEVEL;
         }
+    }
 }
 
 void drawCoreScreen(void){
