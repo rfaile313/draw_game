@@ -9,6 +9,7 @@
 :: Determines output and launcher
 SET EXECUTABLE=draw_game.exe
 SET DEXECUTABLE=draw_game_debug.exe
+SET ICON=..\icon.o
 :: Source to build from (can use abs or rel path)
 SET SOURCE=..\..\..\main.c
 
@@ -29,7 +30,7 @@ GOTO:EOF
 :RUN
 IF NOT EXIST Build MKDIR Build
 PUSHD Build
-%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %LIBFLAGS% && echo **Build Successful. Running.** && echo. && %EXECUTABLE%
+%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %LIBFLAGS% %ICON% && echo **Build Successful. Running.** && echo. && %EXECUTABLE%
 POPD
 GOTO:EOF
 
