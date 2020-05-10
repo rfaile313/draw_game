@@ -1,4 +1,6 @@
-# Draw_Game
+# Draw!
+
+![game_screenshot](assets/screenshot.png)
 
 ## MacOS:
 
