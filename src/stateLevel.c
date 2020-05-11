@@ -6,7 +6,7 @@ enum EarlyStatus{
     ok = 0,
     warning,
     restart,
-    wait,
+    pleasewait,
     losethegame,
     losethegame1
 };
@@ -50,7 +50,7 @@ void updateLevelScreen(void)
     //TODO: change condition
     animation(0, &player, 0, &enemy1); //default animation
 
-    if(earlystatus==wait)
+    if(earlystatus==pleasewait)
     {
         animation1(1, &xAnim);
     }
@@ -60,7 +60,7 @@ void updateLevelScreen(void)
         if(earlystatus == ok)
         {
             PlaySound(fxError);
-            earlystatus = wait;
+            earlystatus = pleasewait;
             bWait = true;
             timePassed = GetTime();
         }
@@ -74,7 +74,7 @@ void updateLevelScreen(void)
         }
     }
     
-    if (earlystatus == wait)
+    if (earlystatus == pleasewait)
         {
             if(GetTime() - timePassed >= 4) 
             {
@@ -152,13 +152,13 @@ void drawLevelScreen(void)
     }
 
     
-    if(earlystatus == wait || earlystatus == losethegame || earlystatus == losethegame1)
+    if(earlystatus == pleasewait || earlystatus == losethegame || earlystatus == losethegame1)
     {
         if(stateLevelCounter >= (FPS/4) )
         {  
 
-            if(earlystatus == wait)DrawTextEx(alagard, "TOO SOON!", posTooSoon, alagard.baseSize * 2, 1, WHITE);
-            if(earlystatus != wait)DrawTextEx(alagard, "Two Faults = LOSE", posTwoFaults, alagard.baseSize * 2, 1, WHITE);
+            if(earlystatus == pleasewait)DrawTextEx(alagard, "TOO SOON!", posTooSoon, alagard.baseSize * 2, 1, WHITE);
+            if(earlystatus != pleasewait)DrawTextEx(alagard, "Two Faults = LOSE", posTwoFaults, alagard.baseSize * 2, 1, WHITE);
 
             if(stateLevelCounter >= (FPS/2))
             {
