@@ -21,6 +21,9 @@ int main(void)
     SetTraceLogLevel(LOG_WARNING);
     //init window - must come before texture, loading calls (OpenGL context required)
     InitWindow(screenWidth, screenHeight, GAME_NAME);
+	//set window icon
+	Image icon = LoadImage("Resources/icon/windowicon.png");
+	SetWindowIcon(icon);
     //this should only reset on new game or if called directly
     modifyTile(&xAnim, 0.0f, 0.0f, 140.0f, 250.0f, 64.0f, 64.0f, 192.0f, 192.0f);
     // Initialize audio device (required for sound)
@@ -165,7 +168,8 @@ int main(void)
     }
     
     // De-Initialization
-    // Unload Resources 
+    // Unload Resources
+    UnloadImage(icon); 
     UnloadTexture(charTexture);
     UnloadTexture(tileTexture);
     UnloadTexture(enemy1IdleTexture);

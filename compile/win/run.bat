@@ -30,6 +30,7 @@ ECHO Invalid Command. Try run or run clean or run build or run debug
 GOTO:EOF 
 
 :RUN
+IF EXIST Build RMDIR /Q/S Build && echo **Cleaned Build folder + files** 
 IF NOT EXIST Build MKDIR Build
 PUSHD Build
 xcopy /i /e /q ..\..\..\Resources Resources
@@ -38,6 +39,7 @@ POPD
 GOTO:EOF
 
 :BUILD
+IF EXIST Build RMDIR /Q/S Build && echo **Cleaned Build folder + files** 
 IF NOT EXIST Build MKDIR Build
 PUSHD Build
 xcopy /i /e /q ..\..\..\Resources Resources
@@ -46,6 +48,7 @@ POPD
 GOTO:EOF 
 
 :DEBUG
+IF EXIST Debug RMDIR /Q/S Debug && echo **Cleaned Debug folder + files** 
 IF NOT EXIST Debug MKDIR Debug
 PUSHD Debug
 tcc %SOURCE% -o %DEXECUTABLE% -std=c99 -Wall -DPLATFORM_DESKTOP -I. -L. -lmsvcrt -lraylib -lopengl32 -lgdi32 -lkernel32 -lshell32 -luser32 && echo. && echo **Debug Build Successful** && echo. && %DEXECUTABLE%
