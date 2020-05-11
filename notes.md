@@ -1,3 +1,17 @@
+### Future features/ideas
+
+1) Money earned from duels
+2) Stuff to spend money on 
+3) the ability to place wagers on said duels to try and get more cash
+4) and maybe between rounds, you give a stat breakdown of your next opponent
+5) accuracy based on gun/skill
+the money would buy you clothes/items
+that increase your stats
+but also might decrease other stats
+so maybe you have more power or accuracy
+but it takes longer for the gun to go off
+i like the idea of like slow motion/bullet time/camera shake too
+
 ### Art
 
 ## Juice FX! 
@@ -10,6 +24,7 @@
 - dust?
 - more characters
 
+## Basics of the game
 
 basic logic:
 

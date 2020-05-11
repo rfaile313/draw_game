@@ -48,11 +48,13 @@ void updateTitleScreen(void){
     }
 }
 
+
 void drawTitleScreen(void){
     DrawText(GAME_NAME, titlePosX, titlePosY, titleSize, WHITE);
     DrawText(fontPlay, playPosX, playPosY, playSize, WHITE);
     DrawText(fontOptions, optionsPosX, optionsPosY, optionsSize, WHITE);
-    DrawText(fontArrow, arrowPosX, arrowPosY, arrowSize, WHITE);         
+    DrawText(fontArrow, arrowPosX, arrowPosY, arrowSize, WHITE);
+	DrawText("(C)Rudy Faile 2020 - test build, not ready for production.", 180, 550, 20, WHITE);        
 }
 
 int titleScreenFinished(void){
