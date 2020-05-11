@@ -34,7 +34,7 @@ IF EXIST Build RMDIR /Q/S Build && echo **Cleaned Build folder + files**
 IF NOT EXIST Build MKDIR Build
 PUSHD Build
 xcopy /i /e /q ..\..\..\Resources Resources
-%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %LIBFLAGS% %WINFLAGS% %ICONRES% && echo **Build Successful. Running.** && echo. && %EXECUTABLE%
+%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %LIBFLAGS% %WINFLAGS% %ICONRES% && echo. && echo **Build Successful. Running.** && echo. && %EXECUTABLE%
 POPD
 GOTO:EOF
 
