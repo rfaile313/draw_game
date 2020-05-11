@@ -2,6 +2,10 @@
 
 ![game_screenshot](assets/screenshot.png)
 
+## How to Play:
+
+It's a standoff! Press Space when it's time to draw, but not before!
+
 ## MacOS:
 
 1. `./run.sh` cleans, builds, and runs if build successful

@@ -9,7 +9,7 @@
 :: Determines output and launcher
 SET EXECUTABLE=draw_game.exe
 SET DEXECUTABLE=draw_game_debug.exe
-SET ICON=..\icon.o
+SET ICONRES=..\..\..\assets\icon\icon.res
 :: Source to build from (can use abs or rel path)
 SET SOURCE=..\..\..\main.c
 
@@ -17,8 +17,10 @@ SET RAYLIB=C:\RAYLIB\RAYLIB\SRC
 
 SET COMPILER=gcc
 SET CFLAGS=-O1 -Wall -std=c99 -Wno-missing-braces
-SET LIBFLAGS=-lraylib -lopengl32 -lgdi32 -lwinmm
-::This is running with MinGW which already has Raylib in the -I and -L :-) 
+SET LIBFLAGS=-lraylib -lopengl32 -lgdi32 -lwinmm -lcomdlg32
+:: FOR INCLUDE AND LIB: This is running with MinGW which already has Raylib in the -I and -L :-) 
+:: Flags below for hiding windows console on executable
+SET WINFLAGS=-Wl,-subsystem,windows
 
 IF [%1] == [] GOTO RUN
 IF [%1] == [clean] GOTO CLEAN
@@ -30,7 +32,7 @@ GOTO:EOF
 :RUN
 IF NOT EXIST Build MKDIR Build
 PUSHD Build
-%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %LIBFLAGS% %ICON% && echo **Build Successful. Running.** && echo. && %EXECUTABLE%
+%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %LIBFLAGS% %WINFLAGS% %ICONRES% && echo **Build Successful. Running.** && echo. && %EXECUTABLE%
 POPD
 GOTO:EOF
 

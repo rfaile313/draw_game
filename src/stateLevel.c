@@ -16,6 +16,8 @@ enum EarlyStatus earlystatus;
 void initLevel(void)
 {
     //initialize and reset variables
+	
+	earlystatus = ok; // Note(rif): does this need to come before the tile mod below?
 
     //player initial poses
     modifyTile(&player, 0.0f, 0.0f, 200.0f, 300.0f, TWENTY, TWENTY,  ONE_HUNDRED, ONE_HUNDRED);
@@ -27,8 +29,6 @@ void initLevel(void)
     nextScreen = 0;
     errorCount = 0;
     bWait = false;
-
-    earlystatus = ok; //reset each level?
 
     timePassed = GetTime();
     check = GetRandomValue(3,6);
@@ -95,9 +95,9 @@ void updateLevelScreen(void)
     {
         if(GetTime() - timePassed >= 4) 
             {
+				earlystatus = ok; //reset earlystatus 
                 modifyTile(&xAnim, 0.0f, 0.0f, 140.0f, 250.0f, 64.0f, 64.0f, 192.0f, 192.0f); //reset X tile
-                earlystatus = ok; //reset earlystatus 
-                choice = 0; //reset title choice
+				choice = 0; //reset title choice
                 currentState = TITLE;
             }
     }
@@ -105,7 +105,10 @@ void updateLevelScreen(void)
 
     //advance to core if they get here amount of time before draw, random every time
     if ( GetTime() - timePassed >= check && !bWait) { 
-        nextScreen = 1; 
+	//reset X tile
+	earlystatus=ok;
+    modifyTile(&xAnim, 0.0f, 0.0f, 140.0f, 250.0f, 64.0f, 64.0f, 192.0f, 192.0f); //reset X tile 
+	nextScreen = 1; 
     } 
 
 }//update
@@ -120,7 +123,7 @@ void drawLevelScreen(void)
     DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
     //if use enemy1idletexture //DrawTexturePro(enemy1IdleTexture, enemy1idle.source, enemy1idle.dest, origin, rotation, WHITE);
 
-     if(earlystatus != ok)
+    if(earlystatus != ok)
     {
         DrawTexturePro(xAnimationTexture, xAnim.source, xAnim.dest, origin, rotation, WHITE);
  
