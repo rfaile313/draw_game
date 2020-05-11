@@ -9,7 +9,7 @@
 :: Determines output and launcher
 SET EXECUTABLE=draw_game.exe
 SET DEXECUTABLE=draw_game_debug.exe
-SET ICONRES=..\..\..\assets\icon\icon.res
+SET ICONRES=..\assets\icon\icon.res
 :: Source to build from (can use abs or rel path)
 SET SOURCE=..\..\..\main.c
 
