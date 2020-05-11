@@ -16,18 +16,18 @@ RUNGAME="./draw_game"
 BUILDDIR="Build"
 BREAK="-----------------------------"
 
-
-
+#Build into draw_game.app
 if [ $1 = "prod" ]; then
 	mkdir $BUILDDIR && cd $BUILDDIR
-	cp ../libraylib.a .
+	cp ../../../Resources/libraylib.a .
 	clang -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL libraylib.a ../../../main.c -o draw_game
 	mkdir draw_game.app 
 	mkdir draw_game.app/Contents
-	cp -a ../Resources draw_game.app/Contents
-	cp ../info.plist draw_game.app/Contents
+	cp -a ../../../Resources draw_game.app/Contents
+	cp ../../../Resources/info.plist draw_game.app/Contents
 	mkdir draw_game.app/Contents/MacOS
 	mv ./draw_game draw_game.app/Contents/MacOS
+	cp ../../../Resources/runapp draw_game.app/Contents/MacOS
 fi
 
 

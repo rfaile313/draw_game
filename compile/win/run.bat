@@ -9,7 +9,7 @@
 :: Determines output and launcher
 SET EXECUTABLE=draw_game.exe
 SET DEXECUTABLE=draw_game_debug.exe
-SET ICONRES=..\assets\icon\icon.res
+SET ICONRES=..\..\..\Resources\icon\icon.res
 :: Source to build from (can use abs or rel path)
 SET SOURCE=..\..\..\main.c
 
@@ -32,6 +32,7 @@ GOTO:EOF
 :RUN
 IF NOT EXIST Build MKDIR Build
 PUSHD Build
+xcopy /i /e /q ..\..\..\Resources Resources
 %COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %LIBFLAGS% %WINFLAGS% %ICONRES% && echo **Build Successful. Running.** && echo. && %EXECUTABLE%
 POPD
 GOTO:EOF
@@ -39,7 +40,8 @@ GOTO:EOF
 :BUILD
 IF NOT EXIST Build MKDIR Build
 PUSHD Build
-%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %INCLUDEPATHS% %LIBPATHS% %LIBFLAGS% && echo. && echo **Build Successful** && echo.
+xcopy /i /e /q ..\..\..\Resources Resources
+%COMPILER% %SOURCE% -o %EXECUTABLE% %CFLAGS% %LIBFLAGS% %WINFLAGS% %ICONRES% && echo **Build Successful.** && echo.
 POPD
 GOTO:EOF 
 
