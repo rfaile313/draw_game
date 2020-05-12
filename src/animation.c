@@ -157,10 +157,12 @@ void animation1(int state,  Tile *animation)
     if(FPS/animation1Counter == 15)
     { // every 5 frames
         animation1Counter = 0;
-        if (state == 1)
+        
+		if (state == 1) //this is the 'x'/fault  animation
         {
             animation->source.x += 64;
-            if(animation->source.x >= (64*19)){
+            if(animation->source.x >= (64*19))
+			{
                 animation->source.x = (64*19);
 
                 animation->dest.x -= 20;
@@ -180,8 +182,18 @@ void animation1(int state,  Tile *animation)
          
                 }
             }
-        }
-    
+        } // state 1 
+		
+		if (state == 2) //this is the bullet animation
+		{
+			//bullet animation
+			animation->source.x += 32;
+            //bullet movement
+            animation->dest.x += 100;
+			if (animation->source.x >= 96) animation->source.x = 0; //invisible after 64
+			if (animation->dest.x >= 290.0f + (100 * 3)) animation->dest.x = 290.0f + (100 * 3);
+
+		}//state 2
     }
 }
 

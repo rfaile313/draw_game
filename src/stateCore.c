@@ -77,9 +77,10 @@ void updateCore(void){
         
     if (coregameplay == win)
     {
-
-
-    animation(2, &player, 4, &enemy1);
+        
+    	if(GetTime() - stateCoreSeconds <= 0.25) animation(2, &player, 1, &enemy1);
+		if(GetTime() - stateCoreSeconds >= 0.25) animation(3, &player, 4, &enemy1);
+        animation1(2, &bullet);		
 
         if (GetTime() - stateCoreSeconds >= 4) 
         {
@@ -89,7 +90,8 @@ void updateCore(void){
     }
 }
 
-void drawCoreScreen(void){
+void drawCoreScreen(void)
+{
 
     //Background: Texture / 0,0 / 0,0 / 4x scale / WHITE
     DrawTextureEx(tileTexture, origin, rotation, 4.0f, WHITE);
@@ -98,6 +100,11 @@ void drawCoreScreen(void){
     DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
 
     if(coregameplay == draw) DrawTextEx(alagard, GAME_NAME, posDraw, alagard.baseSize * 2, 1, WHITE);
+	
+    if(coregameplay == win) 
+    {
+        if(GetTime() - stateCoreSeconds <= 0.25f) DrawTexturePro(bulletTexture, bullet.source, bullet.dest, origin, rotation, WHITE);	
+    }
 }
 
 int finishCore(void){

@@ -44,6 +44,7 @@ int main(void)
     tileTexture = LoadTexture(tileTexturePath);
     enemy1IdleTexture = LoadTexture(enemy1IdleTexturePath);
     xAnimationTexture = LoadTexture(xAnimationTexturePath);
+	bulletTexture = LoadTexture(bulletTexturePath);	
 
     alagard = LoadFont(fontAlagard);
     //-->end resource load
@@ -103,24 +104,8 @@ int main(void)
                     currentState = TITLE;
                 }
             }break;
-            case SHOOT:
-            {
-
-            }break;
-            case WIN:
-            {
-
-            }break;
-            case LOSE:
-            {
-
-            }break;
-            case END:
-            {
-
-            }break;
             default: break;
-        }
+        }//switch 
         //------------->Update
 
         //Draw---------->
@@ -143,29 +128,14 @@ int main(void)
             {
                 drawCoreScreen();
             }break;
-            case SHOOT:
-            {
-
-            }break;
-            case WIN:
-            {
-
-            }break;
-            case LOSE:
-            {
-
-            }break;
-            case END:
-            {
-
-            }break;
             default: break;
         }
         
         //EndDrawing() (Required)
         EndDrawing();
         //-------------->Draw
-    }
+
+    }//-->while(!windowshouldclose)
     
     // De-Initialization
     // Unload Resources
@@ -173,6 +143,8 @@ int main(void)
     UnloadTexture(charTexture);
     UnloadTexture(tileTexture);
     UnloadTexture(enemy1IdleTexture);
+	UnloadTexture(xAnimationTexture);
+	UnloadTexture(bulletTexture);
     UnloadSound(fxInitial);
     UnloadSound(fxDraw);
     UnloadSound(fxShoot);
@@ -189,4 +161,5 @@ int main(void)
     CloseWindow();        
     
     return 0;
+
 }

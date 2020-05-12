@@ -10,9 +10,7 @@ DEFINITELY GO BACK TO GCC -- IT MAKES YOU HAPPY
 
 🟡 Finish player and enemy animations. (and new chars)
 
-🟡 Set up timer system (pretty much done but will tie into slomo)
-
-🟡 set up debugger (done but then went back to gcc, maybe look into tinycc?)
+🟡 Enemy Bullet
 
 🔴 Use JuiceFX to make things cool!
 
@@ -33,6 +31,18 @@ DEFINITELY GO BACK TO GCC -- IT MAKES YOU HAPPY
 🔴 Title: High Score Screen
 
 🔴 Art: Cooler shoot/blood/death
+
+🟢 Set up timer system (Done)
+
+🟢 set up debugger (Done: TCC for GCC // RemedyBG for MSVC, both build files are set up)
+
+🟢 Animation: Player bullet
+
+🟢 Art: Bullet
+
+🟢 Set up timer system (Done)
+
+🟢 set up debugger (Done: TCC for GCC // RemedyBG for MSVC, both build files are set up)
 
 🟢 Game Logic: Lose 
 

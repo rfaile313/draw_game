@@ -24,14 +24,16 @@ typedef struct Tile{
     Rectangle dest;
 }Tile;
 
-//init player and set to default tile  (20x20 px rects) (160x100)
+// init player and set to default tile  (20x20 px rects) (160x100)
 Tile player = {0};
-//init first enemy and set to default tile  (20x20 px rects) (160x100) negative source width to flip X
+// init first enemy and set to default tile  (20x20 px rects) (160x100) negative source width to flip X
 Tile enemy1 = {0};
-//init first enemy idle (comes from different sheet)
+// init first enemy idle (comes from different sheet)
 Tile enemy1idle = {0};
 // xanim
 Tile xAnim = {0};
+// bullet
+Tile bullet = {0};
 
 //---->types and structure def 
 
@@ -117,6 +119,7 @@ Texture2D charTexture;
 Texture2D tileTexture;
 Texture2D enemy1IdleTexture;
 Texture2D xAnimationTexture;
+Texture2D bulletTexture;
 
 Font alagard;
 //--->resources

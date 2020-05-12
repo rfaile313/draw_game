@@ -11,6 +11,7 @@
 
     const_str enemy1IdleTexturePath = "Resources/cowboyspenzilla/enemy1idle.png";
     const_str xAnimationTexturePath = "Resources/rudy/xanimation.png";
+	const_str bulletTexturePath = "Resources/rudy/bullet.png";
     
     const_str soundBullet  = "Resources/sound/bullet.ogg";
     const_str soundDraw    = "Resources/sound/draw.ogg";
@@ -34,8 +35,9 @@
 
     const_str enemy1IdleTexturePath = "../Resources/cowboyspenzilla/enemy1idle.png";
     const_str xAnimationTexturePath = "../Resources/rudy/xanimation.png";
+	const_str bulletTexturePath = "../Resources/rudy/bullet.png";
     
-    const_str soundBullet  = "../Resources/sound/bullet.ogg";
+	const_str soundBullet  = "../Resources/sound/bullet.ogg";
     const_str soundDraw    = "../Resources/sound/draw.ogg";
     const_str soundError   = "../Resources/sound/error.ogg";
     const_str soundInitial = "../Resources/sound/initial.ogg";

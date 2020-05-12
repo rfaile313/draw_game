@@ -23,6 +23,9 @@ void initLevel(void)
     modifyTile(&player, 0.0f, 0.0f, 200.0f, 300.0f, TWENTY, TWENTY,  ONE_HUNDRED, ONE_HUNDRED);
     modifyTile(&enemy1, 120.0f, 60.0f, 600.0f, 300.0f, -TWENTY, TWENTY,  ONE_HUNDRED, ONE_HUNDRED);
     modifyTile(&enemy1idle, 0.0f, 0.0f, 600.0f, 300.0f, -ONE_HUNDRED, ONE_HUNDRED,  ONE_HUNDRED, ONE_HUNDRED);
+		
+	//bullet
+	modifyTile(&bullet, 0.0f, 0.0f, 290.0f, 340.0f, 32.0f, 32.0f, 32.0f, 32.0f);	
 
     //default values
     stateLevelCounter = 0;
@@ -121,6 +124,8 @@ void drawLevelScreen(void)
 
     DrawTexturePro(charTexture, player.source, player.dest, origin, rotation, WHITE);
     DrawTexturePro(charTexture, enemy1.source, enemy1.dest, origin, rotation, WHITE);
+
+
     //if use enemy1idletexture //DrawTexturePro(enemy1IdleTexture, enemy1idle.source, enemy1idle.dest, origin, rotation, WHITE);
 
     if(earlystatus != ok)
