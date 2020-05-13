@@ -3,6 +3,6 @@
     <plist version="1.0">
     <dict>
       <key>CFBundleExecutable</key>
-      <string>draw_game</string>
+      <string>runapp</string>
     </dict>
     </plist>

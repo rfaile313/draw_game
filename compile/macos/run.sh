@@ -14,6 +14,7 @@ OUTPUT="-o draw_game"
 COMPLETE="**Build Succeded**"
 RUNGAME="./draw_game"
 BUILDDIR="Build"
+RESOURCES="Resources"
 BREAK="-----------------------------"
 
 #Build into draw_game.app
@@ -28,23 +29,27 @@ if [ $1 = "prod" ]; then
 	mkdir draw_game.app/Contents/MacOS
 	mv ./draw_game draw_game.app/Contents/MacOS
 	cp ../../../Resources/runapp draw_game.app/Contents/MacOS
+	chmod +x draw_game.app/Contents/MacOS/runapp
 fi
 
-
+# Clean
 if [ $1 = "clean" ]; then
 	if [[ -d $BUILDDIR ]]
 		then
 			rm -rf $BUILDDIR && echo "Removed $BUILDDIR folder + files"
+			rm -rf $RESOURCES && echo "Removed $RESOURCES folder + files"
 			echo "**Cleaning Done**"
 		else
 	echo "No $BUILDDIR folder to remove"
 	fi
 fi
 
+# Normal build and run
 if [ -z "$1"  ]; then
 	
 	if [[ -d $BUILDDIR ]]
 		then
+			rm -rf $RESOURCES && echo "Removed $RESOURCES folder + files"
 			rm -rf $BUILDDIR && echo "Removed $BUILDDIR folder + files"
 			echo "**Cleaning Done**"
 		else
@@ -65,6 +70,7 @@ if [ -z "$1"  ]; then
 	#check if previous command built
 	if [ $? -eq 0 ]; then
 		echo $COMPLETE
+		cp -a  ../../../Resources/ ../Resources
 		$RUNGAME
 	else
 		echo "******Build Failed******"
