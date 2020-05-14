@@ -54,7 +54,7 @@ if [[ $1 == "clean" ]]; then
 fi
 
 # Normal build and run
-if [ -z "$1"  ]; then
+if [[ -z "$1"  ]]; then
 	
 	if [[ -d $BUILDDIR ]]
 		then
@@ -77,7 +77,7 @@ if [ -z "$1"  ]; then
 
 	$COMPILER $CFLAGS $SOURCE $OUTPUT $LIBS
 	#check if previous command built
-	if [ $? -eq 0 ]; then
+	if [[ $? -eq 0 ]]; then
 		echo $COMPLETE
 		cp -a  ../../../Resources/ ../Resources
 		$RUNGAME
