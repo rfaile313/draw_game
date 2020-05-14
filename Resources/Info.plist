@@ -3,6 +3,8 @@
     <plist version="1.0">
     <dict>
       <key>CFBundleExecutable</key>
-      <string>runapp</string>
+	  <string>runapp</string>
+	  <key>CFBundleIconFile</key>
+	  <string>gun2.icns</string>
     </dict>
     </plist>

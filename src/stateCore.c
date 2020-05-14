@@ -25,7 +25,8 @@ void initCore(void){
     stateCoreSeconds = GetTime ();
 }
 
-void updateCore(void){
+void updateCore(void)
+{
 // the enemy a certain time to shoot based on difficulty
 // the player has to shoot before they get shot
 // but not before you draw your weapon
@@ -33,29 +34,36 @@ void updateCore(void){
    if(coregameplay == draw)animation(1, &player, 1, &enemy1);
 
     //enemy win condition
-    if (GetTime() - stateCoreSeconds >= ENEMY_DIFFICULTY && coregameplay != win){
-        animation(4, &player, 3, &enemy1);
-        if(coregameplay == draw){
+   if (GetTime() - stateCoreSeconds >= ENEMY_DIFFICULTY && coregameplay != win)
+	{
+        if(coregameplay == draw)
+		{
             PlaySound(fxShoot);
-            PlaySound(fxLoseWdl);
-            //reset time
+            PlaySound(fxLoseWdl); //has 1s delay
+			//explicitly change bullet starting position, flip source width to flip x axis
+          	modifyTile(&bullet, 0.0f, 0.0f, 575.0f, 340.0f, -32.0f, 32.0f, 32.0f, 32.0f);	
+			//reset time
             stateCoreSeconds = GetTime();
+			coregameplay = lose;
         }
-        coregameplay = lose;
-  
-        animation(4, &player, 6, &enemy1);
+	}
+	
+	if(coregameplay == lose)
+	{
+		if(GetTime() - stateCoreSeconds < 0.25f) animation(1, &player, 3, &enemy1); //enemy shoot, player stays draw
+		if(GetTime() - stateCoreSeconds > 0.25f) animation(4, &player, 6, &enemy1); //player die, enemy taunt
+		animation1(3, &bullet); //bullet animation
 
         if (GetTime() - stateCoreSeconds >= 4 ) 
         {
-        //wait 2 seconds ^, then
-        //reset levels, difficulty
-        currentLevel = 1;
-        ENEMY_DIFFICULTY = 1.05f;
-        finishstate = gototitle;
-
+			//wait 2 seconds ^, then
+			//reset levels, difficulty
+			currentLevel = 1;
+			ENEMY_DIFFICULTY = 1.05f;
+			finishstate = gototitle;
         }
+	}
 
-    }
 
     //if you press space and the enemy hasn't won that means you've won
     if(IsKeyPressed(KEY_SPACE) && coregameplay != lose)
@@ -78,8 +86,8 @@ void updateCore(void){
     if (coregameplay == win)
     {
         
-    	if(GetTime() - stateCoreSeconds <= 0.25) animation(2, &player, 1, &enemy1);
-		if(GetTime() - stateCoreSeconds >= 0.25) animation(3, &player, 4, &enemy1);
+    	if(GetTime() - stateCoreSeconds <= 0.25f) animation(2, &player, 1, &enemy1);
+		if(GetTime() - stateCoreSeconds >= 0.25f) animation(3, &player, 4, &enemy1);
         animation1(2, &bullet);		
 
         if (GetTime() - stateCoreSeconds >= 4) 
@@ -88,11 +96,11 @@ void updateCore(void){
             currentState = LEVEL;
         }
     }
-}
+
+}//updateCore 
 
 void drawCoreScreen(void)
 {
-
     //Background: Texture / 0,0 / 0,0 / 4x scale / WHITE
     DrawTextureEx(tileTexture, origin, rotation, 4.0f, WHITE);
 
@@ -105,9 +113,14 @@ void drawCoreScreen(void)
     {
         if(GetTime() - stateCoreSeconds <= 0.25f) DrawTexturePro(bulletTexture, bullet.source, bullet.dest, origin, rotation, WHITE);	
     }
+	if(coregameplay == lose)
+	{
+        if(GetTime() - stateCoreSeconds <= 0.25f) DrawTexturePro(bulletTexture, bullet.source, bullet.dest, origin, rotation, WHITE);
+	}
 }
 
-int finishCore(void){
+int finishCore(void)
+{
     return finishstate;
 }
 

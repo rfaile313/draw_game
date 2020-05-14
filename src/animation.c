@@ -54,7 +54,6 @@ void animation(int state,  Tile *animation,
                 animation->source.y = 80;
                 animation->source.x = 20;
             }
-            
         }
         
         //enemy animations
@@ -88,7 +87,6 @@ void animation(int state,  Tile *animation,
                     eAnimation->source.y = 0; 
                 }
             }
-           
         }
 
         if (eState == 5) //new idle
@@ -111,7 +109,6 @@ void animation(int state,  Tile *animation,
             eAnimation->source.y = 20;
             eAnimation->source.x = 80;
             }
-           
         }
        
     } //--->if(FPS/animationCounter == 4)
@@ -133,7 +130,7 @@ void animation(int state,  Tile *animation,
             }
         }
 
-        if(state==2)//shoot gun, then spin?
+        if(state == 2)//shoot gun, then spin?
         {
             if (playerstate != spingun){
             animation->source.y = 40;
@@ -155,7 +152,7 @@ void animation1(int state,  Tile *animation)
 {
     animation1Counter++;
     if(FPS/animation1Counter == 15)
-    { // every 5 frames
+    { // every 4 frames
         animation1Counter = 0;
         
 		if (state == 1) //this is the 'x'/fault  animation
@@ -184,7 +181,7 @@ void animation1(int state,  Tile *animation)
             }
         } // state 1 
 		
-		if (state == 2) //this is the bullet animation
+		if (state == 2) //this is the player bullet animation
 		{
 			//bullet animation
 			animation->source.x += 32;
@@ -194,12 +191,23 @@ void animation1(int state,  Tile *animation)
 			if (animation->dest.x >= 290.0f + (100 * 3)) animation->dest.x = 290.0f + (100 * 3);
 
 		}//state 2
+
+		if (state == 3) //this is the enemy bullet animation
+		{
+			//bullet animation
+			animation->source.x += 32;
+            //bullet movement
+            animation->dest.x -= 100;
+			if (animation->source.x >= 96) animation->source.x = 0; //invisible after 64
+			if (animation->dest.x <= 575.0f - (100 * 3)) animation->dest.x = 575.0f - (100 * 3);
+		}//state3
     }
 }
 
 void modifyTile(Tile *individual_tile, f32 sX, f32 sY, f32 dX, f32 dY,
 				f32 srcW, f32 srcH, f32 destW, f32 destH)
 // Modify tile struct values directly
+// I have been finding this useful as a one time call.
 {
     individual_tile->source.x = sX;
     individual_tile->source.y = sY;

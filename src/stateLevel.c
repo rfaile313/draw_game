@@ -101,6 +101,7 @@ void updateLevelScreen(void)
 				earlystatus = ok; //reset earlystatus 
                 modifyTile(&xAnim, 0.0f, 0.0f, 140.0f, 250.0f, 64.0f, 64.0f, 192.0f, 192.0f); //reset X tile
 				choice = 0; //reset title choice
+				currentLevel = 1; //reset level
                 currentState = TITLE;
             }
     }
