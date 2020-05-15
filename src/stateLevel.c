@@ -41,7 +41,7 @@ void initLevel(void)
     animationCounter = 0;
     animation1Counter= 0;
     fastestAnimationCounter=0;
-    enemystate = shoot;
+    enemystate = taunt1;
     playerstate = reset;
 }
 

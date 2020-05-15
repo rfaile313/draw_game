@@ -50,13 +50,13 @@ void updateCore(void)
 	
 	if(coregameplay == lose)
 	{
-		if(GetTime() - stateCoreSeconds < 0.25f) animation(1, &player, 3, &enemy1); //enemy shoot, player stays draw
-		if(GetTime() - stateCoreSeconds > 0.25f) animation(4, &player, 6, &enemy1); //player die, enemy taunt
+		if(GetTime() - stateCoreSeconds < 0.15f) animation(1, &player, 3, &enemy1); //enemy shoot, player stays draw
+		if(GetTime() - stateCoreSeconds > 0.15f) animation(4, &player, 6, &enemy1); //player die, enemy taunt
 		animation1(3, &bullet); //bullet animation
 
         if (GetTime() - stateCoreSeconds >= 4 ) 
         {
-			//wait 2 seconds ^, then
+			//wait 4 seconds ^, then
 			//reset levels, difficulty
 			currentLevel = 1;
 			ENEMY_DIFFICULTY = 1.05f;
@@ -115,7 +115,7 @@ void drawCoreScreen(void)
     }
 	if(coregameplay == lose)
 	{
-        if(GetTime() - stateCoreSeconds <= 0.25f) DrawTexturePro(bulletTexture, bullet.source, bullet.dest, origin, rotation, WHITE);
+        if(GetTime() - stateCoreSeconds <= 0.30f) DrawTexturePro(bulletTexture, bullet.source, bullet.dest, origin, rotation, WHITE);
 	}
 }
 

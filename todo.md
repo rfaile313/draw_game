@@ -6,15 +6,12 @@
 🟢 Complete
 
 ---
-DEFINITELY GO BACK TO GCC -- IT MAKES YOU HAPPY
 
 🟡 Finish player and enemy animations. (and new chars)
 
-🟡 Enemy Bullet
+🟡 Enemy Bullet (almost there.... something seems a bit off 🤔
 
 🔴 Use JuiceFX to make things cool!
-
-🔴 Game Logic: Win 
 
 🔴 Game Logic: New/Different Enemy
 
@@ -31,6 +28,10 @@ DEFINITELY GO BACK TO GCC -- IT MAKES YOU HAPPY
 🔴 Title: High Score Screen
 
 🔴 Art: Cooler shoot/blood/death
+
+🟢 DEFINITELY GO BACK TO GCC -- IT MAKES YOU HAPPY
+
+🟢 Game Logic: Win 
 
 🟢 Set up timer system (Done)
 

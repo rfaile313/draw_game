@@ -30,31 +30,7 @@ void animation(int state,  Tile *animation,
             animation->source.x -= 20;
             if(animation->source.x < 0) animation->source.x = 60;
         }
-        if(state==4)//death
-        {
-            if(playerstate==reset)
-            {
-                animation->source.y = 40;
-                animation->source.x = 40;
-                playerstate=dieframe1;
-                
-            }
-            //dieframe1
-            else if (playerstate==dieframe1)
-            {
-                
-                animation->source.y = 80;
-                animation->source.x = 0;
-                playerstate=dieframe2;
-                
-            }
-            //dieframe2
-            else if (playerstate==dieframe2)
-            {
-                animation->source.y = 80;
-                animation->source.x = 20;
-            }
-        }
+        
         
         //enemy animations
         if (eState == 0) //spin gun enemy
@@ -76,17 +52,13 @@ void animation(int state,  Tile *animation,
             if (eAnimation->source.x >= 100) eAnimation->source.x = 100; 
         }
         if (eState == 3){ //shoot gun enemy
-            if(enemystate == shoot)
-            {
             eAnimation->source.y = 40;
             eAnimation->source.x += 20;
                 if (eAnimation->source.x >= 120)
                 {
-                    enemystate = taunt1;
                     eAnimation->source.x = 80;
                     eAnimation->source.y = 0; 
                 }
-            }
         }
 
         if (eState == 5) //new idle
@@ -128,7 +100,34 @@ void animation(int state,  Tile *animation,
             eAnimation->source.x += 20;
             if (eAnimation->source.x >= 100) eAnimation->source.x = 100;
             }
-        }
+        }//-->die enemy
+
+		if(state==4)// player death
+        {
+            if(playerstate==reset)
+            {
+                animation->source.y = 40;
+                animation->source.x = 0;
+                playerstate=dieframe1;
+                
+            }
+            //dieframe1
+            else if (playerstate==dieframe1)
+            {
+                
+                animation->source.y = 80;
+                animation->source.x = 0;
+				animation->dest.x -= 20;
+				if(animation->dest.x <= 140)playerstate=dieframe2;
+                
+            }
+            //dieframe2
+            else if (playerstate==dieframe2)
+            {
+                animation->source.y = 80;
+                animation->source.x = 20;
+            }
+        }//-->playerdeath
 
         if(state == 2)//shoot gun, then spin?
         {
@@ -143,7 +142,8 @@ void animation(int state,  Tile *animation,
             animation->source.x -= 20;
             if(animation->source.x < 0) animation->source.x = 60;   
             }
-        }
+        }//playerstate2
+
     }//fastestAnimationCounter
 
 }//animation parent function
@@ -169,10 +169,10 @@ void animation1(int state,  Tile *animation)
                 animation->dest.width -= 20;
                 animation->dest.height -= 20;
        
-                if (animation->dest.y >= (250 + (20 * 5) ) && animation->dest.width <= (192 - (20 * 4) )  )
+                if (animation->dest.y >= (250 + (20 * 5) ) && animation->dest.width <= (192 - (20 * 4) ))
                 {
                 animation->dest.x = (140.0f - (20 * 5));
-                animation->dest.y = (250 + (20 * 5)   );
+                animation->dest.y = (250 + (20 * 5));
 
                 animation->dest.width = (192 - (20 * 4));
                 animation->dest.height= (192 - (20 * 4));
@@ -197,9 +197,9 @@ void animation1(int state,  Tile *animation)
 			//bullet animation
 			animation->source.x += 32;
             //bullet movement
-            animation->dest.x -= 100;
+            animation->dest.x -= 90;
 			if (animation->source.x >= 96) animation->source.x = 0; //invisible after 64
-			if (animation->dest.x <= 575.0f - (100 * 3)) animation->dest.x = 575.0f - (100 * 3);
+			if (animation->dest.x <= 575.0f - (110 * 3)) animation->dest.x = 575.0f - (110 * 3);
 		}//state3
     }
 }
