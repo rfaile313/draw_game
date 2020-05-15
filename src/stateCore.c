@@ -115,7 +115,7 @@ void drawCoreScreen(void)
     }
 	if(coregameplay == lose)
 	{
-        if(GetTime() - stateCoreSeconds <= 0.30f) DrawTexturePro(bulletTexture, bullet.source, bullet.dest, origin, rotation, WHITE);
+        if(GetTime() - stateCoreSeconds <= 0.25f) DrawTexturePro(bulletTexture, bullet.source, bullet.dest, origin, rotation, WHITE);
 	}
 }
 
