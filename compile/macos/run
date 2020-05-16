@@ -1,5 +1,6 @@
 #/bin/bash
 
+# Note(rudy): cd into compile/macos first
 # combines clean, build, and run game
 # into one script, leveraging logical
 # operator && which runs only if 
@@ -11,22 +12,24 @@ CFLAGS="-Wall -g -Wno-missing-braces"
 SOURCE="../../../main.c"
 LIBS="-lraylib"
 OUTPUT="-o draw_game"
-COMPLETE="**Build Succeded**"
+SUCCESS="**Build Succeded**"
+FAIL="**Build Failed**"
 RUNGAME="./draw_game"
 BUILDDIR="Build"
 RESOURCES="Resources"
-BREAK="-----------------------------"
 
 #Build into draw_game.app
 if [[ $1 == "prod" ]]; then
-	
+
+	# Remove build dir if one exists
 	if [[ -d $BUILDDIR ]]
 		then
 			rm -rf $RESOURCES && echo "Removed $RESOURCES folder + files"
 			rm -rf $BUILDDIR && echo "Removed $BUILDDIR folder + files"
 			echo "**Cleaning Done**"
 	fi
-
+	
+	# Make build dir, push into it, create and copy all needed files
 	mkdir $BUILDDIR && cd $BUILDDIR
 	cp ../../../Resources/libraylib.a .
 	clang -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL libraylib.a ../../../main.c -o draw_game
@@ -64,26 +67,18 @@ if [[ -z "$1"  ]]; then
 		else
 	echo "No $BUILDDIR folder to remove"
 	fi
-
-	mkdir $BUILDDIR && cd $BUILDDIR
 	
-	echo $BREAK
-	echo "**Building game with $COMPILER**"
-	echo "Flags: $CFLAGS"
-	echo "Source: $SOURCE"
-	echo "Output: $OUTPUT"
-	echo "Linked Libs: $LIBS"
-	echo $BREAK
+	mkdir $BUILDDIR && cd $BUILDDIR
 
+	# Actual compilation
 	$COMPILER $CFLAGS $SOURCE $OUTPUT $LIBS
 	#check if previous command built
 	if [[ $? -eq 0 ]]; then
-		echo $COMPLETE
+		echo $SUCCESS
 		cp -a  ../../../Resources/ ../Resources
 		$RUNGAME
 	else
-		echo "******Build Failed******"
+		echo $FAIL
 	fi
-
 fi
 

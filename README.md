@@ -8,8 +8,9 @@ It's a standoff! Press Space when it's time to draw, but not before!
 
 ## MacOS:
 
-1. `./run.sh` cleans, builds, and runs if build successful
-2. `./cleanmac.sh` cleans files for git commits
+1. `./run` cleans, builds, and runs if build successful
+2. `./run clean` cleans (good for removing prior to git commits
+3. `./run prod` makes a draw_game.app macOS app
 
 ## Windows:
 
