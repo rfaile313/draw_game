@@ -6,25 +6,27 @@
 
 ---
 
-🟡 Finish player and enemy animations. (and new chars)
+🟡 Game Logic: Display reaction time
 
-🔴 Game Logic: Display reaction time
+🟡 Adjust enemy difficulty based on options//difficulty setting
 
-🔴 Game Logic: High Score
+🟡 Game Logic: High Score (Highest Level, Fastest Draw, Difficulty)
+
+🟡 High Score Screen? options? put directly on title?
+
+🔴 refactor/refine title and options based on layout/constraints
 
 🔴 Consider refactoring animation.c
 
 🔴 Use JuiceFX?
 
-🔴 Game Art/logic: New/Different Enemy
+🔴 Game Art/logic: New/Different Enemy // player motions, etc.
 
 🔴 Game Logic: (maybe) Slowmo?
 
-🔴 Title: Options Screen
-
-🔴 Title: High Score Screen
-
 🔴 Art: Cooler shoot/blood/death
+
+🟢 Title: Options Screen (done)
 
 🟢 Enemy Bullet Animation (done)
 
@@ -71,6 +73,17 @@
 🟢 set up placeholder player animation with framecounter (done: playerAnimation())
 
 🟢 Initial Timer set up (done)
+
+### Future ideas:
+
+Points buy outfits/guns
+levels/duels are multi-round, guns affect accuracy etc
+
+### Crazy ideas:
+
+Multiplayer
+Leaderboard
+Point/cash shop to buy clothes/guns/etc (#swag)
 
 ---
 

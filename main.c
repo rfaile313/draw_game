@@ -7,6 +7,7 @@
 #include "src/animation.c"
 #include "src/resources.c"
 #include "src/stateTitle.c"
+#include "src/stateOptions.c"
 #include "src/stateLevel.c"
 #include "src/stateCore.c"
 
@@ -39,6 +40,7 @@ int main(void)
     fxOrgan   = LoadSound(soundOrgan); 
     fxShoot   = LoadSound(soundShoot);
     fxWin     = LoadSound(soundWin);
+	fxToggle  = LoadSound(soundToggle);	
          
     charTexture = LoadTexture(charTexturePath); //128/4 x 256/8
     tileTexture = LoadTexture(tileTexturePath);
@@ -65,7 +67,14 @@ int main(void)
             case TITLE:
             {
                 updateTitleScreen();
-                if(titleScreenFinished() == 1) //1 = next screen
+				
+				if(titleScreenFinished() == 1) //1 = options
+				{
+					arrowPosX = 250; //set arrow to 'back' on options screen
+					arrowPosY = 200; // ""
+					currentState = OPTIONS;	
+				}
+                if(titleScreenFinished() == 2) //2 = next screen
                 {
                     choice = 0; //resets titleScreenFinished()
                     initLevel(); //function in stateTitle.c: resets variables from logic.h
@@ -73,6 +82,16 @@ int main(void)
                 }
    
             }break;
+			case OPTIONS:
+			{
+				updateOptionsScreen();
+				
+				if(titleScreenFinished() == 0)
+				{
+					currentState = TITLE;
+				}
+			
+			}break;
             case LEVEL:
             {
                 if (earlystatus == warning)
@@ -120,6 +139,10 @@ int main(void)
             {
                 drawTitleScreen();
             }break;
+			case OPTIONS:
+			{
+				drawOptionsScreen();				
+			}break;
             case LEVEL:
             {
                 drawLevelScreen();

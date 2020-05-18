@@ -9,12 +9,9 @@
 // Controls Game State
 typedef enum GameState {
 TITLE = 0,
+OPTIONS,
 LEVEL,
-CORE,
-SHOOT,
-WIN,
-LOSE,
-END
+CORE
 }GameState;
 
 GameState currentState;
@@ -105,6 +102,7 @@ Vector2 posTwoFaults = {110, 225};
 //--->end global variables
 
 //resources----->
+Sound fxToggle;
 Sound fxBullet;
 Sound fxDraw;
 Sound fxError;

@@ -22,6 +22,7 @@
     const_str soundOrgan   = "Resources/sound/organ.ogg";
     const_str soundShoot   = "Resources/sound/shoot.ogg";
     const_str soundWin     = "Resources/sound/win.ogg";
+	const_str soundToggle  = "Resources/sound/togglesound.ogg";	
 
     const_str fontAlagard  = "Resources/spritefont/custom_alagard.png";
 
@@ -46,8 +47,9 @@
     const_str soundOrgan   = "../Resources/sound/organ.ogg";
     const_str soundShoot   = "../Resources/sound/shoot.ogg";
     const_str soundWin     = "../Resources/sound/win.ogg";
-
-    const_str fontAlagard  = "../Resources/spritefont/custom_alagard.png";
+	const_str soundToggle  = "../Resources/sound/togglesound.ogg";	
+    
+	const_str fontAlagard  = "../Resources/spritefont/custom_alagard.png";
 
     #if TARGET_IPHONE_SIMULATOR
          // iOS Simulator
