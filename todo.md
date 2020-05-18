@@ -1,6 +1,5 @@
 # Draw Game TODO
 
-
 🟡 In Progress
 🔴 Not Started
 🟢 Complete
@@ -9,17 +8,15 @@
 
 🟡 Finish player and enemy animations. (and new chars)
 
-🟡 Enemy Bullet (almost there.... something seems a bit off 🤔
-
-🔴 Use JuiceFX to make things cool!
-
-🔴 Game Logic: New/Different Enemy
-
 🔴 Game Logic: Display reaction time
 
 🔴 Game Logic: High Score
 
 🔴 Consider refactoring animation.c
+
+🔴 Use JuiceFX?
+
+🔴 Game Art/logic: New/Different Enemy
 
 🔴 Game Logic: (maybe) Slowmo?
 
@@ -28,6 +25,8 @@
 🔴 Title: High Score Screen
 
 🔴 Art: Cooler shoot/blood/death
+
+🟢 Enemy Bullet Animation (done)
 
 🟢 DEFINITELY GO BACK TO GCC -- IT MAKES YOU HAPPY
 

@@ -1,9 +1,9 @@
-//only external dependency
+// only external dependency
 #include <raylib.h>
-//headers
+// headers
 #include "src/r_types.h" 
 #include "src/logic.h"
-//unity
+// unity build 
 #include "src/animation.c"
 #include "src/resources.c"
 #include "src/stateTitle.c"

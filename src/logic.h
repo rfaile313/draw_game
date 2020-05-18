@@ -30,9 +30,9 @@ Tile player = {0};
 Tile enemy1 = {0};
 // init first enemy idle (comes from different sheet)
 Tile enemy1idle = {0};
-// xanim
+// xanim tile init
 Tile xAnim = {0};
-// bullet
+// bullet tile init
 Tile bullet = {0};
 
 //---->types and structure def 

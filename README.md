@@ -1,6 +1,6 @@
 # Draw!
 
-![game_screenshot](assets/screenshot.png)
+![game_screenshot](Resources/screenshot.png)
 
 ## How to Play:
 
@@ -20,7 +20,7 @@ It's a standoff! Press Space when it's time to draw, but not before!
 1. `run` builds and runs
 2. `run build` only builds
 3. `run clean` cleans files
-4. `run debug` will run a debugger once I set it up
+4. `run debug` compiles with TCC for debugging 
 
 (4coder bindings to run.bat)
 

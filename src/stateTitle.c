@@ -48,7 +48,6 @@ void updateTitleScreen(void){
     }
 }
 
-
 void drawTitleScreen(void){
     DrawText(GAME_NAME, titlePosX, titlePosY, titleSize, WHITE);
     DrawText(fontPlay, playPosX, playPosY, playSize, WHITE);
