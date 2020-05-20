@@ -57,8 +57,16 @@ void updateOptionsScreen(void)
 		else if(arrowPosY == 400) //sound
 		{
 			PlaySound(fxToggle);
-			if(gameSound)  gameSound = false;
-			else if(!gameSound) gameSound = true;
+			if(gameSound)
+			{
+				gameSound = false;
+				SetMasterVolume(0);
+			}
+			else if(!gameSound)
+			{
+				gameSound = true;
+				SetMasterVolume(1);
+			}
 		}
 	}
 
@@ -74,8 +82,16 @@ void updateOptionsScreen(void)
 		else if(arrowPosY == 400) //sound
 		{
 			PlaySound(fxToggle);
-			if(gameSound)  gameSound = false;
-			else if(!gameSound) gameSound = true;
+			if(gameSound)
+			{
+				gameSound = false;
+				SetMasterVolume(0);
+			}
+			else if(!gameSound)
+			{
+				gameSound = true;
+				SetMasterVolume(1);
+			}	
 		}
 	}
 
