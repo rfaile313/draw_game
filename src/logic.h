@@ -8,17 +8,17 @@
 // ----------------------
 // Controls Game State
 typedef enum GameState {
-TITLE = 0,
-OPTIONS,
-LEVEL,
-CORE
+	TITLE = 0,
+	OPTIONS,
+	LEVEL,
+	CORE
 }GameState;
 
 GameState currentState;
 
 typedef struct Tile{
-    Rectangle source;
-    Rectangle dest;
+	Rectangle source;
+	Rectangle dest;
 }Tile;
 
 // init player and set to default tile  (20x20 px rects) (160x100)
@@ -83,9 +83,9 @@ u16 backPosY = 200;
 u16 backSize = 50;
 
 typedef enum GameDifficulty {
-difficultyNormal=0,
-difficultyEasy,
-difficultyHard
+	difficultyNormal=0,
+	difficultyEasy,
+	difficultyHard
 }GameDifficulty;
 
 GameDifficulty gamedifficulty = 0;
@@ -108,14 +108,14 @@ u32 fastestAnimationCounter;
 u32 animation1Counter;
 
 enum AnimationState{
-reset = 0,
-shoot,
-stand,
-dieframe1,
-dieframe2,
-taunt1,
-taunt2,
-spingun
+	reset = 0,
+	shoot,
+	stand,
+	dieframe1,
+	dieframe2,
+	taunt1,
+	taunt2,
+	spingun
 };
 enum AnimationState enemystate;
 enum AnimationState playerstate;
@@ -162,12 +162,12 @@ Font alagard;
 
 //animation.c function defs
 void animation(int state,  Tile *animation,
-               int eState, Tile *eAnimation);
+		int eState, Tile *eAnimation);
 
 void animation1(int state,  Tile *animation);
 
 void modifyTile(Tile *individual_tile, f32 sX, f32 sY, f32 dX, f32 dY,
-				f32 srcW, f32 srcH, f32 destW, f32 destH);
+		f32 srcW, f32 srcH, f32 destW, f32 destH);
 
 // stateTitle.c function defs
 void updateTitleScreen(void);

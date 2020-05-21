@@ -7,16 +7,16 @@ void updateOptionsScreen(void)
 {	
 	if(IsKeyPressed(KEY_UP))
 	{
-        arrowPosY -= 100;
-        if(arrowPosY <= 200) arrowPosY = 200;
-    }
+		arrowPosY -= 100;
+		if(arrowPosY <= 200) arrowPosY = 200;
+	}
 
 	if(IsKeyPressed(KEY_DOWN))
 	{
-        arrowPosY += 100; // 200 back, 250 difficulty title, 300 difficulty, 350 sound title, 400 snd
-        if(arrowPosY >= 400) arrowPosY = 400;
-    }
-	
+		arrowPosY += 100; // 200 back, 250 difficulty title, 300 difficulty, 350 sound title, 400 snd
+		if(arrowPosY >= 400) arrowPosY = 400;
+	}
+
 	if(IsKeyPressed(KEY_LEFT))
 	{
 		if(arrowPosY == 300) //difficulty
@@ -37,7 +37,7 @@ void updateOptionsScreen(void)
 				gamedifficulty = difficultyNormal;
 				ENEMY_DIFFICULTY = DIFF_EASY;	
 			}
-			
+
 		}
 		else if(arrowPosY == 400) //sound
 		{
@@ -92,17 +92,17 @@ void updateOptionsScreen(void)
 		}
 	}
 
-    if(IsKeyPressed(KEY_SPACE))
+	if(IsKeyPressed(KEY_SPACE))
 	{
-        //TODO: add fancy animations
-        if (arrowPosY == 200) 
+		//TODO: add fancy animations
+		if (arrowPosY == 200) 
 		{
 			//set arrow back to play
 			arrowPosX = 250;
 			arrowPosY = 300;
 			choice = 0; //back  
 		}   
-    }
+	}
 
 }//-->updateOptionsScreen()
 
@@ -115,13 +115,13 @@ void drawOptionsScreen(void)
 	DrawText(fontSound,      (backPosX + 15), (backPosY + 150), backSize, WHITE);	
 
 	//draw different difficulty
-	
+
 	if(gamedifficulty == difficultyEasy)   DrawText(fontEasy,   (backPosX + 20), (backPosY + 100), backSize, WHITE);
 	if(gamedifficulty == difficultyNormal) DrawText(fontNormal, (backPosX + 15), (backPosY + 100), backSize, WHITE);
 	if(gamedifficulty == difficultyHard)   DrawText(fontHard,   (backPosX + 20), (backPosY + 100), backSize, WHITE);
 
 	//draw different sound
-	
+
 	if(gameSound)  DrawText(fontOn,  (backPosX + 30), (backPosY + 200), backSize, WHITE);
 	if(!gameSound) DrawText(fontOff, (backPosX + 30), (backPosY + 200), backSize, WHITE);
 

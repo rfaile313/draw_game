@@ -28,45 +28,45 @@ const_str fontArrow   = "->";
 const_str fontTest    = "(C)Rudy Faile 2020 - test build, not ready for production.";
 
 enum selection {
-none,
-options,
-play
+	none,
+	options,
+	play
 };
 
 enum selection choice = 0;
 
 void updateTitleScreen(void)
 {
-    
+
 	if(IsKeyPressed(KEY_DOWN))
 	{
-        arrowPosY += 50;
-        if(arrowPosY >= 350)arrowPosY = 350;
-    }
-    if(IsKeyPressed(KEY_UP))
+		arrowPosY += 50;
+		if(arrowPosY >= 350)arrowPosY = 350;
+	}
+	if(IsKeyPressed(KEY_UP))
 	{
-        arrowPosY -= 50;
-        if(arrowPosY <= 300) arrowPosY = 300;
-    }
-    if(IsKeyPressed(KEY_SPACE))
+		arrowPosY -= 50;
+		if(arrowPosY <= 300) arrowPosY = 300;
+	}
+	if(IsKeyPressed(KEY_SPACE))
 	{
-        //TODO: add fancy animations
-        if (arrowPosY == 300) choice = 2; //play
-        else if (arrowPosY == 350) choice = 1; //options
-        else choice = 0;
-    }
+		//TODO: add fancy animations
+		if (arrowPosY == 300) choice = 2; //play
+		else if (arrowPosY == 350) choice = 1; //options
+		else choice = 0;
+	}
 }
 
 void drawTitleScreen(void)
 {
-    DrawText(GAME_NAME, titlePosX, titlePosY, titleSize, WHITE);
-    DrawText(fontPlay, playPosX, playPosY, playSize, WHITE);
-    DrawText(fontOptions, optionsPosX, optionsPosY, optionsSize, WHITE);
-    DrawText(fontArrow, arrowPosX, arrowPosY, arrowSize, WHITE);
+	DrawText(GAME_NAME, titlePosX, titlePosY, titleSize, WHITE);
+	DrawText(fontPlay, playPosX, playPosY, playSize, WHITE);
+	DrawText(fontOptions, optionsPosX, optionsPosY, optionsSize, WHITE);
+	DrawText(fontArrow, arrowPosX, arrowPosY, arrowSize, WHITE);
 	DrawText(fontTest, testPosX, testPosY, testSize, WHITE);        
 }
 
 int titleScreenFinished(void)
 {
-    return choice;
+	return choice;
 }
