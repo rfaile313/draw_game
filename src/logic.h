@@ -137,6 +137,8 @@ Vector2 posDraw =  {325, 225};
 Vector2 posTooSoon = {240, 225};
 //"Two Faults = LOSE" Text Positioning on Screen
 Vector2 posTwoFaults = {110, 225};
+// Draw reaction time
+Vector2 posDrawTime = {150, 400};
 //--->end global variables
 
 //resources----->
