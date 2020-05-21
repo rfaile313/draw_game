@@ -89,7 +89,8 @@ void updateCore(void)
 			//increment level
 			currentLevel += 1;
 			ENEMY_DIFFICULTY -= DIFFICULTY_MULTIPLIER;
-			//can we get the diff between level load time and reaction time?
+			// V gets the diff from the time we entered statecore
+			// V to the time user draws (if win) 
 			drawTime = (GetTime() - stateCoreSeconds);						
 			//set time
 			stateCoreSeconds = GetTime();
@@ -127,7 +128,7 @@ void drawCoreScreen(void)
 
 	if(coregameplay == win) 
 	{
-		DrawTextEx(alagard, FormatText("Reaction Time: %f", drawTime), posDrawTime,
+		DrawTextEx(alagard, FormatText("Reaction Time: %.3f", drawTime), posDrawTime,
 alagard.baseSize, 1, WHITE);  
 		if(GetTime() - stateCoreSeconds <= 0.25f) DrawTexturePro(bulletTexture, bullet.source, bullet.dest, origin, rotation, WHITE);	
 	}
