@@ -51,6 +51,9 @@ int main(void)
     alagard = LoadFont(fontAlagard);
     //-->end resource load
 
+	// Default difficulty is Normal unless set otherwise
+	ENEMY_DIFFICULTY = DIFF_NORMAL;
+
     //set the starting state
     currentState = TITLE;
 

@@ -3,34 +3,6 @@
 #include "logic.h"
 #include <stdio.h>
 
-const_str fontOptionsScrn = "Options";
-const_str fontDifficulty  = "Difficulty";
-const_str fontEasy		  = "<Easy>";
-const_str fontMedium      = "<Medium>";
-const_str fontHard        = "<Hard>"; 
-const_str fontSound       = "Sound";
-const_str fontOn          = "<On>";
-const_str fontOff         = "<Off>";
-const_str fontBack        = "Back";
-
-// VV already defined in stateTitle.c 
-//const_str fontArrow   = "->";
-//const_str fontTest    = "(C)Rudy Faile 2020 - test build, not ready for production.";
-
-u16 backPosX = 310;
-u16 backPosY = 200;
-u16 backSize = 50;
-
-typedef enum GameDifficulty {
-difficultyEasy = 0,
-difficultyMedium,
-difficultyHard
-}GameDifficulty;
-
-GameDifficulty gamedifficulty = 0;
-
-bool gameSound = true;
-
 void updateOptionsScreen(void)
 {	
 	if(IsKeyPressed(KEY_UP))
@@ -50,9 +22,22 @@ void updateOptionsScreen(void)
 		if(arrowPosY == 300) //difficulty
 		{
 			PlaySound(fxToggle);
-			if(gamedifficulty == difficultyEasy)   gamedifficulty = difficultyHard;
-			else if(gamedifficulty == difficultyHard)   gamedifficulty = difficultyMedium;
-			else if(gamedifficulty == difficultyMedium) gamedifficulty = difficultyEasy;
+			if(gamedifficulty == difficultyNormal)
+			{
+				gamedifficulty = difficultyEasy;
+				ENEMY_DIFFICULTY = DIFF_EASY;	
+			}
+			else if(gamedifficulty == difficultyEasy)
+			{
+				gamedifficulty = difficultyHard;
+				ENEMY_DIFFICULTY = DIFF_HARD;	
+			}
+			else if(gamedifficulty == difficultyHard)
+			{
+				gamedifficulty = difficultyNormal;
+				ENEMY_DIFFICULTY = DIFF_EASY;	
+			}
+			
 		}
 		else if(arrowPosY == 400) //sound
 		{
@@ -75,9 +60,21 @@ void updateOptionsScreen(void)
 		if(arrowPosY == 300) //difficulty
 		{
 			PlaySound(fxToggle);
-			if(gamedifficulty == difficultyEasy)   gamedifficulty = difficultyMedium;
-			else if(gamedifficulty == difficultyMedium) gamedifficulty = difficultyHard;
-			else if(gamedifficulty == difficultyHard)   gamedifficulty = difficultyEasy;
+			if(gamedifficulty == difficultyNormal)
+			{
+				gamedifficulty = difficultyHard;
+				ENEMY_DIFFICULTY = DIFF_HARD;	
+			}
+			else if(gamedifficulty == difficultyHard)
+			{
+				gamedifficulty = difficultyEasy;
+				ENEMY_DIFFICULTY = DIFF_EASY;
+			}
+			else if(gamedifficulty == difficultyEasy)
+			{
+				gamedifficulty = difficultyNormal;
+				ENEMY_DIFFICULTY = DIFF_NORMAL;
+			}
 		}
 		else if(arrowPosY == 400) //sound
 		{
@@ -120,7 +117,7 @@ void drawOptionsScreen(void)
 	//draw different difficulty
 	
 	if(gamedifficulty == difficultyEasy)   DrawText(fontEasy,   (backPosX + 20), (backPosY + 100), backSize, WHITE);
-	if(gamedifficulty == difficultyMedium) DrawText(fontMedium, (backPosX + 10), (backPosY + 100), backSize, WHITE);
+	if(gamedifficulty == difficultyNormal) DrawText(fontNormal, (backPosX + 15), (backPosY + 100), backSize, WHITE);
 	if(gamedifficulty == difficultyHard)   DrawText(fontHard,   (backPosX + 20), (backPosY + 100), backSize, WHITE);
 
 	//draw different sound

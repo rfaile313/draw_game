@@ -51,8 +51,46 @@ const f32 ONE_HUNDRED = 100.0f; //100.0f Float
 bool bWait;
 bool bRestart;
 
-f32 ENEMY_DIFFICULTY = 1.05f;
-f32 DIFFICULTY_MULTIPLIER = .25f;
+f32 ENEMY_DIFFICULTY;
+
+// diff levels
+f32 DIFF_EASY   = 1.50f;
+f32 DIFF_NORMAL = 1.00f;
+f32 DIFF_HARD   = .75f;
+
+// ++ how much harder each level
+f32 DIFFICULTY_MULTIPLIER = .15f;
+
+// stateOptions.c variables
+const_str fontOptionsScrn = "Options";
+const_str fontDifficulty  = "Difficulty";
+const_str fontEasy		  = "<Easy>";
+const_str fontNormal      = "<Normal>";
+const_str fontHard        = "<Hard>"; 
+const_str fontSound       = "Sound";
+const_str fontOn          = "<On>";
+const_str fontOff         = "<Off>";
+const_str fontBack        = "Back";
+
+// VV already defined in stateTitle.c 
+//const_str fontArrow   = "->";
+//const_str fontTest    = "(C)Rudy Faile 2020 - test build, not ready for production.";
+
+//NOTE: Could easily make sound adjustable rather than on/off.
+
+u16 backPosX = 310;
+u16 backPosY = 200;
+u16 backSize = 50;
+
+typedef enum GameDifficulty {
+difficultyNormal=0,
+difficultyEasy,
+difficultyHard
+}GameDifficulty;
+
+GameDifficulty gamedifficulty = 0;
+
+bool gameSound = true;
 
 // Spare counter variable
 u16 i;
@@ -131,18 +169,22 @@ void animation1(int state,  Tile *animation);
 void modifyTile(Tile *individual_tile, f32 sX, f32 sY, f32 dX, f32 dY,
 				f32 srcW, f32 srcH, f32 destW, f32 destH);
 
-//stateTitle.c function defs
+// stateTitle.c function defs
 void updateTitleScreen(void);
 void drawTitleScreen(void);
 int titleScreenFinished(void);
 
-//stateLevel.c function defs
+// stateOptions.c function defs
+void updateOptionsScreen(void);
+void drawOptionsScreen(void);
+
+// stateLevel.c function defs
 void initLevel(void);
 void updateLevelScreen(void);
 void drawLevelScreen(void);
 int levelScreenFinished(void);
 
-//stateCore.c function defs 
+// stateCore.c function defs 
 void initCore(void);
 void updateCore(void);
 void drawCoreScreen(void);

@@ -59,7 +59,19 @@ void updateCore(void)
 			//wait 4 seconds ^, then
 			//reset levels, difficulty
 			currentLevel = 1;
-			ENEMY_DIFFICULTY = 1.05f;
+			if(gamedifficulty == difficultyNormal)
+			{
+				ENEMY_DIFFICULTY = DIFF_NORMAL;	
+			}
+			else if(gamedifficulty == difficultyHard)
+			{
+				ENEMY_DIFFICULTY = DIFF_HARD;
+			}
+			else if(gamedifficulty == difficultyEasy)
+			{
+				ENEMY_DIFFICULTY = DIFF_EASY;
+			}
+			//reset
 			finishstate = gototitle;
         }
 	}
