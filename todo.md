@@ -6,8 +6,6 @@
 
 ---
 
-🟡 Game Logic: Display reaction time
-
 🟡 Game Logic: High Score (Highest Level, Fastest Draw, Difficulty)
 
 🟡 High Score Screen? options? put directly on title?
@@ -23,6 +21,8 @@
 🔴 Game Logic: (maybe) Slowmo?
 
 🔴 Art: Cooler shoot/blood/death
+
+🟢 Game Logic: Display reaction time
 
 🟢 Adjust enemy difficulty based on options//difficulty setting
 
