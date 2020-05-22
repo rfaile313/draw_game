@@ -33,6 +33,7 @@ if [[ $1 == "prod" ]]; then
 	mkdir $BUILDDIR && cd $BUILDDIR
 	cp ../../../Resources/libraylib.a .
 	clang -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL libraylib.a ../../../main.c -o draw_game
+	rm -f libraylib.a #don't need lib after compile
 	mkdir draw_game.app 
 	mkdir draw_game.app/Contents
 	mkdir draw_game.app/Contents/MacOS
