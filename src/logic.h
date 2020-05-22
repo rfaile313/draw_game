@@ -16,6 +16,11 @@ typedef enum GameState {
 
 GameState currentState;
 
+typedef enum StorageData {
+	STORAGE_POSITION_HISCORE = 0,
+	STORAGE_POSITION_BESTSPEED
+}StorageData;
+
 typedef struct Tile{
 	Rectangle source;
 	Rectangle dest;
@@ -36,6 +41,9 @@ Tile bullet = {0};
 
 // Global variables------>
 u16 currentLevel = 1;
+
+u16 bestScore;
+f64 bestTime;
 
 const_str GAME_NAME = "DRAW!";
 
