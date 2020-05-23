@@ -18,8 +18,6 @@ static u16 arrowPosX = 250;
 static u16 arrowPosY = 300;
 static u16 arrowSize = 50;
 
-static u16 testPosX  = 180;
-static u16 testPosY  = 550;
 static u16 testSize  = 20; 
 
 const_str fontPlay    = "Play";
@@ -63,7 +61,7 @@ void drawTitleScreen(void)
 	DrawText(fontPlay, playPosX, playPosY, playSize, WHITE);
 	DrawText(fontOptions, optionsPosX, optionsPosY, optionsSize, WHITE);
 	DrawText(fontArrow, arrowPosX, arrowPosY, arrowSize, WHITE);
-	//DrawText(fontTest, testPosX, testPosY, testSize, WHITE);       
+	DrawText(fontTest, 180, 20, testSize, WHITE);       
 
 	//should mean there's a high score loaded
 	if(bestScore > 0)
