@@ -63,7 +63,17 @@ void drawTitleScreen(void)
 	DrawText(fontPlay, playPosX, playPosY, playSize, WHITE);
 	DrawText(fontOptions, optionsPosX, optionsPosY, optionsSize, WHITE);
 	DrawText(fontArrow, arrowPosX, arrowPosY, arrowSize, WHITE);
-	DrawText(fontTest, testPosX, testPosY, testSize, WHITE);        
+	//DrawText(fontTest, testPosX, testPosY, testSize, WHITE);       
+
+	//should mean there's a high score loaded
+	if(bestScore > 0)
+	{
+		DrawText(FormatText("Highest Level: %d", bestScore), 300, 500, 20, WHITE);
+	}
+	if(bestTime != 0.f)
+	{
+		DrawText(FormatText("Fastest Reaction Time: %.3f", bestTime), 260, 530, 20, WHITE);
+	}
 }
 
 int titleScreenFinished(void)

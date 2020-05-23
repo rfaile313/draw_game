@@ -56,7 +56,12 @@ int main(void)
 
 	//set the starting state
 	currentState = TITLE;
-
+	
+	//High Score
+	bestScore = LoadStorageValue(STORAGE_POSITION_HISCORE);
+	bestTime = LoadStorageValue(STORAGE_POSITION_BESTSPEED);
+			
+	
 	//Set game to run at 60 frames-per-second
 	SetTargetFPS(FPS);
 	//---> end initialization------

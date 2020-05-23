@@ -95,14 +95,12 @@ void updateCore(void)
 			//set time
 			stateCoreSeconds = GetTime();
 			//HighScore + BestTime
-			bestScore = LoadStorageValue(STORAGE_POSITION_HISCORE);
 			if (currentLevel > bestScore)
 			{ //new high score
 				bestScore = currentLevel;
 				SaveStorageValue(STORAGE_POSITION_HISCORE, bestScore);
 			}
-			bestTime = LoadStorageValue(STORAGE_POSITION_BESTSPEED);
-			if (drawTime < bestTime)
+			if (drawTime < bestTime || bestTime == 0.f)
 			{ //new best time
 				bestTime = drawTime;
 				SaveStorageValue(STORAGE_POSITION_BESTSPEED, bestTime);
@@ -142,25 +140,10 @@ void drawCoreScreen(void)
 
 	if(coregameplay == win) 
 	{ 
-		/*
-		//should just be able to display new high score here if it is
-		if (currentLevel > bestScore)
-		{ //new high score
-			DrawTextEx(alagard, "New High Score!", posDraw, alagard.baseSize * 2, 1, WHITE); 
-		}
-		
-		if (drawTime < bestTime)
-		{ //new best time
-		
-		}
-		*/
-
 		DrawTextEx(alagard, FormatText("Reaction Time: %.3f", drawTime), posDrawTime, alagard.baseSize, 1, WHITE);  
 		if(GetTime() - stateCoreSeconds <= 0.25f) DrawTexturePro(bulletTexture, bullet.source, bullet.dest, origin, rotation, WHITE);	
 	}
 	
-
-
 	if(coregameplay == lose)
 	{
 		if(GetTime() - stateCoreSeconds <= 0.25f) DrawTexturePro(bulletTexture, bullet.source, bullet.dest, origin, rotation, WHITE);
