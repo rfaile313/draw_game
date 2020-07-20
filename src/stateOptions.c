@@ -126,7 +126,6 @@ void drawOptionsScreen(void)
 	if(!gameSound) DrawText(fontOff, (backPosX + 30), (backPosY + 200), backSize, WHITE);
 
 	DrawText(fontArrow, arrowPosX, arrowPosY, arrowSize, WHITE);
-	DrawText(fontTest, 180, 20, testSize, WHITE);        
 }
 
 

@@ -18,12 +18,9 @@ static u16 arrowPosX = 250;
 static u16 arrowPosY = 300;
 static u16 arrowSize = 50;
 
-static u16 testSize  = 20; 
-
 const_str fontPlay    = "Play";
 const_str fontOptions = "Options";
 const_str fontArrow   = "->";
-const_str fontTest    = "(C)Rudy Faile 2020 - test build, not ready for production.";
 
 enum selection {
 	none,
@@ -61,7 +58,6 @@ void drawTitleScreen(void)
 	DrawText(fontPlay, playPosX, playPosY, playSize, WHITE);
 	DrawText(fontOptions, optionsPosX, optionsPosY, optionsSize, WHITE);
 	DrawText(fontArrow, arrowPosX, arrowPosY, arrowSize, WHITE);
-	DrawText(fontTest, 180, 20, testSize, WHITE);       
 
 	//should mean there's a high score loaded
 	if(bestScore > 0)
