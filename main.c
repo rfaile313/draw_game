@@ -11,6 +11,12 @@
 #include "src/stateLevel.c"
 #include "src/stateCore.c"
 
+// web compilation -- uncomment 14
+//#define PLATFORM_WEB
+
+#if defined(PLATFORM_WEB)
+    #include <emscripten/emscripten.h>
+#endif
 // --- Program entry point
 int main(void)
 {
@@ -65,9 +71,52 @@ int main(void)
 	//Set game to run at 60 frames-per-second
 	SetTargetFPS(FPS);
 	//---> end initialization------
-
+	
 	// Main game loop
-	while (!WindowShouldClose())    // Detect window close button or ESC key
+
+	
+
+	#if defined(PLATFORM_WEB)
+	// Web, Obvs
+	    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+
+	#else
+	// Win/Linux/MacOS
+		while (!WindowShouldClose())    // Detect window close button or ESC key
+		{
+			UpdateDrawFrame();
+		}
+	#endif
+	
+
+	// De-Initialization
+	// Unload Resources
+	UnloadImage(icon); 
+	UnloadTexture(charTexture);
+	UnloadTexture(tileTexture);
+	UnloadTexture(enemy1IdleTexture);
+	UnloadTexture(xAnimationTexture);
+	UnloadTexture(bulletTexture);
+	UnloadSound(fxInitial);
+	UnloadSound(fxDraw);
+	UnloadSound(fxShoot);
+	UnloadSound(fxLose);
+	UnloadSound(fxOrgan);
+	UnloadSound(fxLoseWdl);
+	UnloadSound(fxError);
+	UnloadSound(fxBullet);
+	UnloadSound(fxWin);
+	UnloadFont(alagard);
+	// Close audio
+	CloseAudioDevice(); 
+	// Close window and OpenGL context
+	CloseWindow();        
+
+	return 0;
+
+}
+
+void UpdateDrawFrame(void)
 	{
 		//Update---------------->
 		switch(currentState)
@@ -166,31 +215,4 @@ int main(void)
 		EndDrawing();
 		//-------------->Draw
 
-	}//-->while(!windowshouldclose)
-
-	// De-Initialization
-	// Unload Resources
-	UnloadImage(icon); 
-	UnloadTexture(charTexture);
-	UnloadTexture(tileTexture);
-	UnloadTexture(enemy1IdleTexture);
-	UnloadTexture(xAnimationTexture);
-	UnloadTexture(bulletTexture);
-	UnloadSound(fxInitial);
-	UnloadSound(fxDraw);
-	UnloadSound(fxShoot);
-	UnloadSound(fxLose);
-	UnloadSound(fxOrgan);
-	UnloadSound(fxLoseWdl);
-	UnloadSound(fxError);
-	UnloadSound(fxBullet);
-	UnloadSound(fxWin);
-	UnloadFont(alagard);
-	// Close audio
-	CloseAudioDevice(); 
-	// Close window and OpenGL context
-	CloseWindow();        
-
-	return 0;
-
-}
+	} //-->UpdateDrawFrame

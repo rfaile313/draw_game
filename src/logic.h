@@ -4,6 +4,9 @@
 #include <raylib.h>
 #include "r_types.h"
 
+// forward declaration to draw and update one frame 
+void UpdateDrawFrame(void);
+
 // Types and structure def
 // ----------------------
 // Controls Game State
