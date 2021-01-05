@@ -6,6 +6,10 @@
 
 It's a standoff! Press Space when it's time to draw, but not before!
 
+The game was compiled for web using [WASM](https://webassembly.org/) and can be played here:
+
+https://draw.rudyfaile.com/
+
 ## MacOS:
 
 1. `./run` cleans, builds, and runs if build successful
