@@ -11,7 +11,7 @@
 #include "src/stateLevel.c"
 #include "src/stateCore.c"
 
-// web compilation -- uncomment 14
+// uncomment the below line to compile for web
 //#define PLATFORM_WEB
 
 #if defined(PLATFORM_WEB)
